@@ -1,9 +1,14 @@
 (()=>{
   const C=window.CRYPTO_HUB_CONFIG;
-  const mode=()=>localStorage.getItem(C.networkModeKey)||C.defaultNetworkMode;
-  const setMode=m=>{C.networks=C.networkProfiles[m];$('#networkModeLabel').textContent=m==='mainnet'?'وضع Mainnet':'وضع Testnet';$('#toggleMainnet').textContent=m==='mainnet'?'العودة إلى Testnet':'تفعيل Mainnet';};
-  setMode(mode());
   const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const mode=()=>localStorage.getItem(C.networkModeKey)||C.defaultNetworkMode;
+  const setMode=m=>{
+    C.networks=C.networkProfiles[m]||C.networkProfiles.testnet;
+    const label=$('#networkModeLabel'), button=$('#toggleMainnet');
+    if(label)label.textContent=m==='mainnet'?'وضع Mainnet':'وضع Testnet';
+    if(button)button.textContent=m==='mainnet'?'العودة إلى Testnet':'تفعيل Mainnet';
+  };
+  setMode(mode());
   let wallet=null,pending='',activeTab='earn',balanceTimer=null;
   const toast=m=>{const t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove('show'),3000)};
   const bytesB64=b=>btoa(String.fromCharCode(...new Uint8Array(b))), b64Bytes=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -12,7 +17,14 @@
   async function dec(box,p){const k=await key(p,b64Bytes(box.salt)),d=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64Bytes(box.iv)},k,b64Bytes(box.data));return new TextDecoder().decode(d)}
   const navTab=t=>{activeTab=t;$$('.tab-pane').forEach(x=>x.classList.add('hidden'));$(`#tab-${t}`).classList.remove('hidden');$$('.nav-item[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));$('#pageTitle').textContent={earn:'الكسب والإحالات',wallet:'المحفظة اللامركزية',swap:'التداول والتبادل'}[t];$$('.subpage').forEach(x=>x.classList.add('hidden'));$('#sidebar').classList.remove('open');if(t==='wallet'&&wallet)refreshBalances()};
   const navPage=p=>{$$('.tab-pane').forEach(x=>x.classList.add('hidden'));$$('.subpage').forEach(x=>x.classList.add('hidden'));$(`#page-${p}`).classList.remove('hidden');$('#pageTitle').textContent=p==='wallet-assets'?'الأصول والشبكات':'الأمان والنسخ';$('#sidebar').classList.remove('open')};
-  const renderEarn=()=>{$('#earnList').innerHTML=C.earnSites.map(s=>{const ref=C.referralLinks[s.referralKey]||'';return`<article class="site-card"><div class="site-card-top"><span class="site-logo ${s.color}">${s.symbol}</span><span class="site-type">${s.tag}</span></div><h3>${s.name}</h3><p>${s.description}</p><div class="site-meta"><span>◉ رابط مباشر</span><span>↗ ${ref&&!ref.startsWith('YOUR_')?'إحالة مفعلة':'إعداد مطلوب'}</span></div><button class="primary-btn earn-link" data-id="${s.id}">${ref&&!ref.startsWith('YOUR_')?'التسجيل عبر رابط الإحالة':'فتح الموقع'} ↗</button></article>`}).join('');$$('.earn-link').forEach(b=>b.onclick=()=>{const s=C.earnSites.find(x=>x.id===b.dataset.id),u=C.referralLinks[s.referralKey];window.open(u&&!u.startsWith('YOUR_')?u:s.url,'_blank','noopener,noreferrer')})};
+  const renderEarn=()=>{
+    const host=$('#earnList'); if(!host)return;
+    host.innerHTML=C.earnSites.map(s=>{
+      const ref=C.referralLinks[s.referralKey]||'';
+      const target=ref&&!ref.startsWith('YOUR_')?ref:s.url;
+      return`<article class="site-card"><div class="site-card-top"><span class="site-logo ${s.color}">${s.symbol}</span><span class="site-type">${s.tag}</span></div><h3>${s.name}</h3><p>${s.description}</p><div class="site-meta"><span>◉ رابط مباشر</span><span>↗ ${ref&&!ref.startsWith('YOUR_')?'إحالة مفعلة':'الرابط المباشر'}</span></div><a class="primary-btn earn-link" href="${target}" target="_blank" rel="noopener noreferrer">${ref&&!ref.startsWith('YOUR_')?'التسجيل عبر رابط الإحالة':'فتح الموقع'} ↗</a></article>`
+    }).join('');
+  };
   async function makeWallet(m){const evm=ethers.HDNodeWallet.fromPhrase(m),seedHex=ethers.Mnemonic.fromPhrase(m).computeSeed();let tron='غير متاح',derived=null;try{if(window.TronWeb)tron=TronWeb.address.fromPrivateKey(evm.privateKey.slice(2))}catch(e){console.warn('TRON derivation unavailable',e)}try{derived=window.chainReady?await window.chainReady(seedHex):null}catch(e){console.warn('BTC/SOL derivation unavailable',e)}return{mnemonic:m,evm:{address:evm.address,privateKey:evm.privateKey},tron,bitcoin:derived?.bitcoin||'غير متاح',solana:derived?.solana||'غير متاح'}}
   const setWallet=unlocked=>{$('#vaultState').textContent=unlocked?'مفتوحة محلياً':'محفظة مقفلة';$('#walletStatus').textContent=unlocked?'مفتوحة محلياً':'مقفلة';$('#unlockBanner').classList.toggle('hidden',unlocked);$('#evmAddress').textContent=unlocked?wallet.evm.address:'أنشئ أو استورد محفظة';renderAssets();if(unlocked)refreshBalances();else{clearInterval(balanceTimer);balanceTimer=null}};
   const asset=(n,s,a,b='—')=>`<article class="asset-card"><div class="asset-top"><span class="coin ${n.toLowerCase().replaceAll(' ','-')}">${s[0]}</span><span class="chain-name">${n}</span><i class="asset-status"></i></div><strong class="asset-balance">${b} ${s}</strong><code>${a||'افتح المحفظة'}</code><button class="text-btn copy-address" data-address="${a||''}">نسخ العنوان ⧉</button></article>`;
