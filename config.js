@@ -1,7 +1,8 @@
 window.CRYPTO_HUB_CONFIG = {
   storageKey:'crypto_hub_v2_encrypted',
   networkModeKey:'crypto_hub_network_mode',
-  defaultNetworkMode:'testnet',
+  defaultNetworkMode:'mainnet',
+  activeNetworkKeys:['ethereum','bnb'],
   ads:{provider:'A-Ads',unitId:'2455510'},
   referralLinks:{
     freecash:'https://freecash.com/r/377TY6', faucetpay:'https://faucetpay.io/r/10151849', timebucks:'https://timebucks.com/?refID=230048987', cointiply:'https://cointiply.mobi/QW9zy0', coinpayz:'https://coinpayz.xyz/r/818836', viefaucet:'https://viefaucet.com?r=6a9f5fc3ceaac88d2429c4a8'
