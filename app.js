@@ -1,7 +1,7 @@
 (()=>{
   const C=window.CRYPTO_HUB_CONFIG;
   const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-  const mode=()=>localStorage.getItem(C.networkModeKey)||C.defaultNetworkMode;
+  const mode=()=>'mainnet';
   const setMode=m=>{
     C.networks=C.networkProfiles[m]||C.networkProfiles.testnet;
     const label=$('#networkModeLabel'), button=$('#toggleMainnet');
@@ -15,10 +15,11 @@
   async function key(p,s){const b=await crypto.subtle.importKey('raw',new TextEncoder().encode(p),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt:s,iterations:250000,hash:'SHA-256'},b,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
   async function enc(text,p){const s=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),k=await key(p,s),d=await crypto.subtle.encrypt({name:'AES-GCM',iv},k,new TextEncoder().encode(text));return{salt:bytesB64(s),iv:bytesB64(iv),data:bytesB64(d)}}
   async function dec(box,p){const k=await key(p,b64Bytes(box.salt)),d=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64Bytes(box.iv)},k,b64Bytes(box.data));return new TextDecoder().decode(d)}
-  const navTab=t=>{activeTab=t;$$('.tab-pane').forEach(x=>x.classList.add('hidden'));$(`#tab-${t}`).classList.remove('hidden');$$('.nav-item[data-tab],.mobile-nav-item[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));$('#pageTitle').textContent={earn:'الكسب والإحالات',wallet:'المحفظة اللامركزية',swap:'التداول والتبادل'}[t];$$('.subpage').forEach(x=>x.classList.add('hidden'));$('#sidebar').classList.remove('open');if(t==='wallet'&&wallet)refreshBalances()};
+  const navTab=t=>{activeTab=t;$$('.tab-pane').forEach(x=>x.classList.add('hidden'));$(`#tab-${t}`).classList.remove('hidden');$$('.nav-item[data-tab],.mobile-nav-item[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));$('#pageTitle').textContent={earn:'الكسب والإحالات',wallet:'محفظة TRON',swap:'التبادل'}[t];$$('.subpage').forEach(x=>x.classList.add('hidden'));$('#sidebar').classList.remove('open');if(t==='wallet'&&wallet)refreshBalances()};
   const navPage=p=>{$$('.tab-pane').forEach(x=>x.classList.add('hidden'));$$('.subpage').forEach(x=>x.classList.add('hidden'));$(`#page-${p}`).classList.remove('hidden');$('#pageTitle').textContent=p==='wallet-assets'?'الأصول والشبكات':'الأمان والنسخ';$('#sidebar').classList.remove('open')};
   $('#reviewTronSend').onclick=async()=>{try{if(!wallet?.tronPrivateKey)throw Error('أنشئ أو افتح محفظة TRON أولاً');const to=$('#tronTo').value.trim(),amount=$('#tronAmount').value.trim(),asset=$('#tronAsset').value;if(!TronWeb.isAddress(to))throw Error('عنوان TRON غير صحيح');if(!amount||Number(amount)<=0)throw Error('أدخل مبلغًا صحيحًا');const pk=Array.from(wallet.tronPrivateKey).map(x=>x.toString(16).padStart(2,'0')).join('');const tw=new TronWeb({fullHost:C.networks.tron.rpcUrl,privateKey:pk});const from=wallet.tron;let unsigned,description;if(asset==='trx'){unsigned=await tw.transactionBuilder.sendTrx(to,Math.round(Number(amount)*1e6),from);description=`${amount} TRX إلى ${to}`}else{const token=C.tokens.tronUsdt;const c=await tw.contract().at(token);unsigned=await c.transfer(to,Math.round(Number(amount)*1e6)).transaction();description=`${amount} USDT (TRC-20) إلى ${to} · العقد ${token}`}const review=$('#tronSendReview');review.classList.remove('hidden');review.innerHTML=`<b>راجع قبل التوقيع المحلي</b><code>الشبكة: TRON Mainnet<br>${description}<br>المرسل: ${from}<br>الرسوم: تُحسب من الشبكة</code><button class="primary-btn" id="signTron">توقيع وبث المعاملة</button><button class="text-btn" id="cancelTron">إلغاء</button>`;$('#signTron').onclick=async()=>{try{const signed=await tw.trx.sign(unsigned,pk);const result=await tw.trx.sendRawTransaction(signed);review.innerHTML=`<b>تم بث معاملة TRON</b><code>${result.txid||result.transaction?.txID||JSON.stringify(result)}</code>`;toast('تم إرسال المعاملة؛ تحقق من TronScan')}catch(e){toast('فشل التوقيع أو البث: '+e.message)}};$('#cancelTron').onclick=()=>review.classList.add('hidden')}catch(e){toast(e.message)}};
   const external={tron:true};
+  window.EarnlyWallet={network:'TRON Mainnet',version:'1.0.0'};
   const renderEarn=()=>{
     const host=$('#earnList'); if(!host)return;
     host.innerHTML=C.earnSites.map(s=>{

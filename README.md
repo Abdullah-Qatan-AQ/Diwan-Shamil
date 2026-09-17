@@ -70,3 +70,8 @@ flutter build apk --release --dart-define=EARNLY_URL=https://YOUR_DEPLOYED_DOMAI
 ## الإصدار النهائي المحدد
 
 الشبكتان المدعومتان في هذه النسخة هما **Ethereum Mainnet** عبر MetaMask و**TRON Mainnet** عبر TronLink. يدعم التطبيق إرسال العملة الأصلية ETH وTRX، وإرسال USDT على TRON باستخدام عقد Tether الرسمي `TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t`. كل إرسال يمر عبر شاشة مراجعة ثم طلب توقيع داخل المحفظة الخارجية.
+
+
+## Web deployment
+
+The static web application is deployed through GitHub Pages at https://abdullah-qatan-aq.github.io/Crybto/. It is branded as Earnly Wallet and provides a client-side TRON Mainnet wallet, receive addresses, locally encrypted persistence, review-before-signing transfers, and the disclosed Earn Hub referral directory.
