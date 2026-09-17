@@ -37,5 +37,7 @@ window.CRYPTO_HUB_CONFIG = {
     }
   },
   networks:null,
-  dex:{provider:'0x / Uniswap / PancakeSwap',zeroExApiBase:'https://api.0x.org',zeroExApiKey:'YOUR_PUBLIC_0X_API_KEY',routerAddresses:{}}
+  tokens:{},
+  dex:{provider:'Uniswap/PancakeSwap/0x',zeroExApiBase:'',zeroExApiKey:'',routerAddresses:{},slippageBps:50},
+  safety:{allowUnlimitedApprovals:false,requireSimulation:true,requireExactChainId:true}
 };
