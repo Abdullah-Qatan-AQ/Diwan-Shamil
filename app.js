@@ -17,6 +17,13 @@
   async function dec(box,p){const k=await key(p,b64Bytes(box.salt)),d=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64Bytes(box.iv)},k,b64Bytes(box.data));return new TextDecoder().decode(d)}
   const navTab=t=>{activeTab=t;$$('.tab-pane').forEach(x=>x.classList.add('hidden'));$(`#tab-${t}`).classList.remove('hidden');$$('.nav-item[data-tab],.mobile-nav-item[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));$('#pageTitle').textContent={earn:'الكسب والإحالات',wallet:'المحفظة اللامركزية',swap:'التداول والتبادل'}[t];$$('.subpage').forEach(x=>x.classList.add('hidden'));$('#sidebar').classList.remove('open');if(t==='wallet'&&wallet)refreshBalances()};
   const navPage=p=>{$$('.tab-pane').forEach(x=>x.classList.add('hidden'));$$('.subpage').forEach(x=>x.classList.add('hidden'));$(`#page-${p}`).classList.remove('hidden');$('#pageTitle').textContent=p==='wallet-assets'?'الأصول والشبكات':'الأمان والنسخ';$('#sidebar').classList.remove('open')};
+  const external={evm:null,solana:null,tron:null,bitcoin:null};
+  const connectorStatus=m=>{const el=$('#connectorStatus');if(el)el.textContent=m};
+  const connectEvm=async()=>{if(!window.ethereum)return toast('ثبّت MetaMask أولاً');const accounts=await window.ethereum.request({method:'eth_requestAccounts'});external.evm=accounts[0];connectorStatus(`MetaMask: ${external.evm}`);toast('تم ربط MetaMask')};
+  const connectSolana=async()=>{const p=window.phantom?.solana||window.solana;if(!p)return toast('ثبّت Phantom أولاً');const r=await p.connect();external.solana=r.publicKey.toString();connectorStatus(`Phantom: ${external.solana}`);toast('تم ربط Phantom')};
+  const connectTron=async()=>{if(!window.tronLink)return toast('ثبّت TronLink أولاً');const r=await window.tronLink.request({method:'tron_requestAccounts'});external.tron=window.tronWeb?.defaultAddress?.base58||r?.[0]||'';connectorStatus(`TronLink: ${external.tron||'متصل'}`);toast('تم ربط TronLink')};
+  const connectBitcoin=async()=>{if(!window.unisat)return toast('ثبّت UniSat أولاً');const a=await window.unisat.requestAccounts();external.bitcoin=a[0];connectorStatus(`UniSat: ${external.bitcoin}`);toast('تم ربط UniSat')};
+  $('#connectEvm').onclick=connectEvm;$('#connectSolana').onclick=connectSolana;$('#connectTron').onclick=connectTron;$('#connectBitcoin').onclick=connectBitcoin;
   const renderEarn=()=>{
     const host=$('#earnList'); if(!host)return;
     host.innerHTML=C.earnSites.map(s=>{
