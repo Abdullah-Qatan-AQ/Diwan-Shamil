@@ -65,3 +65,8 @@ flutter build apk --release --dart-define=EARNLY_URL=https://YOUR_DEPLOYED_DOMAI
 ## النسخة الحالية
 
 تم حصر النسخة الحالية في **Ethereum Mainnet** و**BNB Chain Mainnet** لتقليل التعقيد. الإرسال الأصلي يستخدم MetaMask عند الاتصال، ويتحقق من `chainId` ويعرض المعاملة قبل التوقيع. بقية الشبكات غير معروضة في الواجهة.
+
+
+## الإصدار النهائي المحدد
+
+الشبكتان المدعومتان في هذه النسخة هما **Ethereum Mainnet** عبر MetaMask و**TRON Mainnet** عبر TronLink. يدعم التطبيق إرسال العملة الأصلية ETH وTRX، وإرسال USDT على TRON باستخدام عقد Tether الرسمي `TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t`. كل إرسال يمر عبر شاشة مراجعة ثم طلب توقيع داخل المحفظة الخارجية.

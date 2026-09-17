@@ -2,7 +2,7 @@ window.CRYPTO_HUB_CONFIG = {
   storageKey:'crypto_hub_v2_encrypted',
   networkModeKey:'crypto_hub_network_mode',
   defaultNetworkMode:'mainnet',
-  activeNetworkKeys:['ethereum','bnb'],
+  activeNetworkKeys:['ethereum','tron'],
   ads:{provider:'A-Ads',unitId:'2455510'},
   referralLinks:{
     freecash:'https://freecash.com/r/377TY6', faucetpay:'https://faucetpay.io/r/10151849', timebucks:'https://timebucks.com/?refID=230048987', cointiply:'https://cointiply.mobi/QW9zy0', coinpayz:'https://coinpayz.xyz/r/818836', viefaucet:'https://viefaucet.com?r=6a9f5fc3ceaac88d2429c4a8'
@@ -38,7 +38,7 @@ window.CRYPTO_HUB_CONFIG = {
     }
   },
   networks:null,
-  tokens:{},
+  tokens:{tronUsdt:'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t'},
   dex:{provider:'Uniswap/PancakeSwap/0x',zeroExApiBase:'',zeroExApiKey:'',routerAddresses:{},slippageBps:50},
   safety:{allowUnlimitedApprovals:false,requireSimulation:true,requireExactChainId:true}
 };

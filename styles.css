@@ -65,3 +65,5 @@ body{direction:rtl}.brand{letter-spacing:0}.nav-item{text-align:right}.nav-item.
 .connector-panel{margin-bottom:13px}.connector-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.connector-status{background:#091726;border:1px solid #29415a;border-radius:7px;padding:11px;color:#a7bed0;font-size:11px;direction:rtl}@media(max-width:700px){.connector-grid{grid-template-columns:1fr 1fr}.connector-grid button{min-height:46px}}
 
 .network-status-panel{margin-top:13px}.network-status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:14px}.network-status-item{background:#091726;border:1px solid #29415a;border-radius:8px;padding:11px}.network-status-item strong,.network-status-item span{display:block}.network-status-item strong{font-size:11px}.network-status-item span{font-size:10px;color:#8aa0b5;margin-top:6px}.network-status-item.ready{border-color:#2b8067}.network-status-item.ready span{color:var(--mint)}.network-status-item.warn{border-color:#84692b}.network-status-item.warn span{color:var(--amber)}@media(max-width:700px){.network-status-grid{grid-template-columns:1fr 1fr}}
+
+.tron-send-panel{border-color:#8b4c70}
