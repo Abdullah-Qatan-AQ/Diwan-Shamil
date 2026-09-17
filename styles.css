@@ -51,7 +51,7 @@ body{direction:rtl}.brand{letter-spacing:0}.nav-item{text-align:right}.nav-item.
   .mobile-nav-item span{font-size:9px;font-weight:700}
   .mobile-nav-item.active,.mobile-nav-item:active{background:#153b3b;color:var(--mint)}
   .main-content{padding-bottom:82px}
-  .sidebar{display:none!important}
+  .sidebar{display:flex!important}
   .topbar{position:sticky;top:0;z-index:90}
   button,a,input,select,textarea{touch-action:manipulation}
   .site-card .primary-btn,.primary-btn,.secondary-btn{min-height:44px}
