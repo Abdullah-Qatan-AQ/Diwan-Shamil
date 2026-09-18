@@ -66,7 +66,17 @@ const realSources = [
 ];
 const classicWorks = ['صحيح البخاري','صحيح مسلم','سنن أبي داود','سنن الترمذي','سنن النسائي','سنن ابن ماجه','موطأ مالك','مسند أحمد','الأدب المفرد','رياض الصالحين','الأربعون النووية','بلوغ المرام','عمدة الأحكام','فتح الباري','شرح النووي على مسلم','عون المعبود','تحفة الأحوذي','نيل الأوطار','سبل السلام','تفسير الطبري','تفسير ابن كثير','تفسير القرطبي','تفسير البغوي','تفسير الجلالين','تفسير السعدي','تفسير التحرير والتنوير','أسباب النزول','الناسخ والمنسوخ','علوم القرآن','إعجاز القرآن','السيرة الحلبية','زاد المعاد','فقه السيرة','الرحيق المختوم','دلائل النبوة','الشمائل المحمدية','الشفا بتعريف حقوق المصطفى','البداية والنهاية','الكامل في التاريخ','تاريخ الأمم والملوك','تاريخ ابن خلدون','الطبقات الكبرى','أسد الغابة','الإصابة في تمييز الصحابة','سير أعلام النبلاء','حلية الأولياء','صفة الصفوة','البخلاء','الحيوان','البيان والتبيين','الكامل في اللغة والأدب','العقد الفريد','عيون الأخبار','الأغاني','مقامات الحريري','مقامات بديع الزمان','كليلة ودمنة','نهج البلاغة','رسائل الجاحظ','الأمالي','زهر الآداب','صبح الأعشى','خزانة الأدب','لسان العرب','تاج العروس','معجم مقاييس اللغة','الصحاح','العين','جمهرة اللغة','تهذيب اللغة','المخصص','الخصائص','دلائل الإعجاز','أسرار البلاغة','الكتاب لسيبويه','مغني اللبيب','ألفية ابن مالك','شرح ابن عقيل','المعلقات السبع','ديوان امرئ القيس','ديوان طرفة بن العبد','ديوان زهير بن أبي سلمى','ديوان لبيد بن ربيعة','ديوان عنترة بن شداد','ديوان النابغة الذبياني','ديوان الأعشى','ديوان جرير','ديوان الفرزدق','ديوان الأخطل','ديوان ذي الرمة','ديوان أبي نواس','ديوان أبي تمام','ديوان البحتري','ديوان المتنبي','ديوان المعري','ديوان ابن زيدون','ديوان ابن الفارض','ديوان البوصيري','الشوقيات','ديوان حافظ إبراهيم','ديوان إيليا أبو ماضي','الأعمال الشعرية الكاملة','الأيام','حي بن يقظان','رسالة الغفران','طوق الحمامة','الأدب الكبير','الأدب الصغير','كليلة ودمنة — ابن المقفع','رسالة التوابع والزوابع','حي بن يقظان — ابن طفيل','مقدمة ابن خلدون','رحلة ابن بطوطة','رحلة ابن جبير','خطط المقريزي','فتوح البلدان','مروج الذهب','المنتظم في تاريخ الملوك والأمم','الكامل في التاريخ — ابن الأثير','المواعظ والاعتبار','المنتقى من أخبار المصطفى','مشاهير علماء الأمصار','معرفة الصحابة','الاستيعاب في معرفة الأصحاب','الطبقات الصغير','الجرح والتعديل','ميزان الاعتدال','تهذيب الكمال','الكاشف','تذكرة الحفاظ','طبقات الشافعية','طبقات الحنابلة','طبقات الصوفية','إحياء علوم الدين','مدارج السالكين','الوابل الصيب','الحكم العطائية','الرسالة القشيرية','قوت القلوب','حلية الأولياء — أبو نعيم','الفتوحات المكية','فصوص الحكم','الأحكام السلطانية','المحلى','المغني','المجموع شرح المهذب','بدائع الصنائع','المبسوط','المدونة','بداية المجتهد','زاد المستقنع','كشاف القناع','روضة الطالبين','الموسوعة الفقهية','معجم البلدان','معجم ما استعجم','مراصد الاطلاع','الروض المعطار','الاشتقاق','وفيات الأعيان','إنباه الرواة','معجم الأدباء','يتيمة الدهر','خريدة القصر','الذخيرة في محاسن أهل الجزيرة','نفح الطيب','العمدة في محاسن الشعر','نقد الشعر','طبقات فحول الشعراء','الشعر والشعراء','العقد الفريد — ابن عبد ربه'];
 const classicSources = classicWorks.map(title => [title, 'كتاب تراثي', `https://archive.org/advancedsearch.php?q=${encodeURIComponent(title)}&fl%5B%5D=title&fl%5B%5D=description&fl%5B%5D=identifier&rows=5&output=json`]);
-let sourceCatalog = [realSources[0]];
+const localCollections = [
+  ['القرآن الكريم كاملاً', 'قرآن · ملف محلي', 'data/quran.json', 'quran'],
+  ['صحيح البخاري', 'حديث · ملف محلي', 'data/ara-bukhari.json', 'hadith'],
+  ['صحيح مسلم', 'حديث · ملف محلي', 'data/ara-muslim.json', 'hadith'],
+  ['جامع الترمذي', 'حديث · ملف محلي', 'data/ara-tirmidhi.json', 'hadith'],
+  ['سنن أبي داود', 'حديث · ملف محلي', 'data/ara-abudawud.json', 'hadith'],
+  ['سنن النسائي', 'حديث · ملف محلي', 'data/ara-nasai.json', 'hadith'],
+  ['سنن ابن ماجه', 'حديث · ملف محلي', 'data/ara-ibnmajah.json', 'hadith'],
+  ['موطأ مالك', 'حديث · ملف محلي', 'data/ara-malik.json', 'hadith']
+];
+let sourceCatalog = localCollections;
 let archiveLoaded = false;
 
 const state = { view: 'home', q: '', surahs: [], selectedSurah: 1, font: 24, online: navigator.onLine };
@@ -110,7 +120,7 @@ async function loadAyahs() {
   const box = $('#ayahs'); if (!box) return;
   try {
     const key = `diwan-surah-${state.selectedSurah}`; let data = JSON.parse(localStorage.getItem(key) || 'null');
-    if (!data && navigator.onLine) { const r = await fetch(`https://api.alquran.cloud/v1/surah/${state.selectedSurah}/quran-uthmani`); const j = await r.json(); data = j.data; localStorage.setItem(key, JSON.stringify(data)); }
+    if (!data) { const local = await fetch('data/quran.json'); const all = await local.json(); data = { ayahs: all[String(state.selectedSurah)].map(a => ({text:a.text, numberInSurah:a.verse})) }; localStorage.setItem(key, JSON.stringify(data)); }
     if (!data) throw new Error('offline');
     box.innerHTML = `<div class="basmala">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>` + data.ayahs.map(a => `<p class="ayah"><span>${a.text}</span><b>${a.numberInSurah}</b></p>`).join('');
   } catch { box.innerHTML = '<div class="empty-state"><b>تعذر جلب النص حالياً</b><p>تحقق من الاتصال بالإنترنت ثم أعد المحاولة. لا نضع نصاً وهمياً مكان النص الأصلي.</p><button class="gold-btn" onclick="render()">إعادة المحاولة</button></div>'; }
@@ -139,6 +149,12 @@ async function openSource(index) {
   try {
     const response = await fetch(source[2]);
     const data = await response.json();
+    if (source[3] === 'quran') { state.view = 'reader'; render(); return; }
+    if (source[3] === 'hadith') {
+      const hadiths = Array.isArray(data.hadiths) ? data.hadiths : [];
+      $('.source-reader').innerHTML = `<div class="result-intro">${source[0]} · ${hadiths.length.toLocaleString('ar-EG')} حديث محفوظ محلياً</div><div class="hadith-list">${hadiths.slice(0, 120).map((h, i) => `<article class="hadith-item"><b>حديث ${i + 1}</b><p>${escapeHtml(h.text || h.hadithEnglish || '')}</p></article>`).join('')}</div><div class="inside-note">المحتوى مقروء من ملف JSON المحلي داخل التطبيق، ولا يحتاج اتصالاً بالإنترنت بعد تنزيل التطبيق.</div>`;
+      return;
+    }
     if (source[3]) {
       const files = data.files || [];
       const textFile = files.find(f => /(_djvu\.txt|\.txt)$/i.test(f.name) && !/meta|md5|scandata/i.test(f.name));
