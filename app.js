@@ -74,7 +74,8 @@ const localCollections = [
   ['سنن أبي داود', 'حديث · ملف محلي', 'data/previews/ara-abudawud.json', 'hadith'],
   ['سنن النسائي', 'حديث · ملف محلي', 'data/previews/ara-nasai.json', 'hadith'],
   ['سنن ابن ماجه', 'حديث · ملف محلي', 'data/previews/ara-ibnmajah.json', 'hadith'],
-  ['موطأ مالك', 'حديث · ملف محلي', 'data/previews/ara-malik.json', 'hadith']
+  ['موطأ مالك', 'حديث · ملف محلي', 'data/previews/ara-malik.json', 'hadith'],
+  ['قصص الأنبياء والقصص الإسلامية', 'قصص · ملف محلي', 'data/stories.json', 'stories']
 ];
 let sourceCatalog = localCollections;
 let archiveLoaded = false;
@@ -153,6 +154,11 @@ async function openSource(index) {
     if (source[3] === 'hadith') {
       const hadiths = Array.isArray(data.hadiths) ? data.hadiths : [];
       $('.source-reader').innerHTML = `<div class="result-intro">${source[0]} · ${hadiths.length.toLocaleString('ar-EG')} حديث محفوظ محلياً</div><div class="hadith-list">${hadiths.slice(0, 120).map((h, i) => `<article class="hadith-item"><b>حديث ${i + 1}</b><p>${escapeHtml(h.text || h.hadithEnglish || '')}</p></article>`).join('')}</div><div class="inside-note">المحتوى مقروء من ملف JSON المحلي داخل التطبيق، ولا يحتاج اتصالاً بالإنترنت بعد تنزيل التطبيق.</div>`;
+      return;
+    }
+    if (source[3] === 'stories') {
+      const stories = Array.isArray(data) ? data : [];
+      $('.source-reader').innerHTML = `<div class="result-intro">قصص موثقة ببيانات المصدر · ${stories.length.toLocaleString('ar-EG')} قصص</div><div class="hadith-list">${stories.map(s => `<article class="hadith-item"><b>${escapeHtml(s.category || 'قصة')}</b><p>${escapeHtml(s.title || '')}</p><small>${escapeHtml(s.description || '')}</small><div class="inside-note">المصدر المذكور: ${escapeHtml(s.source || 'غير محدد')} · النص التفصيلي غير مضمن في الملف</div></article>`).join('')}</div>`;
       return;
     }
     if (source[3]) {

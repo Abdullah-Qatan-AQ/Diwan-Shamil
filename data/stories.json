@@ -1,0 +1,126 @@
+[
+  {
+    "id": 1,
+    "title": "The Story of Prophet Adam (AS) - Short Series",
+    "category": "prophet_series_short_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-adam-short-series-en.mp3",
+      "arabic": "",
+      "french": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-adam-short-series-fr.mp3"
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-adam-short-series-image.png",
+    "description": "The first human created by Allah, father of mankind.",
+    "source": "Qalb"
+  },
+  {
+    "id": 2,
+    "title": "The Story of Prophet Idris (Enoch) (AS) - Short Series",
+    "category": "prophet_series_short_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-enoch-short-stories.mp3",
+      "arabic": "",
+      "french": ""
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-idris-short-stories-image.jpg",
+    "description": "A revered prophet, known as Idris in Islam, who lived after Adam and before Nuh, recognized for his piety, knowledge, and ascension to the heavens.",
+    "source": "Qalb"
+  },
+  {
+    "id": 3,
+    "title": "The Story of Prophet Nuh (Noah) (AS) - Short Series",
+    "category": "prophet_series_short_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-nuh-short-stories-en.mp3",
+      "arabic": "",
+      "french": ""
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-nuh-short-series-inage.png",
+    "description": "A prophet known for calling his people to monotheism for centuries and for building the Ark to save believers and pairs of all creatures from the Great Flood.",
+    "source": "Qalb"
+  },
+  {
+    "id": 4,
+    "title": "The Story of Prophet Hud (AS) - Short Series",
+    "category": "prophet_series_short_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-hud-short-stories-en.mp3",
+      "arabic": "",
+      "french": ""
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-hud-short-series-image.png",
+    "description": "The story of Prophet Hud (AS) who was sent to the people of 'Ad to call them to the worship of Allah alone. They were a powerful, wealthy, and arrogant people who refused his message, and were subsequently destroyed by a furious wind.",
+    "source": "Qalb"
+  },
+  {
+    "id": 5,
+    "title": "The Story of Prophet Salih (AS) - Short Series",
+    "category": "prophet_series_short_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-salih-short-stories.mp3",
+      "arabic": "",
+      "french": ""
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-salih-short-series-image.png",
+    "description": "The story of Prophet Salih (AS), sent to the people of Thamud, who demanded a miracle. When they killed the miraculous she-camel he brought, the tribe was destroyed by a great cry and an earthquake.",
+    "source": "Qalb"
+  },
+  {
+    "id": 6,
+    "title": "The Story of Prophet Ibrahim (AS) - Short Series",
+    "category": "prophet_series_short_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-ibrahim-short-stories-en.mp3",
+      "arabic": "",
+      "french": ""
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-prophet-ibrahim-short-stories-image.png",
+    "description": "Prophet Ibrahim, peace be upon him, was the friend of Allah, an unwavering monotheist who challenged his idolatrous people and was saved by a miracle from a fire. His life exemplifies complete submission and obedience to God, establishing him as a father figure for many nations.",
+    "source": "Qalb"
+  },
+  
+  {
+    "id": 101,
+    "title": "The Night Journey to Jerusalem and the Heavens - Part 1",
+    "category": "bedtime_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/Bedtime%20Stories%20-%20The%20Night%20Journey%20To%20Jerusalem%20And%20The%20Heavens%20Part%201%20-%20Safar%20Publications%20-%20SoundLoadMate.com.mp3"
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-night-journey-part-1.png",
+    "description": "Part 1 of the story of Al-Isra' wal-Mi'raj, the miraculous night journey and ascension of the Prophet Muhammad (ﷺ).",
+    "source": "Safar Publications - Mawlānā Kamal Khan"
+  },
+  {
+    "id": 102,
+    "title": "The Night Journey to Jerusalem and the Heavens - Part 2",
+    "category": "bedtime_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/Bedtime%20Stories%20-%20The%20Night%20Journey%20To%20Jerusalem%20And%20The%20Heavens%20Part%202%20-%20Safar%20Publications%20-%20SoundLoadMate.com.mp3"
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-night-journey-part-2.png",
+    "description": "Part 2 of the story of Al-Isra' wal-Mi'raj",
+    "source": "Safar Publications - Mawlānā Kamal Khan"
+  },
+  {
+    "id": 103,
+    "title": "The Night Journey to Jerusalem and the Heavens - Part 3",
+    "category": "bedtime_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/Bedtime%20Stories%20-%20The%20Night%20Journey%20To%20Jerusalem%20And%20The%20Heavens%20Part%203%20Final%20-%20Safar%20Publications%20-%20SoundLoadMate.com.mp3"
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-night-journey-part-3.png",
+    "description": "Part 3 of the story of Al-Isra' wal-Mi'raj",
+    "source": "Safar Publications - Mawlānā Kamal Khan"
+  },
+  {
+    "id": 104,
+    "title": "The Night Journey to Jerusalem and the Heavens - Part 4 (Final)",
+    "category": "bedtime_stories",
+    "languages": {
+      "english": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/Bedtime%20Stories%20-%20The%20Night%20Journey%20To%20Jerusalem%20And%20The%20Heavens%20Part%204%20-%20Safar%20Publications%20-%20SoundLoadMate.com.mp3"
+    },
+    "image": "https://pub-8c50e21dc15a4aea8288a44417db03d0.r2.dev/the-night-journey-part-4.png",
+    "description": "Final part of the story of Al-Isra' wal-Mi'raj",
+    "source": "Safar Publications - Mawlānā Kamal Khan"
+  }
+]
+
