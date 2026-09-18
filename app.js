@@ -68,13 +68,13 @@ const classicWorks = ['صحيح البخاري','صحيح مسلم','سنن أب
 const classicSources = classicWorks.map(title => [title, 'كتاب تراثي', `https://archive.org/advancedsearch.php?q=${encodeURIComponent(title)}&fl%5B%5D=title&fl%5B%5D=description&fl%5B%5D=identifier&rows=5&output=json`]);
 const localCollections = [
   ['القرآن الكريم كاملاً', 'قرآن · ملف محلي', 'data/quran.json', 'quran'],
-  ['صحيح البخاري', 'حديث · ملف محلي', 'data/ara-bukhari.json', 'hadith'],
-  ['صحيح مسلم', 'حديث · ملف محلي', 'data/ara-muslim.json', 'hadith'],
-  ['جامع الترمذي', 'حديث · ملف محلي', 'data/ara-tirmidhi.json', 'hadith'],
-  ['سنن أبي داود', 'حديث · ملف محلي', 'data/ara-abudawud.json', 'hadith'],
-  ['سنن النسائي', 'حديث · ملف محلي', 'data/ara-nasai.json', 'hadith'],
-  ['سنن ابن ماجه', 'حديث · ملف محلي', 'data/ara-ibnmajah.json', 'hadith'],
-  ['موطأ مالك', 'حديث · ملف محلي', 'data/ara-malik.json', 'hadith']
+  ['صحيح البخاري', 'حديث · ملف محلي', 'data/previews/ara-bukhari.json', 'hadith'],
+  ['صحيح مسلم', 'حديث · ملف محلي', 'data/previews/ara-muslim.json', 'hadith'],
+  ['جامع الترمذي', 'حديث · ملف محلي', 'data/previews/ara-tirmidhi.json', 'hadith'],
+  ['سنن أبي داود', 'حديث · ملف محلي', 'data/previews/ara-abudawud.json', 'hadith'],
+  ['سنن النسائي', 'حديث · ملف محلي', 'data/previews/ara-nasai.json', 'hadith'],
+  ['سنن ابن ماجه', 'حديث · ملف محلي', 'data/previews/ara-ibnmajah.json', 'hadith'],
+  ['موطأ مالك', 'حديث · ملف محلي', 'data/previews/ara-malik.json', 'hadith']
 ];
 let sourceCatalog = localCollections;
 let archiveLoaded = false;
@@ -131,7 +131,7 @@ function catalog() {
   $('#catalog-search').oninput = e => { state.q = e.target.value; catalog(); };
   $('#catalog-clear').onclick = () => { state.q = ''; catalog(); };
   $$('.read-source').forEach(b => b.onclick = () => openSource(Number(b.dataset.source)));
-  if (!archiveLoaded) loadArchiveCatalog();
+  // الفهرس محلي؛ لا ننتظر شبكة أو سجلات خارجية عند فتحه.
 }
 async function loadArchiveCatalog() {
   archiveLoaded = true;

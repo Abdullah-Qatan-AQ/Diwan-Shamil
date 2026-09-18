@@ -1,4 +1,4 @@
-const CACHE='diwan-v9';
+const CACHE='diwan-v10';
 const ASSETS=['./','./index.html','./styles.css','./app.js?v=3','./manifest.json'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
