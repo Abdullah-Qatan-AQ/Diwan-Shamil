@@ -66,7 +66,8 @@ const realSources = [
 ];
 const classicWorks = ['صحيح البخاري','صحيح مسلم','سنن أبي داود','سنن الترمذي','سنن النسائي','سنن ابن ماجه','موطأ مالك','مسند أحمد','الأدب المفرد','رياض الصالحين','الأربعون النووية','بلوغ المرام','عمدة الأحكام','فتح الباري','شرح النووي على مسلم','عون المعبود','تحفة الأحوذي','نيل الأوطار','سبل السلام','تفسير الطبري','تفسير ابن كثير','تفسير القرطبي','تفسير البغوي','تفسير الجلالين','تفسير السعدي','تفسير التحرير والتنوير','أسباب النزول','الناسخ والمنسوخ','علوم القرآن','إعجاز القرآن','السيرة الحلبية','زاد المعاد','فقه السيرة','الرحيق المختوم','دلائل النبوة','الشمائل المحمدية','الشفا بتعريف حقوق المصطفى','البداية والنهاية','الكامل في التاريخ','تاريخ الأمم والملوك','تاريخ ابن خلدون','الطبقات الكبرى','أسد الغابة','الإصابة في تمييز الصحابة','سير أعلام النبلاء','حلية الأولياء','صفة الصفوة','البخلاء','الحيوان','البيان والتبيين','الكامل في اللغة والأدب','العقد الفريد','عيون الأخبار','الأغاني','مقامات الحريري','مقامات بديع الزمان','كليلة ودمنة','نهج البلاغة','رسائل الجاحظ','الأمالي','زهر الآداب','صبح الأعشى','خزانة الأدب','لسان العرب','تاج العروس','معجم مقاييس اللغة','الصحاح','العين','جمهرة اللغة','تهذيب اللغة','المخصص','الخصائص','دلائل الإعجاز','أسرار البلاغة','الكتاب لسيبويه','مغني اللبيب','ألفية ابن مالك','شرح ابن عقيل','المعلقات السبع','ديوان امرئ القيس','ديوان طرفة بن العبد','ديوان زهير بن أبي سلمى','ديوان لبيد بن ربيعة','ديوان عنترة بن شداد','ديوان النابغة الذبياني','ديوان الأعشى','ديوان جرير','ديوان الفرزدق','ديوان الأخطل','ديوان ذي الرمة','ديوان أبي نواس','ديوان أبي تمام','ديوان البحتري','ديوان المتنبي','ديوان المعري','ديوان ابن زيدون','ديوان ابن الفارض','ديوان البوصيري','الشوقيات','ديوان حافظ إبراهيم','ديوان إيليا أبو ماضي','الأعمال الشعرية الكاملة','الأيام','حي بن يقظان','رسالة الغفران','طوق الحمامة','الأدب الكبير','الأدب الصغير','كليلة ودمنة — ابن المقفع','رسالة التوابع والزوابع','حي بن يقظان — ابن طفيل','مقدمة ابن خلدون','رحلة ابن بطوطة','رحلة ابن جبير','خطط المقريزي','فتوح البلدان','مروج الذهب','المنتظم في تاريخ الملوك والأمم','الكامل في التاريخ — ابن الأثير','المواعظ والاعتبار','المنتقى من أخبار المصطفى','مشاهير علماء الأمصار','معرفة الصحابة','الاستيعاب في معرفة الأصحاب','الطبقات الصغير','الجرح والتعديل','ميزان الاعتدال','تهذيب الكمال','الكاشف','تذكرة الحفاظ','طبقات الشافعية','طبقات الحنابلة','طبقات الصوفية','إحياء علوم الدين','مدارج السالكين','الوابل الصيب','الحكم العطائية','الرسالة القشيرية','قوت القلوب','حلية الأولياء — أبو نعيم','الفتوحات المكية','فصوص الحكم','الأحكام السلطانية','المحلى','المغني','المجموع شرح المهذب','بدائع الصنائع','المبسوط','المدونة','بداية المجتهد','زاد المستقنع','كشاف القناع','روضة الطالبين','الموسوعة الفقهية','معجم البلدان','معجم ما استعجم','مراصد الاطلاع','الروض المعطار','الاشتقاق','وفيات الأعيان','إنباه الرواة','معجم الأدباء','يتيمة الدهر','خريدة القصر','الذخيرة في محاسن أهل الجزيرة','نفح الطيب','العمدة في محاسن الشعر','نقد الشعر','طبقات فحول الشعراء','الشعر والشعراء','العقد الفريد — ابن عبد ربه'];
 const classicSources = classicWorks.map(title => [title, 'كتاب تراثي', `https://archive.org/advancedsearch.php?q=${encodeURIComponent(title)}&fl%5B%5D=title&fl%5B%5D=description&fl%5B%5D=identifier&rows=5&output=json`]);
-const sourceCatalog = [...realSources, ...classicSources].slice(0, 200);
+let sourceCatalog = [...realSources];
+let archiveLoaded = false;
 
 const state = { view: 'home', q: '', surahs: [], selectedSurah: 1, font: 24, online: navigator.onLine };
 const savedKey = 'diwan-bookmarks';
@@ -120,6 +121,16 @@ function catalog() {
   $('#catalog-search').oninput = e => { state.q = e.target.value; catalog(); };
   $('#catalog-clear').onclick = () => { state.q = ''; catalog(); };
   $$('.read-source').forEach(b => b.onclick = () => openSource(Number(b.dataset.source)));
+  if (!archiveLoaded) loadArchiveCatalog();
+}
+async function loadArchiveCatalog() {
+  archiveLoaded = true;
+  try {
+    const endpoint = 'https://archive.org/advancedsearch.php?q=language%3Aara%20AND%20mediatype%3Atexts&fl%5B%5D=title&fl%5B%5D=identifier&fl%5B%5D=description&rows=200&page=1&output=json';
+    const response = await fetch(endpoint); const data = await response.json();
+    const rows = (data?.response?.docs || []).filter(x => x.identifier && x.title).map(x => [x.title, 'نص عربي متاح', `https://archive.org/metadata/${x.identifier}`, x.identifier]);
+    const seen = new Set(sourceCatalog.map(x => x[0])); sourceCatalog = [...sourceCatalog, ...rows.filter(x => !seen.has(x[0]))].slice(0, 200); render();
+  } catch { archiveLoaded = false; }
 }
 async function openSource(index) {
   const source = sourceCatalog[index];
@@ -128,11 +139,22 @@ async function openSource(index) {
   try {
     const response = await fetch(source[2]);
     const data = await response.json();
+    if (source[3]) {
+      const files = data.files || [];
+      const textFile = files.find(f => /(_djvu\.txt|\.txt)$/i.test(f.name) && !/meta|md5|scandata/i.test(f.name));
+      if (!textFile) throw new Error('no text file');
+      const textResponse = await fetch(`https://archive.org/download/${source[3]}/${encodeURIComponent(textFile.name)}`);
+      const text = await textResponse.text();
+      const cleanText = text.replace(/\u0000/g, '').slice(0, 120000);
+      $('.source-reader').innerHTML = `<div class="result-intro">${source[0]}</div><pre class="source-text">${escapeHtml(cleanText)}</pre><div class="inside-note">هذا النص جُلب من ملف القراءة المتاح في المصدر وعُرض داخل الديوان.</div>`;
+      return;
+    }
     const docs = data?.response?.docs || data?.docs || Object.values(data?.query?.pages || {}).map(x => ({title:x.title, identifier:x.pageid})) || [];
     const clean = docs.map(d => ({title: String(d.title || d.name || 'عنوان من الفهرس').replace(/<[^>]+>/g,''), description: typeof d.description === 'string' ? d.description.replace(/<[^>]+>/g,'').slice(0,220) : 'سجل موثق في الفهرس الرقمي'}));
     $('.source-reader').innerHTML = clean.length ? `<div class="result-intro">نتائج مقروءة من ${source[0]}</div>${clean.map(d => `<div class="result-row"><div><b>${d.title}</b><small>${d.description}</small></div><span>مفهرس</span></div>`).join('')}<div class="inside-note">تم عرض البيانات داخل الديوان. لا يتم فتح المصدر الخارجي تلقائياً.</div>` : '<div class="empty-state"><b>المصدر لم يرجع نتائج قابلة للقراءة</b><p>لم نعرض الكود الخام ولم ننقلك خارج الديوان. جرّب مصدراً آخر من الفهرس.</p></div>';
   } catch { $('.source-reader').innerHTML = '<div class="empty-state"><b>تعذر جلب هذا المصدر داخل الديوان</b><p>المصدر خارجي ولا يسمح بالاتصال المباشر من المتصفح. بقيت بياناته مفهرسة دون عرض بيانات وهمية.</p></div>'; }
 }
+function escapeHtml(value) { return value.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 function downloadCurrent() { const ayahs = $$('.ayah').map(a => a.innerText).join('\n'); if (!ayahs) return; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ayahs], {type:'text/plain;charset=utf-8'})); a.download = `سورة-${state.selectedSurah}-من-الديوان.txt`; a.click(); }
 function bindCommon() { $$('[data-view]').forEach(b => b.onclick = e => { e.preventDefault(); state.view = b.dataset.view; render(); }); $('.brand').onclick = e => { e.preventDefault(); state.view = 'home'; render(); }; }
 function render() { document.documentElement.style.setProperty('--ayah-size', `${state.font}px`); state.view === 'reader' ? reader() : state.view === 'catalog' ? catalog() : home(); }
