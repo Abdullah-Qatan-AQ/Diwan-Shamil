@@ -110,13 +110,30 @@ function navigate(view) {
   }
   render();
 }
+function resetTransientViews() {
+  state.hadithData = null;
+  state.hadithLoading = false;
+  state.poetryIndex = null;
+  state.poetryParts = [];
+  state.poetryLoading = false;
+  state.poetryReady = false;
+}
 function goBack() {
   const previous = state.routeHistory.pop();
-  state.view = previous && previous !== state.view && previous !== "settings" ? previous : "home";
+  const destination = previous && previous !== state.view && previous !== "settings" ? previous : "home";
   state.renderToken += 1;
-  state.hadithData = state.view === "hadith" ? state.hadithData : null;
-  state.hadithLoading = false;
-  if (state.view !== "poetry") {
+  state.view = destination;
+  if (destination === "home") {
+    state.routeHistory = [];
+    resetTransientViews();
+    applyReadingStyle();
+    document.documentElement.dataset.theme = settings.theme;
+    // Render the destination directly; do not route through a stale async view.
+    home();
+    return;
+  }
+  state.hadithData = destination === "hadith" ? state.hadithData : null;
+  if (destination !== "poetry") {
     state.poetryIndex = null;
     state.poetryParts = [];
     state.poetryLoading = false;
@@ -643,8 +660,8 @@ async function downloadLibrary() {
   const urls = [
     "./",
     "./index.html",
-    "./styles.css?v=19",
-    "./app.js?v=19",
+    "./styles.css?v=20",
+    "./app.js?v=20",
     "./manifest.json",
     "./data/quran.json",
     "./data/surah-meta.json",
