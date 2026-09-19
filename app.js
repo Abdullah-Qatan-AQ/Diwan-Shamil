@@ -1,191 +1,24 @@
-const $ = (s, root = document) => root.querySelector(s);
-const $$ = (s, root = document) => [...root.querySelectorAll(s)];
-
-const chapters = [
-  { id: 'quran', icon: '۞', title: 'القرآن الكريم', subtitle: 'تلاوة وتدبر', description: 'السور والآيات مع قراءة واضحة وجلب مباشر للمحتوى.' },
-  { id: 'books', icon: '▤', title: 'الكتب التراثية', subtitle: 'مكتبة مفتوحة', description: 'كتب عربية متاحة عبر الفهارس الرقمية العامة.' },
-  { id: 'hadith', icon: 'ﷺ', title: 'الحديث الشريف', subtitle: 'أمهات الكتب', description: 'أبواب الحديث ومصادره وشروحه الموثقة.' },
-  { id: 'seerah', icon: '✦', title: 'السيرة النبوية', subtitle: 'أحداث ومواقف', description: 'مسارات السيرة والغزوات ومصادرها.' },
-  { id: 'poetry', icon: '❧', title: 'الشعر العربي', subtitle: 'دواوين مختارة', description: 'دواوين الشعر العربي عبر العصور.' },
-  { id: 'manuscripts', icon: '⌘', title: 'المخطوطات', subtitle: 'ذاكرة مكتوبة', description: 'فهرسة المخطوطات والمجموعات الرقمية.' }
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const collections=[
+ ['القرآن الكريم','قرآن','data/quran.json','quran'],
+ ['صحيح البخاري','حديث','data/previews/ara-bukhari.json','hadith'],['صحيح مسلم','حديث','data/previews/ara-muslim.json','hadith'],['جامع الترمذي','حديث','data/previews/ara-tirmidhi.json','hadith'],['سنن أبي داود','حديث','data/previews/ara-abudawud.json','hadith'],['سنن النسائي','حديث','data/previews/ara-nasai.json','hadith'],['سنن ابن ماجه','حديث','data/previews/ara-ibnmajah.json','hadith'],['موطأ مالك','حديث','data/previews/ara-malik.json','hadith'],
+ ['موسوعة الشعر العربي','شعر','data/poetry/index.json','poetry']
 ];
-
-const realSources = [
-  ['القرآن الكريم — النص والتلاوة', 'القرآن', 'https://api.alquran.cloud/v1/surah/1/ar.alafasy'],
-  ['Open Library — كتب عربية', 'كتب', 'https://openlibrary.org/search.json?language=ara&limit=20&q=arabic'],
-  ['Internet Archive — Arabic Books', 'كتب', 'https://archive.org/advancedsearch.php?q=language%3A%22Arabic%22&fl%5B%5D=title&fl%5B%5D=identifier&rows=20&page=1&output=json'],
-  ['Library of Congress — Arabic Collections', 'مخطوطات', 'https://www.loc.gov/books/?fo=json&searchTerms=Arabic&c=100'],
-  ['WorldCat — Arabic Literature', 'فهرسة', 'https://search.worldcat.org/search?q=kw%3AArabic+literature'],
-  ['Wikimedia Commons — Arabic Manuscripts', 'مخطوطات', 'https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=Arabic+manuscript&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url&format=json&origin=*'],
-  ['مكتبة الشاملة', 'تراث', 'https://shamela.ws/'],
-  ['المكتبة الوقفية', 'تراث', 'https://waqfeya.net/'],
-  ['مؤسسة هنداوي', 'أدب', 'https://www.hindawi.org/'],
-  ['موسوعة الشعر العربي', 'شعر', 'https://www.aldiwan.net/'],
-  ['موسوعة الحديث', 'حديث', 'https://sunnah.com/'],
-  ['الدرر السنية', 'حديث', 'https://dorar.net/'],
-  ['أرشيف الإنترنت', 'أرشيف', 'https://archive.org/details/texts?and%5B%5D=language%3A%22Arabic%22'],
-  ['Google Books — Arabic', 'كتب', 'https://books.google.com/books?q=Arabic'],
-  ['Digital Public Library of America', 'مكتبات', 'https://dp.la/search?q=Arabic'],
-  ['مكتبة قطر الرقمية', 'مخطوطات', 'https://www.qdl.qa/'],
-  ['مكتبة الإسكندرية', 'مكتبات', 'https://www.bibalex.org/'],
-  ['مركز الملك فيصل', 'مخطوطات', 'https://www.kfcris.com/'],
-  ['مكتبة الملك عبدالعزيز', 'مكتبات', 'https://www.kapl.org.sa/'],
-  ['مكتبة الأزهر', 'مكتبات', 'https://www.azhar.eg/'],
-  ['مكتبة المدينة المنورة', 'مكتبات', 'https://www.maktabat.org/'],
-  ['UNESCO Digital Library', 'مكتبات', 'https://unesdoc.unesco.org/'],
-  ['HathiTrust Digital Library', 'مكتبات', 'https://www.hathitrust.org/'],
-  ['Project Gutenberg', 'كتب', 'https://www.gutenberg.org/'],
-  ['Wikisource Arabic', 'كتب', 'https://ar.wikisource.org/'],
-  ['ويكي مصدر — القرآن', 'قرآن', 'https://ar.wikisource.org/wiki/القرآن'],
-  ['معجم المعاني', 'لغة', 'https://www.almaany.com/'],
-  ['لسان العرب', 'لغة', 'https://www.baheth.info/'],
-  ['الموسوعة العربية', 'معارف', 'https://arab-ency.com.sy/'],
-  ['الموسوعة الفقهية الكويتية', 'فقه', 'https://islam.gov.kw/'],
-  ['إسلام ويب', 'إسلاميات', 'https://www.islamweb.net/'],
-  ['طريق الإسلام', 'إسلاميات', 'https://ar.islamway.net/'],
-  ['شبكة الألوكة', 'إسلاميات', 'https://www.alukah.net/'],
-  ['مركز تفسير', 'تفسير', 'https://tafsir.net/'],
-  ['موقع التفسير', 'تفسير', 'https://www.altafsir.com/'],
-  ['دار الإفتاء المصرية', 'فقه', 'https://www.dar-alifta.org/'],
-  ['موسوعة السيرة النبوية', 'سيرة', 'https://islamhouse.com/ar/category/'],
-  ['موسوعة التاريخ الإسلامي', 'تاريخ', 'https://tarajm.com/'],
-  ['سير أعلام النبلاء', 'تراجم', 'https://www.islamweb.net/ar/library/'],
-  ['ديوان المتنبي', 'شعر', 'https://www.aldiwan.net/cat-poets-almutanabbi'],
-  ['ديوان أبو تمام', 'شعر', 'https://www.aldiwan.net/cat-poets-abutammam'],
-  ['ديوان أحمد شوقي', 'شعر', 'https://www.aldiwan.net/cat-poets-ahmedshawqi'],
-  ['المعلقات السبع', 'شعر', 'https://ar.wikisource.org/wiki/المعلقات'],
-  ['الأغاني — أبو الفرج الأصفهاني', 'أدب', 'https://archive.org/search.php?query=الأغاني%20الأصفهاني'],
-  ['كليلة ودمنة', 'أدب', 'https://archive.org/search.php?query=كليلة%20ودمنة%20عربي'],
-  ['مقامات الحريري', 'أدب', 'https://archive.org/search.php?query=مقامات%20الحريري'],
-  ['العقد الفريد', 'أدب', 'https://archive.org/search.php?query=العقد%20الفريد'],
-  ['البيان والتبيين', 'أدب', 'https://archive.org/search.php?query=البيان%20والتبيين'],
-  ['البداية والنهاية', 'تاريخ', 'https://archive.org/search.php?query=البداية%20والنهاية%20ابن%20كثير'],
-  ['تاريخ الطبري', 'تاريخ', 'https://archive.org/search.php?query=تاريخ%20الطبري'],
-  ['سيرة ابن هشام', 'سيرة', 'https://archive.org/search.php?query=سيرة%20ابن%20هشام'],
-  ['الرحيق المختوم', 'سيرة', 'https://archive.org/search.php?query=الرحيق%20المختوم']
-];
-const classicWorks = ['صحيح البخاري','صحيح مسلم','سنن أبي داود','سنن الترمذي','سنن النسائي','سنن ابن ماجه','موطأ مالك','مسند أحمد','الأدب المفرد','رياض الصالحين','الأربعون النووية','بلوغ المرام','عمدة الأحكام','فتح الباري','شرح النووي على مسلم','عون المعبود','تحفة الأحوذي','نيل الأوطار','سبل السلام','تفسير الطبري','تفسير ابن كثير','تفسير القرطبي','تفسير البغوي','تفسير الجلالين','تفسير السعدي','تفسير التحرير والتنوير','أسباب النزول','الناسخ والمنسوخ','علوم القرآن','إعجاز القرآن','السيرة الحلبية','زاد المعاد','فقه السيرة','الرحيق المختوم','دلائل النبوة','الشمائل المحمدية','الشفا بتعريف حقوق المصطفى','البداية والنهاية','الكامل في التاريخ','تاريخ الأمم والملوك','تاريخ ابن خلدون','الطبقات الكبرى','أسد الغابة','الإصابة في تمييز الصحابة','سير أعلام النبلاء','حلية الأولياء','صفة الصفوة','البخلاء','الحيوان','البيان والتبيين','الكامل في اللغة والأدب','العقد الفريد','عيون الأخبار','الأغاني','مقامات الحريري','مقامات بديع الزمان','كليلة ودمنة','نهج البلاغة','رسائل الجاحظ','الأمالي','زهر الآداب','صبح الأعشى','خزانة الأدب','لسان العرب','تاج العروس','معجم مقاييس اللغة','الصحاح','العين','جمهرة اللغة','تهذيب اللغة','المخصص','الخصائص','دلائل الإعجاز','أسرار البلاغة','الكتاب لسيبويه','مغني اللبيب','ألفية ابن مالك','شرح ابن عقيل','المعلقات السبع','ديوان امرئ القيس','ديوان طرفة بن العبد','ديوان زهير بن أبي سلمى','ديوان لبيد بن ربيعة','ديوان عنترة بن شداد','ديوان النابغة الذبياني','ديوان الأعشى','ديوان جرير','ديوان الفرزدق','ديوان الأخطل','ديوان ذي الرمة','ديوان أبي نواس','ديوان أبي تمام','ديوان البحتري','ديوان المتنبي','ديوان المعري','ديوان ابن زيدون','ديوان ابن الفارض','ديوان البوصيري','الشوقيات','ديوان حافظ إبراهيم','ديوان إيليا أبو ماضي','الأعمال الشعرية الكاملة','الأيام','حي بن يقظان','رسالة الغفران','طوق الحمامة','الأدب الكبير','الأدب الصغير','كليلة ودمنة — ابن المقفع','رسالة التوابع والزوابع','حي بن يقظان — ابن طفيل','مقدمة ابن خلدون','رحلة ابن بطوطة','رحلة ابن جبير','خطط المقريزي','فتوح البلدان','مروج الذهب','المنتظم في تاريخ الملوك والأمم','الكامل في التاريخ — ابن الأثير','المواعظ والاعتبار','المنتقى من أخبار المصطفى','مشاهير علماء الأمصار','معرفة الصحابة','الاستيعاب في معرفة الأصحاب','الطبقات الصغير','الجرح والتعديل','ميزان الاعتدال','تهذيب الكمال','الكاشف','تذكرة الحفاظ','طبقات الشافعية','طبقات الحنابلة','طبقات الصوفية','إحياء علوم الدين','مدارج السالكين','الوابل الصيب','الحكم العطائية','الرسالة القشيرية','قوت القلوب','حلية الأولياء — أبو نعيم','الفتوحات المكية','فصوص الحكم','الأحكام السلطانية','المحلى','المغني','المجموع شرح المهذب','بدائع الصنائع','المبسوط','المدونة','بداية المجتهد','زاد المستقنع','كشاف القناع','روضة الطالبين','الموسوعة الفقهية','معجم البلدان','معجم ما استعجم','مراصد الاطلاع','الروض المعطار','الاشتقاق','وفيات الأعيان','إنباه الرواة','معجم الأدباء','يتيمة الدهر','خريدة القصر','الذخيرة في محاسن أهل الجزيرة','نفح الطيب','العمدة في محاسن الشعر','نقد الشعر','طبقات فحول الشعراء','الشعر والشعراء','العقد الفريد — ابن عبد ربه'];
-const classicSources = classicWorks.map(title => [title, 'كتاب تراثي', `https://archive.org/advancedsearch.php?q=${encodeURIComponent(title)}&fl%5B%5D=title&fl%5B%5D=description&fl%5B%5D=identifier&rows=5&output=json`]);
-const localCollections = [
-  ['القرآن الكريم كاملاً', 'قرآن · ملف محلي', 'data/quran.json', 'quran'],
-  ['صحيح البخاري', 'حديث · ملف محلي', 'data/previews/ara-bukhari.json', 'hadith'],
-  ['صحيح مسلم', 'حديث · ملف محلي', 'data/previews/ara-muslim.json', 'hadith'],
-  ['جامع الترمذي', 'حديث · ملف محلي', 'data/previews/ara-tirmidhi.json', 'hadith'],
-  ['سنن أبي داود', 'حديث · ملف محلي', 'data/previews/ara-abudawud.json', 'hadith'],
-  ['سنن النسائي', 'حديث · ملف محلي', 'data/previews/ara-nasai.json', 'hadith'],
-  ['سنن ابن ماجه', 'حديث · ملف محلي', 'data/previews/ara-ibnmajah.json', 'hadith'],
-  ['موطأ مالك', 'حديث · ملف محلي', 'data/previews/ara-malik.json', 'hadith'],
-  ['قصص الأنبياء والقصص الإسلامية', 'قصص · ملف محلي', 'data/stories.json', 'stories'],
-  ['موسوعة الشعر العربي · 75 ألف قصيدة', 'شعر · ODbL', 'data/poetry/index.json', 'poetry']
-];
-let sourceCatalog = localCollections;
-let archiveLoaded = false;
-
-const state = { view: 'home', q: '', surahs: [], selectedSurah: 1, font: 24, online: navigator.onLine };
-const savedKey = 'diwan-bookmarks';
-
-function layout(content) {
-  document.body.innerHTML = `<div class="app-shell"><header class="topbar"><a class="brand" href="#"><span class="brand-mark">۞</span><span><b>الديوان الشامل</b><small>مكتبة الوحي والتراث</small></span></a><nav><button data-view="home">الرئيسية</button><button data-view="reader">القارئ</button><button data-view="catalog">الفهرس</button></nav><div class="top-actions"><span class="status"><i></i>${state.online ? 'متصل' : 'وضع عدم الاتصال'}</span><button class="search-trigger" data-view="catalog">⌕ <span>بحث في الديوان</span></button></div></header><main>${content}</main><footer><span>الديوان الشامل</span><span>محتوى يُجلب من مصادره الأصلية · لا نعيد نشر الكتب المحمية</span><span>© 2026</span></footer></div>`;
-  bindCommon();
-}
-function home() {
-  layout(`<section class="hero"><div class="hero-copy"><span class="eyebrow">مكتبة عربية مفتوحة</span><h1>اقرأ من <em>ينابيع المعرفة</em><br>واكتب أثرك.</h1><p>بوابة واحدة تجمع القرآن والحديث والسيرة والشعر والكتب والمخطوطات، مع عرض المحتوى من مصادره الأصلية.</p><div class="hero-search"><span>⌕</span><input id="home-search" placeholder="ابحث عن كتاب، سورة، شاعر أو موضوع"><button id="home-search-btn">بحث</button></div><div class="hero-note"><span>✦</span> يضم الفهرس ٢٠٠ مصدر رقمي قابل للبحث والفتح</div></div><div class="quote-card"><div class="ornament">❧</div><p>وَقُلْ رَبِّ زِدْنِي عِلْمًا</p><small>سورة طه · آية ١١٤</small><div class="quote-rule"></div><span>وردك اليومي</span><strong>دقيقة من القراءة تصنع<br>يوماً أكثر سكينة</strong></div></section><section class="section-head"><div><span class="eyebrow">استكشف أبواب الديوان</span><h2>ماذا تقرأ اليوم؟</h2></div><button class="text-btn" data-view="catalog">عرض كل المصادر ←</button></section><div class="chapter-grid">${chapters.map((c, i) => `<button class="chapter-card c${i}" data-chapter="${c.id}"><span class="chapter-icon">${c.icon}</span><span class="chapter-meta">${c.subtitle}</span><h3>${c.title}</h3><p>${c.description}</p><span class="arrow">←</span></button>`).join('')}</div><section class="feature-strip"><div><span class="eyebrow">يبدأ من هنا</span><h2>اقرأ القرآن الكريم</h2><p>اختر سورة، تحرك بين الآيات، واضبط حجم الخط بما يريح عينك.</p></div><button class="gold-btn" data-chapter="quran">فتح القارئ <span>←</span></button></section>`, 'home');
-  $('#home-search').oninput = e => state.q = e.target.value;
-  $('#home-search-btn').onclick = () => { state.view = 'catalog'; render(); };
-  $$('[data-chapter]').forEach(b => b.onclick = () => { state.view = b.dataset.chapter === 'quran' ? 'reader' : 'catalog'; state.q = b.dataset.chapter === 'quran' ? '' : (chapters.find(c => c.id === b.dataset.chapter)?.title || ''); render(); });
-}
-function reader() {
-  const surah = state.surahs.find(s => s.number === state.selectedSurah);
-  layout(`<div class="page-heading"><div><span class="eyebrow">المصحف الشريف</span><h1>قارئ القرآن</h1></div><div class="reader-status">${state.online ? 'يتم تحديث النص من المصدر' : 'النص المحفوظ متاح دون اتصال'}</div></div><div class="reader-layout"><aside class="surah-nav"><div class="aside-title"><b>السور</b><span>${state.surahs.length || 114}</span></div><input id="surah-filter" placeholder="ابحث عن سورة"><div id="surah-list" class="surah-list"><div class="loading-line"></div><div class="loading-line"></div><div class="loading-line"></div></div></aside><article class="quran-reader"><div class="reader-top"><div><span class="eyebrow">${surah ? `السورة ${surah.number}` : 'جاري التحميل'}</span><h2>${surah?.name || 'القرآن الكريم'}</h2><small>${surah?.englishName || 'النص العربي بالرسم العثماني'}</small></div><div class="reader-tools"><button id="font-down">A−</button><button id="font-up">A+</button><button id="bookmark">☆ حفظ</button><button id="download">⇩ تنزيل</button></div></div><div id="ayahs" class="ayahs"><div class="reader-loading">جاري جلب الآيات من المصدر…</div></div></article></div>`);
-  loadSurahs();
-  $('#surah-filter').oninput = e => drawSurahs(e.target.value);
-  $('#font-down').onclick = () => { state.font = Math.max(18, state.font - 2); document.documentElement.style.setProperty('--ayah-size', `${state.font}px`); };
-  $('#font-up').onclick = () => { state.font = Math.min(36, state.font + 2); document.documentElement.style.setProperty('--ayah-size', `${state.font}px`); };
-  $('#bookmark').onclick = () => { localStorage.setItem(savedKey, String(state.selectedSurah)); $('#bookmark').textContent = '★ محفوظ'; };
-  $('#download').onclick = downloadCurrent;
-}
-async function loadSurahs() {
-  try {
-    const cached = localStorage.getItem('diwan-surahs');
-    state.surahs = cached ? JSON.parse(cached) : [];
-    if (!state.surahs.length) { const r = await fetch('https://api.alquran.cloud/v1/surah'); const j = await r.json(); state.surahs = j.data; localStorage.setItem('diwan-surahs', JSON.stringify(state.surahs)); }
-    drawSurahs(); loadAyahs();
-  } catch { state.surahs = state.surahs.length ? state.surahs : []; drawSurahs(); loadAyahs(); }
-}
-function drawSurahs(filter = '') {
-  const list = $('#surah-list'); if (!list) return;
-  const rows = state.surahs.filter(s => `${s.name} ${s.englishName}`.includes(filter));
-  list.innerHTML = rows.map(s => `<button class="surah-row ${s.number === state.selectedSurah ? 'active' : ''}" data-surah="${s.number}"><span>${String(s.number).padStart(2, '٠')}</span><b>${s.name}</b><small>${s.englishName}</small></button>`).join('') || '<p class="muted">لا توجد نتائج</p>';
-  $$('.surah-row').forEach(b => b.onclick = () => { state.selectedSurah = Number(b.dataset.surah); render(); });
-}
-async function loadAyahs() {
-  const box = $('#ayahs'); if (!box) return;
-  try {
-    const key = `diwan-surah-${state.selectedSurah}`; let data = JSON.parse(localStorage.getItem(key) || 'null');
-    if (!data) { const local = await fetch('data/quran.json'); const all = await local.json(); data = { ayahs: all[String(state.selectedSurah)].map(a => ({text:a.text, numberInSurah:a.verse})) }; localStorage.setItem(key, JSON.stringify(data)); }
-    if (!data) throw new Error('offline');
-    box.innerHTML = `<div class="basmala">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>` + data.ayahs.map(a => `<p class="ayah"><span>${a.text}</span><b>${a.numberInSurah}</b></p>`).join('');
-  } catch { box.innerHTML = '<div class="empty-state"><b>تعذر جلب النص حالياً</b><p>تحقق من الاتصال بالإنترنت ثم أعد المحاولة. لا نضع نصاً وهمياً مكان النص الأصلي.</p><button class="gold-btn" onclick="render()">إعادة المحاولة</button></div>'; }
-}
-function catalog() {
-  const q = state.q.trim().toLowerCase(); const results = sourceCatalog.filter(s => !q || s.join(' ').toLowerCase().includes(q));
-  layout(`<div class="page-heading"><div><span class="eyebrow">خزانة المصادر</span><h1>الفهرس العربي</h1><p>مصادر فعلية للقراءة والبحث، لا بيانات مولّدة.</p></div><div class="catalog-count"><b>${sourceCatalog.length}</b><span>مصدر مفهرس</span></div></div><div class="catalog-toolbar"><div class="catalog-search"><span>⌕</span><input id="catalog-search" value="${state.q}" placeholder="ابحث باسم المصدر أو المجال"><button id="catalog-clear">مسح</button></div><div class="filters"><button class="filter active">الكل</button><button class="filter">قرآن وحديث</button><button class="filter">كتب وأدب</button><button class="filter">مخطوطات</button></div></div><div class="source-grid">${results.map((s, i) => `<article class="source-card"><div class="source-number">${String(i + 1).padStart(2, '٠')}</div><div><span class="source-type">${s[1]}</span><h3>${s[0]}</h3><button class="read-source" data-source="${sourceCatalog.indexOf(s)}">عرض المحتوى داخل الديوان <span>←</span></button></div></article>`).join('')}</div>${!results.length ? '<div class="empty-state"><b>لا توجد نتائج مطابقة</b><p>جرّب كلمة أخرى مثل: قرآن، شعر، مخطوطات.</p></div>' : ''}`);
-  $('#catalog-search').oninput = e => { state.q = e.target.value; catalog(); };
-  $('#catalog-clear').onclick = () => { state.q = ''; catalog(); };
-  $$('.read-source').forEach(b => b.onclick = () => openSource(Number(b.dataset.source)));
-  // الفهرس محلي؛ لا ننتظر شبكة أو سجلات خارجية عند فتحه.
-}
-async function loadArchiveCatalog() {
-  archiveLoaded = true;
-  try {
-    const endpoint = 'https://archive.org/advancedsearch.php?q=language%3Aara%20AND%20mediatype%3Atexts%20AND%20format%3A%22DjVuTXT%22&fl%5B%5D=title&fl%5B%5D=identifier&fl%5B%5D=description&rows=200&page=1&output=json';
-    const response = await fetch(endpoint); const data = await response.json();
-    const rows = (data?.response?.docs || []).filter(x => x.identifier && x.title).map(x => [x.title, 'نص عربي متاح', `https://archive.org/metadata/${x.identifier}`, x.identifier]);
-    const seen = new Set(sourceCatalog.map(x => x[0])); sourceCatalog = [...sourceCatalog, ...rows.filter(x => !seen.has(x[0]))].slice(0, 200); render();
-  } catch { archiveLoaded = false; }
-}
-async function openSource(index) {
-  const source = sourceCatalog[index];
-  layout(`<div class="page-heading"><div><span class="eyebrow">قراءة داخل الديوان</span><h1>${source[0]}</h1><p>${source[1]} · يتم جلب النتائج من المصدر الآن</p></div><button class="gold-btn" id="back-catalog">العودة للفهرس</button></div><article class="source-reader"><div class="reader-loading">جاري جلب المحتوى وعرضه هنا…</div></article>`);
-  $('#back-catalog').onclick = () => catalog();
-  try {
-    const response = await fetch(source[2]);
-    const data = await response.json();
-    if (source[3] === 'quran') { state.view = 'reader'; render(); return; }
-    if (source[3] === 'hadith') {
-      const hadiths = Array.isArray(data.hadiths) ? data.hadiths : [];
-      $('.source-reader').innerHTML = `<div class="result-intro">${source[0]} · ${hadiths.length.toLocaleString('ar-EG')} حديث محفوظ محلياً</div><div class="hadith-list">${hadiths.slice(0, 120).map((h, i) => `<article class="hadith-item"><b>حديث ${i + 1}</b><p>${escapeHtml(h.text || h.hadithEnglish || '')}</p></article>`).join('')}</div><div class="inside-note">المحتوى مقروء من ملف JSON المحلي داخل التطبيق، ولا يحتاج اتصالاً بالإنترنت بعد تنزيل التطبيق.</div>`;
-      return;
-    }
-    if (source[3] === 'stories') {
-      const stories = Array.isArray(data) ? data : [];
-      $('.source-reader').innerHTML = `<div class="result-intro">قصص موثقة ببيانات المصدر · ${stories.length.toLocaleString('ar-EG')} قصص</div><div class="hadith-list">${stories.map(s => `<article class="hadith-item"><b>${escapeHtml(s.category || 'قصة')}</b><p>${escapeHtml(s.title || '')}</p><small>${escapeHtml(s.description || '')}</small><div class="inside-note">المصدر المذكور: ${escapeHtml(s.source || 'غير محدد')} · النص التفصيلي غير مضمن في الملف</div></article>`).join('')}</div>`;
-      return;
-    }
-    if (source[3] === 'poetry') {
-      const index = data || {}; const part = await (await fetch('data/poetry/part-000.json')).json();
-      $('.source-reader').innerHTML = `<div class="result-intro">${escapeHtml(index.title || source[0])} · ${Number(index.count || 0).toLocaleString('ar-EG')} قصيدة</div><div class="hadith-list">${part.slice(0, 120).map(p => `<article class="hadith-item"><b>${escapeHtml(p.poet_name || 'شاعر')} · ${escapeHtml(p.poet_era || '')}</b><p>${escapeHtml(p.poem_title || 'قصيدة')}</p><small>${escapeHtml(p.poem_text || '')}</small></article>`).join('')}</div><div class="inside-note">عُرضت أول ١٢٠ قصيدة من الفهرس المحلي. البيانات موزعة على ${index.parts || 0} ملفات JSON لتجنب تحميل ١١٢MB دفعة واحدة. الترخيص: ODbL، وليس CC0.</div>`;
-      return;
-    }
-    if (source[3]) {
-      const files = data.files || [];
-      const textFile = files.find(f => /(_djvu\.txt|\.txt)$/i.test(f.name) && !/meta|md5|scandata/i.test(f.name));
-      if (!textFile) throw new Error('no text file');
-      const textResponse = await fetch(`https://archive.org/download/${source[3]}/${encodeURIComponent(textFile.name)}`);
-      const text = await textResponse.text();
-      const cleanText = text.replace(/\u0000/g, '').slice(0, 120000);
-      $('.source-reader').innerHTML = `<div class="result-intro">${source[0]}</div><pre class="source-text">${escapeHtml(cleanText)}</pre><div class="inside-note">هذا النص جُلب من ملف القراءة المتاح في المصدر وعُرض داخل الديوان.</div>`;
-      return;
-    }
-    const docs = data?.response?.docs || data?.docs || Object.values(data?.query?.pages || {}).map(x => ({title:x.title, identifier:x.pageid})) || [];
-    const clean = docs.map(d => ({title: String(d.title || d.name || 'عنوان من الفهرس').replace(/<[^>]+>/g,''), description: typeof d.description === 'string' ? d.description.replace(/<[^>]+>/g,'').slice(0,220) : 'سجل موثق في الفهرس الرقمي'}));
-    $('.source-reader').innerHTML = clean.length ? `<div class="result-intro">نتائج مقروءة من ${source[0]}</div>${clean.map(d => `<div class="result-row"><div><b>${d.title}</b><small>${d.description}</small></div><span>مفهرس</span></div>`).join('')}<div class="inside-note">تم عرض البيانات داخل الديوان. لا يتم فتح المصدر الخارجي تلقائياً.</div>` : '<div class="empty-state"><b>المصدر لم يرجع نتائج قابلة للقراءة</b><p>لم نعرض الكود الخام ولم ننقلك خارج الديوان. جرّب مصدراً آخر من الفهرس.</p></div>';
-  } catch { $('.source-reader').innerHTML = '<div class="empty-state"><b>تعذر جلب هذا المصدر داخل الديوان</b><p>المصدر خارجي ولا يسمح بالاتصال المباشر من المتصفح. بقيت بياناته مفهرسة دون عرض بيانات وهمية.</p></div>'; }
-}
-function escapeHtml(value) { return value.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
-function downloadCurrent() { const ayahs = $$('.ayah').map(a => a.innerText).join('\n'); if (!ayahs) return; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ayahs], {type:'text/plain;charset=utf-8'})); a.download = `سورة-${state.selectedSurah}-من-الديوان.txt`; a.click(); }
-function bindCommon() { $$('[data-view]').forEach(b => b.onclick = e => { e.preventDefault(); state.view = b.dataset.view; render(); }); $('.brand').onclick = e => { e.preventDefault(); state.view = 'home'; render(); }; }
-function render() { document.documentElement.style.setProperty('--ayah-size', `${state.font}px`); state.view === 'reader' ? reader() : state.view === 'catalog' ? catalog() : home(); }
-window.addEventListener('online', () => { state.online = true; render(); }); window.addEventListener('offline', () => { state.online = false; render(); });
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+const state={view:'home',font:Number(localStorage.getItem('diwan-font')||24),surahs:[],surah:1,q:'',catalogFilter:'الكل',poetryIndex:null,poetryParts:[],poetryLoaded:0,poetryQuery:'',poetryEra:'الكل',hadithQuery:''};
+function shell(content){document.body.innerHTML=`<div class="app-shell"><header class="topbar"><a class="brand" href="#"><span class="brand-mark">۞</span><b>الديوان الشامل</b></a><nav><button data-view="home">الرئيسية</button><button data-view="reader">القرآن</button><button data-view="catalog">الفهرس</button></nav><button class="top-search" data-view="catalog">⌕ بحث</button></header><main>${content}</main><footer>الديوان الشامل · قراءة هادئة بلا زوائد</footer></div>`;bind();}
+function bind(){$$('[data-view]').forEach(b=>b.onclick=e=>{e.preventDefault();state.view=b.dataset.view;render()});$('.brand')?.addEventListener('click',e=>{e.preventDefault();state.view='home';render()});}
+function home(){shell(`<section class="home"><div class="home-copy"><span class="kicker">الديوان الشامل</span><h1>المعرفة العربية<br><em>في موضعها.</em></h1><p>قرآن، حديث، وشعر عربي في قارئ واحد.</p><div class="quick-search"><input id="quick-q" placeholder="ابحث في الفهرس"><button id="quick-go">بحث</button></div></div><div class="home-mark">۞<small>اقرأ على مهل</small></div></section><section class="home-grid"><button data-view="reader"><b>القرآن الكريم</b><span>السور والآيات</span></button><button data-view="catalog"><b>الحديث الشريف</b><span>الكتب الستة وموطأ مالك</span></button><button data-view="catalog"><b>الشعر العربي</b><span>75,022 قصيدة</span></button></section>`);$('#quick-go').onclick=()=>{state.q=$('#quick-q').value;state.view='catalog';render()};$('#quick-q').onkeydown=e=>{if(e.key==='Enter')$('#quick-go').click()};}
+async function reader(){shell(`<div class="page-head"><div><span class="kicker">المصحف</span><h1>القرآن الكريم</h1></div><div class="reader-actions"><button id="minus">A−</button><button id="plus">A+</button><button id="save">☆ حفظ</button><button id="download">⇩ تنزيل</button></div></div><div class="reader-grid"><aside class="surah-panel"><input id="surah-q" placeholder="ابحث عن سورة"><div id="surahs" class="surahs">جاري التحميل</div></aside><article class="quran-paper"><div class="paper-head"><div><span id="surah-label" class="kicker">السورة</span><h2 id="surah-title">القرآن الكريم</h2></div><input id="ayah-q" class="inline-search" placeholder="بحث في السورة"><div class="font-readout">${state.font}px</div></div><div id="ayahs" class="ayahs">جاري القراءة…</div></article></div>`);$('#minus').onclick=()=>setFont(-2);$('#plus').onclick=()=>setFont(2);$('#download').onclick=downloadQuran;$('#save').onclick=()=>{localStorage.setItem('diwan-saved-surah',state.surah);$('#save').textContent='★ محفوظ'};$('#surah-q').oninput=e=>drawSurahs(e.target.value);$('#ayah-q').oninput=e=>drawAyahs(e.target.value);try{const [qr,mr]=await Promise.all([fetch('data/quran.json'),fetch('data/surah-meta.json')]);const all=await qr.json(),meta=(await mr.json()).data||[];state.surahs=Object.keys(all).map(n=>({number:+n,name:meta[+n-1]?.name||`سورة ${n}`,ayahs:all[n]}));drawSurahs();drawAyahs();}catch{$('#ayahs').textContent='تعذر فتح ملف القرآن المحلي';}}
+function drawSurahs(q=''){const box=$('#surahs');if(!box)return;box.innerHTML=state.surahs.filter(s=>(s.name||'').includes(q)).map(s=>`<button class="surah ${s.number===state.surah?'active':''}" data-n="${s.number}"><i>${String(s.number).padStart(3,'٠')}</i><b>${esc(s.name)}</b><small>${s.ayahs.length} آية</small></button>`).join('');$$('.surah').forEach(b=>b.onclick=()=>{state.surah=+b.dataset.n;drawSurahs($('#surah-q').value);drawAyahs($('#ayah-q').value)});}
+function drawAyahs(q=''){const s=state.surahs.find(x=>x.number===state.surah);if(!s)return;$('#surah-title').textContent=s.name;$('#surah-label').textContent=`سورة ${s.number}`;const rows=s.ayahs.filter(a=>!q||a.text.includes(q));$('#ayahs').innerHTML=`<div class="basmala">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>`+rows.map(a=>`<p class="ayah"><span>${esc(a.text)}</span><b>${a.verse}</b></p>`).join('')||'<div class="empty">لا توجد آيات مطابقة</div>';$('.font-readout').textContent=state.font+'px';}
+function catalog(){const q=state.q.toLowerCase();const filters=['الكل','قرآن','حديث','شعر'];const rows=collections.filter(c=>(state.catalogFilter==='الكل'||c[1]===state.catalogFilter)&&(!q||c.join(' ').toLowerCase().includes(q)));shell(`<div class="page-head"><div><span class="kicker">الخزانة</span><h1>الفهرس</h1></div><strong class="count">${rows.length}<small> مجموعات</small></strong></div><div class="catalog-tools"><div class="catalog-search"><span>⌕</span><input id="catalog-q" value="${esc(state.q)}" placeholder="ابحث عن قرآن، حديث، شاعر…"></div><div class="filters">${filters.map(f=>`<button class="filter ${f===state.catalogFilter?'active':''}" data-filter="${f}">${f}</button>`).join('')}</div></div><div class="collection-grid">${rows.map(c=>`<button class="collection" data-source="${collections.indexOf(c)}"><span>${c[1]}</span><b>${c[0]}</b><small>${c[3]==='poetry'?'75,022 قصيدة':c[3]==='quran'?'114 سورة':'قراءة محلية'}</small><i>←</i></button>`).join('')}</div>`);$('#catalog-q').oninput=e=>{state.q=e.target.value;catalog()};$$('[data-filter]').forEach(b=>b.onclick=()=>{state.catalogFilter=b.dataset.filter;catalog()});$$('.collection').forEach(b=>b.onclick=()=>openCollection(+b.dataset.source));}
+async function openCollection(i){const c=collections[i];if(c[3]==='quran'){state.view='reader';return render()}shell(`<div class="page-head"><div><span class="kicker">${c[1]}</span><h1>${c[0]}</h1></div><div class="reader-actions"><button id="back">الفهرس</button><button id="minus">A−</button><button id="plus">A+</button></div></div><article class="reading-paper"><div id="reading-tools"></div><div id="reading">جاري القراءة…</div></article>`);$('#back').onclick=()=>{state.view='catalog';catalog()};$('#minus').onclick=()=>setFont(-2);$('#plus').onclick=()=>setFont(2);const data=await (await fetch(c[2])).json();if(c[3]==='hadith')renderHadith(c,data);else renderPoetry(c,data);}
+function setFont(delta){state.font=Math.max(16,Math.min(38,state.font+delta));localStorage.setItem('diwan-font',state.font);document.documentElement.style.setProperty('--reading-size',state.font+'px');$('.font-readout')?.replaceChildren(state.font+'px');}
+function renderHadith(c,data){const list=data.hadiths||[];$('#reading').innerHTML=`<div class="reading-toolbar"><input id="hadith-q" placeholder="ابحث داخل ${c[0]}"><span>${list.length.toLocaleString('ar-EG')} حديث</span></div><div id="hadith-list">${list.map((h,i)=>`<article class="hadith"><b>حديث ${h.hadithnumber||i+1}</b><p>${esc(h.text||'')}</p></article>`).join('')}</div>`;$('#hadith-q').oninput=e=>{$$('.hadith').forEach(x=>x.hidden=!x.innerText.includes(e.target.value))};}
+async function renderPoetry(c,index){state.poetryIndex=index;state.poetryParts=[];state.poetryLoaded=0;$('#reading').innerHTML=`<div class="reading-toolbar"><input id="poetry-q" placeholder="ابحث عن شاعر أو قصيدة"><select id="poetry-era"><option>الكل</option></select><span>${Number(index.count).toLocaleString('ar-EG')} قصيدة</span></div><div id="poems"></div><div id="poem-sentinel" class="loading-more">تحميل المزيد…</div>`;const eras=[];let part=await loadPoetryPart();(part||[]).forEach(p=>{if(p.poet_era&&!eras.includes(p.poet_era))eras.push(p.poet_era)});$('#poetry-era').innerHTML='<option>الكل</option>'+eras.map(e=>`<option>${esc(e)}</option>`).join('');drawPoems();$('#poetry-q').oninput=e=>{state.poetryQuery=e.target.value;drawPoems()};$('#poetry-era').onchange=e=>{state.poetryEra=e.target.value;drawPoems()};const io=new IntersectionObserver(async es=>{if(es[0].isIntersecting&&state.poetryLoaded<index.parts){await loadPoetryPart();drawPoems()}else if(state.poetryLoaded>=index.parts)$('#poem-sentinel').textContent='اكتمل تحميل الديوان'});io.observe($('#poem-sentinel'));}
+async function loadPoetryPart(){if(state.poetryLoaded>=state.poetryIndex.parts)return[];const n=String(state.poetryLoaded).padStart(3,'0');const rows=await (await fetch(`data/poetry/part-${n}.json`)).json();state.poetryParts.push(...rows);state.poetryLoaded++;return rows;}
+function drawPoems(){const q=state.poetryQuery.toLowerCase(),era=state.poetryEra;const rows=state.poetryParts.filter(p=>(era==='الكل'||p.poet_era===era)&&(!q||`${p.poet_name} ${p.poem_title} ${p.poem_text}`.toLowerCase().includes(q)));$('#poems').innerHTML=rows.map(p=>`<article class="poem"><header><b>${esc(p.poem_title||'قصيدة')}</b><span>${esc(p.poet_name||'شاعر')} · ${esc(p.poet_era||'')}</span></header><p>${esc(p.poem_text||'')}</p></article>`).join('')||'<div class="empty">لا توجد نتائج في الأجزاء المحملة</div>';}
+function downloadQuran(){const text=$$('.ayah').map(x=>x.innerText).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));a.download=`سورة-${state.surah}.txt`;a.click();}
+function render(){document.documentElement.style.setProperty('--reading-size',state.font+'px');state.view==='reader'?reader():state.view==='catalog'?catalog():home();}
 render();

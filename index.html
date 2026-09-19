@@ -4,19 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#192b2a" />
-  <meta name="description" content="الديوان الشامل — بوابة عربية للقراءة والبحث في القرآن والحديث والسيرة والأدب." />
+  <meta name="description" content="الديوان الشامل — قارئ عربي للقرآن والحديث والشعر." />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=12" />
   <title>الديوان الشامل</title>
 </head>
 <body>
   <div id="app"><div style="padding:40px;text-align:center;font-family:Arial;color:#1d4b44">جاري فتح الديوان الشامل…</div></div>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
-      if (window.caches) caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
-    }
-  </script>
-  <script src="app.js?v=5" defer></script>
+  <script src="app.js?v=12" defer></script>
 </body>
 </html>
