@@ -394,7 +394,15 @@ function getHadithSections(data, list) {
   const names = Object.entries(sections)
     .filter(([, name]) => name)
     .map(([id, name]) => ({ id: String(id), name: arabizeSectionName(name) }));
-  if (names.length) return names;
+  if (names.length) {
+    const seen = new Set();
+    return names.filter((section) => {
+      const key = normalizeArabic(section.name);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
   return [...new Set(list.map((item) => item.chapterId ?? item.chapter ?? item.bookId).filter((value) => value != null))]
     .map((id) => ({ id: String(id), name: `القسم ${id}` }));
 }
