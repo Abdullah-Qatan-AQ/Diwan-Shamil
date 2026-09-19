@@ -60,6 +60,27 @@ function persist() {
   localStorage.setItem("diwan-bookmarks", JSON.stringify(state.bookmarks));
   localStorage.setItem("diwan-surah", String(state.surah));
 }
+async function fetchJson(url, timeoutMs = 20000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, { signal: controller.signal, cache: "default" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    // A service-worker/cache response keeps the reader usable when the network stalls.
+    try {
+      const cached = await caches.match(url);
+      if (cached) return await cached.json();
+    } catch {
+      // Continue to the user-facing error below.
+    }
+    throw error;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function showStatus(message, kind = "ok") {
   let element = $("#app-status");
   if (!element) {
@@ -91,7 +112,7 @@ function navigate(view) {
 }
 function goBack() {
   const previous = state.routeHistory.pop();
-  state.view = previous && previous !== state.view ? previous : "home";
+  state.view = previous && previous !== state.view && previous !== "settings" ? previous : "home";
   state.renderToken += 1;
   state.hadithData = state.view === "hadith" ? state.hadithData : null;
   state.hadithLoading = false;
@@ -334,9 +355,7 @@ async function openCollection(collection) {
     state.poetryReady = false;
     renderPoetryLoading(collection.name);
     try {
-      const response = await fetch(collection.file);
-      if (!response.ok) throw new Error("request");
-      const index = await response.json();
+      const index = await fetchJson(collection.file);
       if (token !== state.renderToken || state.view !== "poetry") return;
       state.poetryIndex = index;
       state.poetryLoading = false;
@@ -357,9 +376,7 @@ async function openCollection(collection) {
   state.hadithLoading = true;
   renderHadith();
   try {
-    const response = await fetch(collection.file);
-    if (!response.ok) throw new Error("request");
-    const data = await response.json();
+    const data = await fetchJson(collection.file);
     const list = normalizeHadithList(data);
     if (token !== state.renderToken || state.view !== "hadith") return;
     state.hadithData.list = list;
@@ -455,11 +472,9 @@ async function loadPoetryPart() {
     return;
   state.poetryLoading = true;
   try {
-    const response = await fetch(
+    state.poetryParts.push(await fetchJson(
       `data/poetry/part-${String(state.poetryLoaded).padStart(3, "0")}.json`,
-    );
-    if (!response.ok) throw new Error("part");
-    state.poetryParts.push(...(await response.json()));
+    ));
     state.poetryLoaded += 1;
   } finally {
     state.poetryLoading = false;
@@ -628,8 +643,8 @@ async function downloadLibrary() {
   const urls = [
     "./",
     "./index.html",
-    "./styles.css?v=18",
-    "./app.js?v=18",
+    "./styles.css?v=19",
+    "./app.js?v=19",
     "./manifest.json",
     "./data/quran.json",
     "./data/surah-meta.json",
