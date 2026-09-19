@@ -16,6 +16,11 @@
 * {
   box-sizing: border-box;
 }
+html,
+body {
+  min-width: 0;
+  overflow-x: hidden;
+}
 html {
   background: var(--cream);
   scroll-behavior: smooth;
@@ -114,6 +119,9 @@ select:focus-visible {
   gap: 40px;
   align-items: center;
   padding: 62px 0 70px;
+}
+.home-copy {
+  min-width: 0;
 }
 .kicker {
   display: inline-block;
@@ -643,7 +651,8 @@ footer {
     font-size: 20px;
   }
   .home h1 {
-    font-size: 57px;
+    font-size: clamp(42px, 14vw, 57px);
+    overflow-wrap: anywhere;
   }
   .home-grid,
   .collection-grid {
@@ -711,6 +720,46 @@ footer {
     transition: none !important;
   }
 }
+@media (max-width: 360px) {
+  .app-shell main {
+    padding-inline: 10px;
+  }
+  .topbar {
+    gap: 8px;
+    padding-inline: 10px;
+  }
+  .brand {
+    gap: 6px;
+  }
+  .brand b {
+    font-size: 18px;
+  }
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+  }
+  .home h1 {
+    font-size: 42px;
+  }
+  .quick-search {
+    max-width: 100%;
+  }
+  .quick-search button {
+    padding-inline: 14px;
+  }
+}
+@media (max-width: 850px) and (max-height: 560px) {
+  .topbar {
+    position: relative;
+  }
+  footer {
+    display: none;
+  }
+  .app-shell main {
+    padding-bottom: calc(45vh + 30px);
+  }
+}
 
 /* Diwan 2.0: settings, themes, bookmarks, and offline controls */
 :root[data-theme="night"] {
@@ -772,6 +821,7 @@ footer {
   border-radius: var(--radius);
   padding: 22px;
   box-shadow: 0 10px 25px #193a3008;
+  font-size: 14px;
 }
 .settings-card h2 {
   font: 25px Amiri;
@@ -783,6 +833,12 @@ footer {
   color: var(--muted);
   font-size: 12px;
   margin: 15px 0 7px;
+}
+.settings-card label b,
+.settings-card button,
+.settings-card input,
+.settings-card select {
+  font-size: 14px;
 }
 .settings-card input[type="range"] {
   width: 100%;

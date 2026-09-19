@@ -46,6 +46,7 @@ const state = {
   poetryQuery: "",
   poetryEra: "الكل",
   poetryLoading: false,
+  poetryReady: false,
   hadithData: null,
   renderToken: 0,
 };
@@ -80,10 +81,22 @@ function navigate(view) {
   if (view === state.view) return;
   state.routeHistory.push(state.view);
   state.view = view;
+  state.hadithData = view === "hadith" ? state.hadithData : null;
+  if (view !== "poetry") {
+    state.poetryIndex = null;
+    state.poetryParts = [];
+  }
   render();
 }
 function goBack() {
   state.view = state.routeHistory.pop() || "home";
+  state.renderToken += 1;
+  state.hadithData = state.view === "hadith" ? state.hadithData : null;
+  if (state.view !== "poetry") {
+    state.poetryIndex = null;
+    state.poetryParts = [];
+    state.poetryLoading = false;
+  }
   render();
 }
 function applyReadingStyle() {
@@ -135,7 +148,18 @@ function home() {
   $("#quick-q").addEventListener("keydown", (event) => {
     if (event.key === "Enter") $("#quick-go").click();
   });
+  $("#quick-q").addEventListener("focus", focusWithinViewport);
   $("#offline-home").addEventListener("click", downloadLibrary);
+}
+
+function focusWithinViewport(event) {
+  window.setTimeout(() => {
+    event.target.scrollIntoView({
+      block: "center",
+      inline: "nearest",
+      behavior: "smooth",
+    });
+  }, 250);
 }
 
 async function reader() {
@@ -399,6 +423,8 @@ function drawHadith() {
 }
 
 async function openPoetry(collection) {
+  const token = ++state.renderToken;
+  state.poetryReady = false;
   try {
     const response = await fetch(collection.file);
     if (!response.ok) throw new Error("request");
@@ -407,13 +433,15 @@ async function openPoetry(collection) {
     showStatus("تعذر تحميل فهرس الشعر.", "error");
     return;
   }
+  if (token !== state.renderToken || state.view !== "poetry") return;
   state.poetryParts = [];
   state.poetryLoaded = 0;
   state.poetryQuery = "";
   state.poetryEra = "الكل";
   shell(
-    `<div class="book-overview"><div><span class="kicker">شعر</span><h2>موسوعة الشعر العربي</h2><p>${Number(state.poetryIndex.count).toLocaleString("ar-EG")} قصيدة · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-q" type="search" placeholder="ابحث عن شاعر أو قصيدة أو بيت"><select id="poetry-era"><option>الكل</option></select><span id="poem-count"></span></div><div id="poems"></div><button id="load-more" class="load-more" type="button">تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`,
+    `<div class="book-overview"><div><span class="kicker">شعر</span><h2>موسوعة الشعر العربي</h2><p>${Number(state.poetryIndex.count).toLocaleString("ar-EG")} قصيدة · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-q" type="search" placeholder="ابحث عن شاعر أو قصيدة أو بيت"><select id="poetry-era"><option>الكل</option></select><span id="poem-count"></span></div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`,
   );
+  $("#poetry-q").addEventListener("focus", focusWithinViewport);
   $("#poetry-q").addEventListener("input", (event) => {
     state.poetryQuery = event.target.value;
     drawPoems();
@@ -428,6 +456,8 @@ async function openPoetry(collection) {
     drawPoems();
   });
   await loadPoetryPart();
+  if (token !== state.renderToken || state.view !== "poetry") return;
+  state.poetryReady = true;
   fillEras();
   drawPoems();
 }
@@ -466,13 +496,20 @@ function fillEras() {
 }
 function updatePoetryStatus() {
   const element = $("#poem-status");
-  if (element)
-    element.textContent =
-      state.poetryLoaded >= (state.poetryIndex?.parts || 0)
-        ? "اكتمل تحميل الديوان"
-        : `المحمّل ${state.poetryParts.length.toLocaleString("ar-EG")} من ${Number(state.poetryIndex?.count || 0).toLocaleString("ar-EG")} قصيدة`;
+  const complete = state.poetryLoaded >= (state.poetryIndex?.parts || 0);
+  if (element) {
+    element.textContent = complete
+      ? "اكتمل تحميل الديوان"
+      : `المحمّل ${state.poetryParts.length.toLocaleString("ar-EG")} من ${Number(state.poetryIndex?.count || 0).toLocaleString("ar-EG")} قصيدة`;
+  }
+  $("#load-more")?.toggleAttribute("hidden", complete);
 }
 function drawPoems() {
+  if (!state.poetryReady) {
+    $("#poems").innerHTML =
+      '<div class="loading-more">جاري تحميل القصائد…</div>';
+    return;
+  }
   const query = state.poetryQuery.toLowerCase();
   const rows = state.poetryParts.filter(
     (item) =>
