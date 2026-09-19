@@ -614,9 +614,11 @@ function updatePoetryStatus(message = "") {
   const element = $("#poem-status");
   const complete = state.poetryLoaded >= (state.poetryIndex?.parts || 0);
   if (element) {
+    const total = Number(state.poetryIndex?.count || 0);
+    const loaded = state.poetryParts.length;
     element.textContent = message || (complete
-      ? "اكتمل تحميل الديوان"
-      : `المحمّل ${state.poetryParts.length.toLocaleString("ar-EG")} من ${Number(state.poetryIndex?.count || 0).toLocaleString("ar-EG")} قصيدة`);
+      ? `اكتمل تحميل الديوان: ${total.toLocaleString("ar-EG")} قصيدة`
+      : `المحمّل الآن: ${loaded.toLocaleString("ar-EG")} من ${total.toLocaleString("ar-EG")} قصيدة — اضغط «إظهار الكل» للبحث في الموسوعة كاملة`);
   }
   $("#load-more")?.toggleAttribute("hidden", complete);
 }
@@ -637,7 +639,11 @@ function drawPoems() {
   );
   const visible = state.poetryShowAll ? rows : rows.slice(0, state.poetryLimit);
   const allButton = $("#poetry-all");
-  if (allButton) { allButton.textContent = state.poetryShowAll ? "إظهار المختصر" : "إظهار الكل"; allButton.setAttribute("aria-pressed", String(state.poetryShowAll)); }
+  const complete = state.poetryLoaded >= (state.poetryIndex?.parts || 0);
+  if (allButton) {
+    allButton.textContent = state.poetryShowAll ? "إظهار المختصر" : (complete ? "إظهار الكل" : "إظهار الكل وتحميل الموسوعة");
+    allButton.setAttribute("aria-pressed", String(state.poetryShowAll));
+  }
   $("#poems").innerHTML =
     visible
       .map((item) => {
@@ -645,7 +651,11 @@ function drawPoems() {
         return `<article class="poem"><header><b>${esc(item.poem_title || "قصيدة")}</b><span>${esc(item.poet_name || "شاعر")} · ${esc(item.poet_era || "")} <button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(item.poem_title || "قصيدة")}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button></span></header><p>${esc(item.poem_text || "")}</p></article>`;
       })
       .join("") || '<div class="empty">لا توجد نتائج في الأجزاء المحملة</div>';
-  $("#poem-count").textContent = `${rows.length.toLocaleString("ar-EG")} نتيجة · عرض ${visible.length.toLocaleString("ar-EG")}`;
+  const total = Number(state.poetryIndex?.count || 0);
+  const scope = complete ? total : state.poetryParts.length;
+  $("#poem-count").textContent = complete
+    ? `${rows.length.toLocaleString("ar-EG")} نتيجة مطابقة من ${scope.toLocaleString("ar-EG")} قصيدة`
+    : `${rows.length.toLocaleString("ar-EG")} نتيجة في الجزء المحمّل (${scope.toLocaleString("ar-EG")} قصيدة)`;
   updatePoetryStatus();
   $$("[data-save]").forEach((button) =>
     button.addEventListener("click", () => {
