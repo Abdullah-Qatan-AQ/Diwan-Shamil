@@ -1,13 +1,16 @@
-const CACHE = "diwan-v21";
+const CACHE = "diwan-v22";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=21",
-  "./app.js?v=21",
+  "./styles.css?v=22",
+  "./app.js?v=22",
   "./manifest.json",
+  "./icon-192.svg",
+  "./icon-512.svg",
   "./data/quran.json",
   "./data/surah-meta.json",
   "./data/poetry/index.json",
+  ...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, "0")}.json`),
   "./data/ara-bukhari.json",
   "./data/ara-muslim.json",
   "./data/ara-tirmidhi.json",
@@ -17,17 +20,17 @@ const ASSETS = [
   "./data/ara-malik.json",
 ];
 self.addEventListener("install", (e) =>
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS))),
+  e.waitUntil(caches.open(CACHE).then(async (c) => {
+    await Promise.all(ASSETS.map(async (asset) => { try { await c.add(asset); } catch {} }));
+    await self.skipWaiting();
+  })),
 );
 self.addEventListener("activate", (e) =>
   e.waitUntil(
-    caches
-      .keys()
-      .then((keys) =>
-        Promise.all(
-          keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)),
-        ),
-      ),
+    Promise.all([
+      self.clients.claim(),
+      caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))),
+    ]),
   ),
 );
 self.addEventListener("fetch", (e) => {
