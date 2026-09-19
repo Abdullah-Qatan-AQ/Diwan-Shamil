@@ -75,7 +75,8 @@ const localCollections = [
   ['سنن النسائي', 'حديث · ملف محلي', 'data/previews/ara-nasai.json', 'hadith'],
   ['سنن ابن ماجه', 'حديث · ملف محلي', 'data/previews/ara-ibnmajah.json', 'hadith'],
   ['موطأ مالك', 'حديث · ملف محلي', 'data/previews/ara-malik.json', 'hadith'],
-  ['قصص الأنبياء والقصص الإسلامية', 'قصص · ملف محلي', 'data/stories.json', 'stories']
+  ['قصص الأنبياء والقصص الإسلامية', 'قصص · ملف محلي', 'data/stories.json', 'stories'],
+  ['موسوعة الشعر العربي · 75 ألف قصيدة', 'شعر · ODbL', 'data/poetry/index.json', 'poetry']
 ];
 let sourceCatalog = localCollections;
 let archiveLoaded = false;
@@ -159,6 +160,11 @@ async function openSource(index) {
     if (source[3] === 'stories') {
       const stories = Array.isArray(data) ? data : [];
       $('.source-reader').innerHTML = `<div class="result-intro">قصص موثقة ببيانات المصدر · ${stories.length.toLocaleString('ar-EG')} قصص</div><div class="hadith-list">${stories.map(s => `<article class="hadith-item"><b>${escapeHtml(s.category || 'قصة')}</b><p>${escapeHtml(s.title || '')}</p><small>${escapeHtml(s.description || '')}</small><div class="inside-note">المصدر المذكور: ${escapeHtml(s.source || 'غير محدد')} · النص التفصيلي غير مضمن في الملف</div></article>`).join('')}</div>`;
+      return;
+    }
+    if (source[3] === 'poetry') {
+      const index = data || {}; const part = await (await fetch('data/poetry/part-000.json')).json();
+      $('.source-reader').innerHTML = `<div class="result-intro">${escapeHtml(index.title || source[0])} · ${Number(index.count || 0).toLocaleString('ar-EG')} قصيدة</div><div class="hadith-list">${part.slice(0, 120).map(p => `<article class="hadith-item"><b>${escapeHtml(p.poet_name || 'شاعر')} · ${escapeHtml(p.poet_era || '')}</b><p>${escapeHtml(p.poem_title || 'قصيدة')}</p><small>${escapeHtml(p.poem_text || '')}</small></article>`).join('')}</div><div class="inside-note">عُرضت أول ١٢٠ قصيدة من الفهرس المحلي. البيانات موزعة على ${index.parts || 0} ملفات JSON لتجنب تحميل ١١٢MB دفعة واحدة. الترخيص: ODbL، وليس CC0.</div>`;
       return;
     }
     if (source[3]) {

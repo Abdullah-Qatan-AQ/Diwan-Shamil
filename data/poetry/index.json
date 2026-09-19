@@ -1,0 +1,15 @@
+{
+  "title": "الشعر العربي من القرن السادس إلى القرن العشرين",
+  "source": "Kaggle / mdanok / arabic-poetry-dataset",
+  "license": "ODbL-1.0",
+  "count": 75022,
+  "parts": 76,
+  "fields": [
+    "poet_name",
+    "poet_era",
+    "poem_tags",
+    "poem_title",
+    "poem_text",
+    "poem_count"
+  ]
+}
