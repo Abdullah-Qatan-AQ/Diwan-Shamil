@@ -50,6 +50,8 @@ const state = {
   poetryLimit: 60,
   poetryShowAll: false,
   poetryAllLoading: false,
+  poetryLoadPromise: null,
+  poetrySearchToken: 0,
   hadithData: null,
   hadithLoading: false,
   renderToken: 0,
@@ -504,14 +506,26 @@ function renderPoetryControls() {
   $("#poetry-q").addEventListener("input", async (event) => {
     state.poetryQuery = event.target.value;
     state.poetryLimit = 60;
-    if (state.poetryQuery.trim() && state.poetryLoaded < state.poetryIndex.parts) await ensureAllPoetryLoaded();
+    const searchToken = ++state.poetrySearchToken;
+    const needsFullSearch = state.poetryQuery.trim() && state.poetryLoaded < state.poetryIndex.parts;
+    if (needsFullSearch) {
+      $("#poems").innerHTML = '<div class="loading-more">جاري البحث في كامل موسوعة الشعر…</div>';
+      $("#poem-count").textContent = "يتم تحميل بقية القصائد للبحث الكامل…";
+      await ensureAllPoetryLoaded();
+      if (searchToken !== state.poetrySearchToken) return;
+    }
     drawPoems();
   });
   $("#poetry-era").addEventListener("change", (event) => { state.poetryEra = event.target.value; state.poetryLimit = 60; drawPoems(); });
   $("#poetry-all").addEventListener("click", async () => {
     state.poetryShowAll = !state.poetryShowAll;
-    if (state.poetryShowAll) await ensureAllPoetryLoaded();
-    drawPoems();
+    const searchToken = ++state.poetrySearchToken;
+    if (state.poetryShowAll && state.poetryLoaded < state.poetryIndex.parts) {
+      $("#poems").innerHTML = '<div class="loading-more">جاري تحميل كامل موسوعة الشعر لإظهار كل النصوص…</div>';
+      $("#poem-count").textContent = "يتم تحميل جميع القصائد…";
+      await ensureAllPoetryLoaded();
+    }
+    if (searchToken === state.poetrySearchToken) drawPoems();
   });
   $("#load-more").addEventListener("click", async () => { state.poetryLimit += 60; await loadPoetryPart(); fillEras(); drawPoems(); });
   fillEras();
@@ -567,16 +581,21 @@ async function openPoetry(collection) {
 }
 
 async function ensureAllPoetryLoaded() {
-  if (state.poetryAllLoading || !state.poetryIndex) return;
+  if (!state.poetryIndex) return;
+  if (state.poetryLoadPromise) return state.poetryLoadPromise;
   state.poetryAllLoading = true;
-  updatePoetryStatus("جاري تجهيز البحث في كامل موسوعة الشعر…");
-  try {
-    while (state.poetryLoaded < state.poetryIndex.parts) await loadPoetryPart();
-    fillEras();
-  } finally {
-    state.poetryAllLoading = false;
-    updatePoetryStatus();
-  }
+  state.poetryLoadPromise = (async () => {
+    updatePoetryStatus("جاري تجهيز البحث في كامل موسوعة الشعر…");
+    try {
+      while (state.poetryLoaded < state.poetryIndex.parts) await loadPoetryPart();
+      fillEras();
+    } finally {
+      state.poetryAllLoading = false;
+      state.poetryLoadPromise = null;
+      updatePoetryStatus();
+    }
+  })();
+  return state.poetryLoadPromise;
 }
 
 async function loadPoetryPart() {
