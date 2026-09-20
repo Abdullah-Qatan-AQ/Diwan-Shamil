@@ -56,6 +56,10 @@ const state = {
   hadithLoading: false,
   renderToken: 0,
   settingsModalOpen: false,
+  readingPositions: Array.isArray(readJson("diwan-positions", []))
+    ? readJson("diwan-positions", [])
+    : [],
+  resumePosition: null,
 };
 
 function persist() {
@@ -65,6 +69,7 @@ function persist() {
   );
   localStorage.setItem("diwan-bookmarks", JSON.stringify(state.bookmarks));
   localStorage.setItem("diwan-surah", String(state.surah));
+  localStorage.setItem("diwan-positions", JSON.stringify(state.readingPositions));
 }
 async function fetchJson(url, timeoutMs = 20000) {
   const controller = new AbortController();
@@ -164,7 +169,7 @@ function applyReadingStyle() {
 function shell(content) {
   const app = $("#app");
   if (!app) throw new Error("العنصر #app غير موجود");
-  app.innerHTML = `<div class="app-shell"><header class="topbar"><button id="app-back" class="app-back" type="button" aria-label="رجوع">‹ رجوع</button><a class="brand" href="#"><span class="brand-mark">۞</span><b>الديوان الشامل</b></a><nav aria-label="التنقل الرئيسي"><button type="button" data-view="home">الرئيسية</button><button type="button" data-view="reader">القرآن</button><button type="button" data-view="catalog">الفهرس</button><button type="button" data-view="settings">الإعدادات</button></nav><button type="button" class="top-search" data-view="catalog" aria-label="بحث">⌕ بحث</button></header><main>${content}</main><footer>الديوان الشامل · مكتبة عربية للقراءة والبحث · <b>من صنع Abdullah Qatan</b></footer></div>`;
+  app.innerHTML = `<div class="app-shell"><header class="topbar"><button id="app-back" class="app-back" type="button" aria-label="رجوع">‹ رجوع</button><a class="brand" href="#"><span class="brand-mark">۞</span><b>الديوان الشامل</b></a><nav aria-label="التنقل الرئيسي"><button type="button" data-view="home">الرئيسية</button><button type="button" data-view="reader">القرآن</button><button type="button" data-view="catalog">الفهرس</button><button type="button" data-view="favorites">المفضلة</button><button type="button" data-view="settings">الإعدادات</button></nav><button type="button" class="top-search" data-view="catalog" aria-label="بحث">⌕ بحث</button></header><main>${content}</main><footer>الديوان الشامل · مكتبة عربية للقراءة والبحث · <b>من صنع Abdullah Qatan</b></footer></div>`;
   bindShell();
 }
 function bindShell() {
@@ -193,7 +198,7 @@ function bindShell() {
 
 function home() {
   shell(
-    `<section class="home"><div class="home-copy"><span class="kicker">مكتبتك العربية</span><h1>المعرفة العربية<br><em>في موضعها.</em></h1><div class="quick-search"><input id="quick-q" type="search" autocomplete="off" placeholder="ابحث في القرآن والحديث والشعر"><button id="quick-go" type="button">بحث</button></div><div class="home-actions"><button type="button" data-view="settings">تخصيص القراءة</button><button id="offline-home" type="button">تنزيل المكتبة</button></div></div><div class="home-mark">۞</div></section><section class="home-grid"><button type="button" data-view="reader"><b>القرآن الكريم</b><span>السور والآيات والبحث داخل السورة</span></button><button type="button" data-view="catalog"><b>الحديث الشريف</b><span>ثمانية كتب مع بحث وفلاتر</span></button><button type="button" data-view="catalog"><b>الشعر العربي</b><span>75,022 قصيدة مع تحميل تدريجي</span></button><button type="button" data-view="settings"><b>إعدادات وتجربة شخصية</b><span>ثيمات، خط، محفوظات، ونسخ احتياطي</span></button></section>`,
+    `<section class="home"><div class="home-copy"><span class="kicker">مكتبتك العربية</span><h1>المعرفة العربية<br><em>في موضعها.</em></h1><div class="quick-search"><input id="quick-q" type="search" autocomplete="off" placeholder="ابحث في القرآن والحديث والشعر"><button id="quick-go" type="button">بحث</button></div><div class="home-actions"><button type="button" data-view="settings">تخصيص القراءة</button><button id="offline-home" type="button">تنزيل المكتبة</button></div></div><div class="home-mark">۞</div></section><section class="home-grid"><button type="button" data-view="reader"><b>القرآن الكريم</b><span>السور والآيات والبحث داخل السورة</span></button><button type="button" data-view="catalog"><b>الحديث الشريف</b><span>ثمانية كتب مع بحث وفلاتر</span></button><button type="button" data-view="catalog"><b>الشعر العربي</b><span>75,022 قصيدة مع تحميل تدريجي</span></button><button type="button" data-view="favorites"><b>المفضلة والمواضع</b><span>اجمع نصوصك وواصل القراءة من آخر موضع</span></button><button type="button" data-view="settings"><b>إعدادات وتجربة شخصية</b><span>ثيمات، خط، محفوظات، ونسخ احتياطي</span></button></section>`,
   );
   $("#quick-go").addEventListener("click", () => {
     state.q = $("#quick-q").value.trim();
@@ -218,11 +223,21 @@ function focusWithinViewport(event) {
 
 async function reader() {
   shell(
-    `<div class="page-head"><div><span class="kicker">المصحف</span><h1>القرآن الكريم</h1></div><div class="reader-actions"><button id="minus" type="button">A−</button><button id="plus" type="button">A+</button><button id="save" type="button">☆ حفظ</button><button id="download" type="button">⇩ تنزيل السورة</button></div></div><div class="reader-grid"><aside class="surah-panel"><input id="surah-q" type="search" placeholder="بحث باسم السورة"><div id="surahs" class="surahs">جاري التحميل</div></aside><article class="quran-paper"><div class="paper-head"><div><span id="surah-label" class="kicker">السورة</span><h2 id="surah-title">القرآن الكريم</h2></div><input id="ayah-q" class="inline-search" type="search" placeholder="بحث داخل السورة"><div class="font-readout">${state.font}px</div></div><div id="ayahs" class="ayahs">جاري القراءة…</div></article></div>`,
+    `<div class="page-head"><div><span class="kicker">المصحف</span><h1>القرآن الكريم</h1></div><div class="reader-actions"><button id="minus" type="button">A−</button><button id="plus" type="button">A+</button><button id="save" type="button">☆ حفظ السورة</button><button id="save-position" type="button">⌖ حفظ الموضع</button><button id="download" type="button">⇩ تنزيل السورة</button></div></div><div class="reader-grid"><aside class="surah-panel"><input id="surah-q" type="search" placeholder="بحث باسم السورة"><div id="surahs" class="surahs">جاري التحميل</div></aside><article class="quran-paper"><div class="paper-head"><div><span id="surah-label" class="kicker">السورة</span><h2 id="surah-title">القرآن الكريم</h2></div><input id="ayah-q" class="inline-search" type="search" placeholder="بحث داخل السورة"><div class="font-readout">${state.font}px</div></div><div id="ayahs" class="ayahs">جاري القراءة…</div></article></div>`,
   );
   $("#minus").addEventListener("click", () => setFont(-2));
   $("#plus").addEventListener("click", () => setFont(2));
   $("#download").addEventListener("click", downloadQuran);
+  $("#save-position").addEventListener("click", () => {
+    saveReadingPosition({
+      id: `quran-${state.surah}`,
+      type: "quran",
+      title: state.surahs.find((item) => item.number === state.surah)?.name || `سورة ${state.surah}`,
+      surah: state.surah,
+      scrollY: Math.round(window.scrollY),
+    });
+    $("#save-position").textContent = "✓ تم حفظ الموضع";
+  });
   $("#save").addEventListener("click", () => {
     const added = toggleBookmark({
       id: `surah-${state.surah}`,
@@ -255,6 +270,11 @@ async function reader() {
     }));
     drawSurahs();
     drawAyahs();
+    if (state.resumePosition?.surah === state.surah) {
+      const y = state.resumePosition.scrollY || 0;
+      state.resumePosition = null;
+      window.setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 80);
+    }
   } catch {
     if (token === state.renderToken)
       $("#ayahs").textContent = "تعذر فتح ملف القرآن المحلي";
@@ -314,6 +334,39 @@ function toggleBookmark(item) {
   else state.bookmarks.unshift({ ...item, at: Date.now() });
   persist();
   return index < 0;
+}
+function saveReadingPosition(item) {
+  state.readingPositions = [item, ...state.readingPositions.filter((saved) => saved.id !== item.id)].slice(0, 20);
+  persist();
+}
+function removeSaved(id, kind) {
+  if (kind === "position") state.readingPositions = state.readingPositions.filter((item) => item.id !== id);
+  else state.bookmarks = state.bookmarks.filter((item) => item.id !== id);
+  persist();
+}
+function openSavedItem(item, kind) {
+  if (kind === "position" && item.type === "quran") {
+    state.surah = Number(item.surah) || 1;
+    state.resumePosition = item;
+    persist();
+    navigate("reader");
+    return;
+  }
+  if (item.type === "quran") {
+    state.surah = Number(String(item.id).replace("surah-", "")) || 1;
+    persist();
+    navigate("reader");
+    return;
+  }
+  showStatus("هذا المحفوظ متاح من قائمة الكتاب الأصلية.");
+}
+function favorites() {
+  const bookmarks = state.bookmarks;
+  const positions = state.readingPositions;
+  shell(`<div class="page-head"><div><span class="kicker">مكتبتي</span><h1>المفضلة والمواضع</h1></div><strong class="count">${bookmarks.length + positions.length}<small> عناصر</small></strong></div><div class="favorites-grid"><section class="settings-card"><h2>المفضلة</h2><p class="muted">النصوص والسور التي اخترت الاحتفاظ بها.</p><div class="bookmark-list">${bookmarks.map((item) => `<div class="bookmark-row"><button class="saved-link" type="button" data-open-favorite="${esc(item.id)}">★ ${esc(item.title || item.id)}</button><button type="button" data-remove-favorite="${esc(item.id)}" data-remove-kind="bookmark">حذف</button></div>`).join("") || '<p class="muted">لا توجد مفضلات بعد. استخدم زر «حفظ» داخل القارئ.</p>'}</div></section><section class="settings-card"><h2>مواضع القراءة</h2><p class="muted">واصل القراءة من المكان الذي توقفت عنده.</p><div class="bookmark-list">${positions.map((item) => `<div class="bookmark-row"><button class="saved-link" type="button" data-open-position="${esc(item.id)}">⌖ ${esc(item.title || item.id)}</button><button type="button" data-remove-favorite="${esc(item.id)}" data-remove-kind="position">حذف</button></div>`).join("") || '<p class="muted">لم تحفظ موضعًا بعد. افتح القرآن واضغط «حفظ الموضع».</p>'}</div></section></div>`);
+  $$('[data-open-favorite]').forEach((button) => button.addEventListener("click", () => { const item = state.bookmarks.find((saved) => saved.id === button.dataset.openFavorite); if (item) openSavedItem(item, "bookmark"); }));
+  $$('[data-open-position]').forEach((button) => button.addEventListener("click", () => { const item = positions.find((saved) => saved.id === button.dataset.openPosition); if (item) openSavedItem(item, "position"); }));
+  $$('[data-remove-favorite]').forEach((button) => button.addEventListener("click", () => { removeSaved(button.dataset.removeFavorite, button.dataset.removeKind); favorites(); }));
 }
 
 function catalog() {
@@ -689,7 +742,7 @@ function drawPoems() {
 }
 
 function settingsMarkup() {
-  return `<div class="settings-backdrop" id="settings-modal" role="presentation"><section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title"><button class="modal-close" id="settings-close" type="button" aria-label="إغلاق">×</button><div class="page-head"><div><span class="kicker">تخصيص</span><h1 id="settings-title">الإعدادات</h1></div></div><section class="settings-grid"><article class="settings-card"><h2>المظهر والقراءة</h2><label>الثيم</label><div class="theme-choices"><button type="button" data-theme="sand">رملي</button><button type="button" data-theme="night">ليلي</button><button type="button" data-theme="green">أخضر</button><button type="button" data-theme="paper">ورقي</button></div><label>حجم الخط <b id="settings-font">${state.font}px</b></label><input id="settings-font-range" type="range" min="16" max="40" value="${state.font}"><label class="check"><input id="remember" type="checkbox" ${settings.remember ? "checked" : ""}> تذكر آخر سورة</label></article><article class="settings-card"><h2>المحفوظات والنسخ الاحتياطي</h2><p>لديك <b>${state.bookmarks.length}</b> عنصر محفوظ.</p><button id="export-data" type="button">تصدير نسخة احتياطية</button><button id="import-data" type="button">استيراد نسخة احتياطية</button><input id="import-file" type="file" accept="application/json" hidden><div class="bookmark-list">${state.bookmarks.slice(0, 12).map((item) => `<div class="bookmark-row"><span>${esc(item.title || item.id)}</span><button type="button" data-remove="${esc(item.id)}">حذف</button></div>`).join("") || '<p class="muted">لا توجد محفوظات بعد.</p>'}</div></article><article class="settings-card"><h2>القراءة دون إنترنت</h2><p>بيانات القرآن والحديث والشعر مضمّنة في نسخة التطبيق ويمكن تنزيلها كاملة.</p><button id="download-library" type="button">تنزيل المكتبة الأساسية</button><button id="clear-cache" type="button">مسح التنزيلات</button></article></section><p class="modal-credit">من صنع Abdullah Qatan · مرخص برخصة MIT</p></section></div>`;
+  return `<div class="settings-backdrop" id="settings-modal" role="presentation"><section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title"><button class="modal-close" id="settings-close" type="button" aria-label="إغلاق">×</button><div class="page-head"><div><span class="kicker">تخصيص</span><h1 id="settings-title">الإعدادات</h1></div></div><section class="settings-grid"><article class="settings-card"><h2>المظهر والقراءة</h2><label>الثيم</label><div class="theme-choices"><button type="button" data-theme="sand">رملي</button><button type="button" data-theme="night">ليلي</button><button type="button" data-theme="green">أخضر</button><button type="button" data-theme="paper">ورقي</button></div><label>حجم الخط <b id="settings-font">${state.font}px</b></label><input id="settings-font-range" type="range" min="16" max="40" value="${state.font}"><label class="check"><input id="remember" type="checkbox" ${settings.remember ? "checked" : ""}> تذكر آخر سورة</label></article><article class="settings-card"><h2>المحفوظات والنسخ الاحتياطي</h2><p>لديك <b>${state.bookmarks.length}</b> عنصر محفوظ.</p><button id="export-data" type="button">تصدير نسخة احتياطية</button><button id="import-data" type="button">استيراد نسخة احتياطية</button><input id="import-file" type="file" accept="application/json" hidden><div class="bookmark-list">${state.bookmarks.slice(0, 12).map((item) => `<div class="bookmark-row"><span>${esc(item.title || item.id)}</span><button type="button" data-remove="${esc(item.id)}">حذف</button></div>`).join("") || '<p class="muted">لا توجد محفوظات بعد.</p>'}</div></article><article class="settings-card"><h2>القراءة دون إنترنت</h2><p>بيانات القرآن والحديث والشعر مضمّنة في نسخة التطبيق ويمكن تنزيلها كاملة.</p><button id="download-library" type="button">تنزيل المكتبة الأساسية</button><button id="clear-cache" type="button">مسح التنزيلات</button></article><article class="settings-card danger-card"><h2>إعادة ضبط التطبيق</h2><p>يمسح المفضلة والمواضع والثيم والإعدادات المحلية، ثم يعيد فتح التطبيق من البداية.</p><button id="reset-app" type="button">إعادة تعيين كل التطبيق</button></article></section><p class="modal-credit">من صنع Abdullah Qatan · مرخص برخصة MIT</p></section></div>`;
 }
 function openSettingsModal() {
   if (state.settingsModalOpen) return;
@@ -707,9 +760,16 @@ function openSettingsModal() {
   $("#import-file").addEventListener("change", importData);
   $("#download-library").addEventListener("click", downloadLibrary);
   $("#clear-cache").addEventListener("click", clearOffline);
+  $("#reset-app").addEventListener("click", resetApplication);
   $$('[data-remove]', modal).forEach((button) => button.addEventListener("click", () => { state.bookmarks = state.bookmarks.filter((item) => item.id !== button.dataset.remove); persist(); close(); openSettingsModal(); }));
 }
 function settingsView() { openSettingsModal(); }
+function resetApplication() {
+  if (!window.confirm("هل تريد حذف كل بيانات التطبيق المحلية وإعادة ضبطه؟")) return;
+  localStorage.clear();
+  if ("caches" in window) caches.keys().then((names) => Promise.all(names.map((name) => caches.delete(name))));
+  window.location.reload();
+}
 
 function exportData() {
   try {
@@ -721,6 +781,7 @@ function exportData() {
             exportedAt: new Date().toISOString(),
             settings,
             bookmarks: state.bookmarks,
+            readingPositions: state.readingPositions,
             surah: state.surah,
           },
           null,
@@ -750,6 +811,7 @@ function importData(event) {
     try {
       const data = JSON.parse(reader.result);
       if (Array.isArray(data.bookmarks)) state.bookmarks = data.bookmarks;
+      if (Array.isArray(data.readingPositions)) state.readingPositions = data.readingPositions;
       if (data.settings && typeof data.settings === "object")
         Object.assign(settings, data.settings);
       if (Number.isInteger(Number(data.surah)))
@@ -838,6 +900,7 @@ function render() {
   state.renderToken += 1;
   if (state.view === "reader") reader();
   else if (state.view === "catalog") catalog();
+  else if (state.view === "favorites") favorites();
   else if (state.view === "settings") { state.view = "home"; home(); openSettingsModal(); }
   else if (state.view === "hadith" && state.hadithData) renderHadith();
   else if (state.view === "poetry" && state.poetryIndex) renderPoetryControls();

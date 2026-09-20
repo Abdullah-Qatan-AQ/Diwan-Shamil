@@ -923,3 +923,26 @@ body {
 .toggle-all[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--deep); }
 footer b { color: var(--green); }
 @media (max-width: 700px) { .settings-modal { padding: 18px; border-radius: 18px; } .settings-modal .settings-grid { grid-template-columns: 1fr; } .reading-toolbar { align-items: stretch; } .toggle-all { width: 100%; } }
+
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.saved-link {
+  border: 0;
+  background: transparent;
+  color: var(--deep);
+  text-align: right;
+  padding: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.saved-link:hover { color: var(--red); }
+.danger-card { border-color: #d9b5ad; }
+.danger-card h2 { color: var(--red); }
+#reset-app { background: #f7e4df; color: #8f4038; border-color: #dfb6ad; }
+@media (max-width: 700px) { .favorites-grid { grid-template-columns: 1fr; } }
