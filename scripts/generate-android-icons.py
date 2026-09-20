@@ -1,8 +1,9 @@
 from pathlib import Path
 from PIL import Image
 
+project_root = Path(__file__).resolve().parents[1]
 source = Path('/home/ubuntu/icon-input/Screenshot_٢٠٢٦٠٩١٩_١٤٢٧١١_Chrome.jpg')
-res = Path('/home/ubuntu/work/Crybto/android/app/src/main/res')
+res = project_root / 'android' / 'app' / 'src' / 'main' / 'res'
 
 # Crop the complete mark, including its subtle shadow, without stretching it.
 image = Image.open(source).convert('RGB')

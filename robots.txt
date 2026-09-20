@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://abdullah-qatan-aq.github.io/Crybto/sitemap.xml
+Sitemap: https://abdullah-qatan-aq.github.io/Diwan-Shamil/sitemap.xml
