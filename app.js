@@ -482,10 +482,19 @@ const hadithTopics = {
   "العلم والهداية": ["علم", "العلم", "تعلم", "هدي", "الايمان", "الاسلام"],
 };
 function getHadithQuality(item, sourceName) {
-  const raw = normalizeArabic([item.grade, item.grades, item.hukm, item.authenticity, item.status].flat().join(" "));
+  const raw = normalizeArabic([item.grade, item.grades, item.hukm, item.authenticity, item.status]
+    .flat(Infinity)
+    .map((value) => typeof value === "object" ? JSON.stringify(value) : value)
+    .filter(Boolean)
+    .join(" "));
   if (/ضعيف|موضوع|منكر|متروك/.test(raw)) return "ضعيف";
   if (/صحيح|حسن|قوي/.test(raw) || /صحيح البخاري|صحيح مسلم/.test(sourceName)) return "قوي / صحيح";
   return "غير محدد";
+}
+function getHadithSectionId(item) {
+  return String(
+    item.chapterId ?? item.chapter ?? item.bookId ?? item.book?.id ?? item.reference?.book ?? "",
+  );
 }
 
 async function openCollection(collection) {
@@ -541,7 +550,7 @@ async function openCollection(collection) {
     state.hadithData.index = list.map((item) => {
       const text = getHadithText(item);
       const number = String(getHadithNumber(item));
-      const section = String(item.chapterId ?? item.chapter ?? item.bookId ?? "");
+      const section = getHadithSectionId(item);
       const searchable = normalizeArabic([text, number, JSON.stringify(item)].join(" "));
       return { item, text, number, section, quality: getHadithQuality(item, collection.name), searchable };
     });
