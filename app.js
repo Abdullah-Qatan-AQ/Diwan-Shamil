@@ -270,11 +270,7 @@ async function reader() {
     }));
     drawSurahs();
     drawAyahs();
-    if (state.resumePosition?.surah === state.surah) {
-      const y = state.resumePosition.scrollY || 0;
-      state.resumePosition = null;
-      window.setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 80);
-    }
+    if (state.resumePosition?.surah === state.surah) restoreSavedPosition();
   } catch {
     if (token === state.renderToken)
       $("#ayahs").textContent = "تعذر فتح ملف القرآن المحلي";
@@ -344,21 +340,34 @@ function removeSaved(id, kind) {
   else state.bookmarks = state.bookmarks.filter((item) => item.id !== id);
   persist();
 }
+function restoreSavedPosition() {
+  const item = state.resumePosition;
+  if (!item) return;
+  state.resumePosition = null;
+  window.setTimeout(() => {
+    const target = item.targetId && document.querySelector(`[data-entry-id="${CSS.escape(item.targetId)}"]`);
+    if (target) target.scrollIntoView({ block: "center", behavior: "smooth" });
+    else if (Number(item.scrollY) > 0) window.scrollTo({ top: Number(item.scrollY), behavior: "smooth" });
+  }, 100);
+}
 function openSavedItem(item, kind) {
-  if (kind === "position" && item.type === "quran") {
-    state.surah = Number(item.surah) || 1;
-    state.resumePosition = item;
+  const shouldResume = kind === "position" || item.type !== "quran" || item.scrollY != null;
+  if (item.type === "quran" || item.type === "surah") {
+    state.surah = Number(item.surah) || Number(String(item.id).replace("surah-", "")) || 1;
+    state.resumePosition = item.type === "quran" && shouldResume ? item : null;
     persist();
     navigate("reader");
     return;
   }
-  if (item.type === "quran") {
-    state.surah = Number(String(item.id).replace("surah-", "")) || 1;
-    persist();
-    navigate("reader");
+  const collection = collections.find((entry) => entry[0] === item.collection) ||
+    collections.find((entry) => item.type === "hadith" && item.id.startsWith(`hadith-${entry[0]}-`)) ||
+    (item.type === "poem" ? collections.find((entry) => entry[3] === "poetry") : null);
+  if (!collection) {
+    showStatus("تعذر تحديد مصدر هذا المحفوظ.", "error");
     return;
   }
-  showStatus("هذا المحفوظ متاح من قائمة الكتاب الأصلية.");
+  state.resumePosition = item;
+  openCollection({ file: collection[2], kind: collection[3], name: collection[0] });
 }
 function favorites() {
   const bookmarks = state.bookmarks;
@@ -507,6 +516,7 @@ async function openCollection(collection) {
       if (token !== state.renderToken || state.view !== "poetry") return;
       state.poetryReady = true;
       renderPoetryControls();
+      if (state.resumePosition?.type === "poem") restoreSavedPosition();
     } catch {
       if (token === state.renderToken) {
         state.poetryLoading = false;
@@ -535,6 +545,7 @@ async function openCollection(collection) {
     state.hadithData.loading = false;
     state.hadithLoading = false;
     renderHadith();
+    if (state.resumePosition?.type === "hadith") restoreSavedPosition();
   } catch {
     if (token === state.renderToken) {
       state.hadithLoading = false;
@@ -554,7 +565,7 @@ function renderPoetryLoading(name, message = "جاري فتح موسوعة ال�
 }
 function renderPoetryControls() {
   const index = state.poetryIndex;
-  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>موسوعة الشعر العربي</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-q" type="search" placeholder="بحث في كامل موسوعة الشعر: الشاعر أو العنوان أو النص"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="poem-count"></span></div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
+  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>موسوعة الشعر العربي</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-q" type="search" placeholder="بحث في كامل موسوعة الشعر: الشاعر أو العنوان أو النص"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><button id="poetry-position" class="toggle-all" type="button">⌖ حفظ الموضع</button><span id="poem-count"></span></div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
   $("#poetry-q").addEventListener("focus", focusWithinViewport);
   $("#poetry-q").addEventListener("input", async (event) => {
     state.poetryQuery = event.target.value;
@@ -570,6 +581,10 @@ function renderPoetryControls() {
     drawPoems();
   });
   $("#poetry-era").addEventListener("change", (event) => { state.poetryEra = event.target.value; state.poetryLimit = 60; drawPoems(); });
+  $("#poetry-position").addEventListener("click", () => {
+    saveReadingPosition({ id: "poetry-position", type: "poem", title: "موسوعة الشعر العربي", collection: "موسوعة الشعر العربي", scrollY: Math.round(window.scrollY) });
+    $("#poetry-position").textContent = "✓ تم حفظ الموضع";
+  });
   $("#poetry-all").addEventListener("click", async () => {
     state.poetryShowAll = !state.poetryShowAll;
     const searchToken = ++state.poetrySearchToken;
@@ -588,7 +603,7 @@ function renderPoetryControls() {
 function renderHadith() {
   const info = state.hadithData;
   shell(
-    `<div class="book-overview"><div><span class="kicker">حديث</span><h2>${esc(info.name)}</h2><p>${info.list.length.toLocaleString("ar-EG")} نص · بحث وفلاتر متقدمة</p></div><div class="book-seal">حديث</div></div><div class="reading-toolbar"><input id="hadith-q" type="search" placeholder="بحث في النص أو الرقم"><select id="hadith-section"><option value="all">كل الأقسام</option>${info.sections.map((section) => `<option value="${esc(section.id)}">${esc(section.name)}</option>`).join("")}</select><select id="hadith-quality"><option value="all">كل الدرجات</option><option value="قوي / صحيح">قوي / صحيح</option><option value="ضعيف">ضعيف</option><option value="غير محدد">غير محدد</option></select><select id="hadith-topic">${Object.keys(hadithTopics).map((topic) => `<option value="${esc(topic)}">${esc(topic === "الكل" ? "كل الموضوعات" : topic)}</option>`).join("")}</select><select id="hadith-len"><option value="all">كل الأطوال</option><option value="short">مختصر</option><option value="long">مطول</option></select><button id="hadith-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="hadith-count"></span></div><div id="hadith-list">${info.loading ? '<div class="loading-more">جاري تحميل الكتاب…</div>' : ''}</div><button id="hadith-more" class="load-more" type="button" ${info.loading ? 'hidden' : ''}>عرض المزيد</button><div id="hadith-status" class="loading-more">${info.loading ? 'يتم تجهيز البحث…' : ''}</div>`,
+    `<div class="book-overview"><div><span class="kicker">حديث</span><h2>${esc(info.name)}</h2><p>${info.list.length.toLocaleString("ar-EG")} نص · بحث وفلاتر متقدمة</p></div><div class="book-seal">حديث</div></div><div class="reading-toolbar"><input id="hadith-q" type="search" placeholder="بحث في النص أو الرقم"><select id="hadith-section"><option value="all">كل الأقسام</option>${info.sections.map((section) => `<option value="${esc(section.id)}">${esc(section.name)}</option>`).join("")}</select><select id="hadith-quality"><option value="all">كل الدرجات</option><option value="قوي / صحيح">قوي / صحيح</option><option value="ضعيف">ضعيف</option><option value="غير محدد">غير محدد</option></select><select id="hadith-topic">${Object.keys(hadithTopics).map((topic) => `<option value="${esc(topic)}">${esc(topic === "الكل" ? "كل الموضوعات" : topic)}</option>`).join("")}</select><select id="hadith-len"><option value="all">كل الأطوال</option><option value="short">مختصر</option><option value="long">مطول</option></select><button id="hadith-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><button id="hadith-position" class="toggle-all" type="button">⌖ حفظ الموضع</button><span id="hadith-count"></span></div><div id="hadith-list">${info.loading ? '<div class="loading-more">جاري تحميل الكتاب…</div>' : ''}</div><button id="hadith-more" class="load-more" type="button" ${info.loading ? 'hidden' : ''}>عرض المزيد</button><div id="hadith-status" class="loading-more">${info.loading ? 'يتم تجهيز البحث…' : ''}</div>`,
   );
   $("#hadith-q").addEventListener("input", (event) => {
     info.query = event.target.value.trim().toLowerCase();
@@ -608,6 +623,10 @@ function renderHadith() {
   $("#hadith-quality").addEventListener("change", (event) => { info.quality = event.target.value; info.limit = 60; drawHadith(); });
   $("#hadith-topic").addEventListener("change", (event) => { info.topic = event.target.value; info.limit = 60; drawHadith(); });
   $("#hadith-all").addEventListener("click", () => { info.showAll = !info.showAll; drawHadith(); });
+  $("#hadith-position").addEventListener("click", () => {
+    saveReadingPosition({ id: `hadith-position-${info.name}`, type: "hadith", title: info.name, collection: info.name, scrollY: Math.round(window.scrollY) });
+    $("#hadith-position").textContent = "✓ تم حفظ الموضع";
+  });
   $("#hadith-more").addEventListener("click", () => { info.limit += 60; drawHadith(); });
   drawHadith();
 }
@@ -621,12 +640,12 @@ function drawHadith() {
   if (allButton) { allButton.textContent = info.showAll ? "إظهار المختصر" : "إظهار الكل"; allButton.setAttribute("aria-pressed", String(info.showAll)); }
   $("#hadith-list").innerHTML = visible.map(({ item, text, number }) => {
     const id = `hadith-${info.name}-${number}`;
-    return `<article class="hadith"><div class="hadith-meta"><b>حديث ${esc(number)}</b><span>${esc(info.name)}</span><button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(text.slice(0, 80))}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button></div><p>${esc(text)}</p></article>`;
+    return `<article class="hadith" data-entry-id="${esc(id)}"><div class="hadith-meta"><b>حديث ${esc(number)}</b><span>${esc(info.name)}</span><button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(text.slice(0, 80))}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button></div><p>${esc(text)}</p></article>`;
   }).join("") || '<div class="empty">لا توجد نتائج مطابقة</div>';
   $("#hadith-count").textContent = `${matches.length.toLocaleString("ar-EG")} حديث`;
   $("#hadith-status").textContent = matches.length > visible.length ? `عرض ${visible.length.toLocaleString("ar-EG")} من ${matches.length.toLocaleString("ar-EG")} حديث` : "اكتملت النتائج";
   $("#hadith-more").hidden = matches.length <= visible.length;
-  $$('[data-save]').forEach((button) => button.addEventListener("click", () => { toggleBookmark({ id: button.dataset.save, type: "hadith", title: button.dataset.title }); drawHadith(); }));
+  $$('[data-save]').forEach((button) => button.addEventListener("click", () => { toggleBookmark({ id: button.dataset.save, type: "hadith", title: button.dataset.title, collection: info.name, targetId: button.dataset.save, scrollY: Math.round(window.scrollY) }); drawHadith(); }));
 }
 
 async function openPoetry(collection) {
@@ -720,7 +739,7 @@ function drawPoems() {
     visible
       .map((item) => {
         const id = `poem-${item.poem_title}-${item.poet_name}`;
-        return `<article class="poem"><header><b>${esc(item.poem_title || "قصيدة")}</b><span>${esc(item.poet_name || "شاعر")} · ${esc(item.poet_era || "")} <button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(item.poem_title || "قصيدة")}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button></span></header><p>${esc(item.poem_text || "")}</p></article>`;
+        return `<article class="poem" data-entry-id="${esc(id)}"><header><b>${esc(item.poem_title || "قصيدة")}</b><span>${esc(item.poet_name || "شاعر")} · ${esc(item.poet_era || "")} <button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(item.poem_title || "قصيدة")}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button></span></header><p>${esc(item.poem_text || "")}</p></article>`;
       })
       .join("") || '<div class="empty">لا توجد نتائج في الأجزاء المحملة</div>';
   const total = Number(state.poetryIndex?.count || 0);
@@ -735,6 +754,9 @@ function drawPoems() {
         id: button.dataset.save,
         type: "poem",
         title: button.dataset.title,
+        collection: "موسوعة الشعر العربي",
+        targetId: button.dataset.save,
+        scrollY: Math.round(window.scrollY),
       });
       drawPoems();
     }),
