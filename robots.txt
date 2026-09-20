@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abdullah-qatan-aq.github.io/Crybto/sitemap.xml
