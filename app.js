@@ -453,7 +453,7 @@ function getHadithSections(data, list) {
   if (chapters.length) {
     return chapters
       .filter((chapter) => chapter.id != null && (chapter.arabic || chapter.name))
-      .map((chapter) => ({ id: String(chapter.id), name: String(chapter.arabic || chapter.name) }));
+      .map((chapter) => ({ id: String(chapter.id), name: arabizeSectionName(chapter.arabic || chapter.name) }));
   }
   const sections = data.metadata?.sections || data.sections || {};
   const names = Object.entries(sections)
