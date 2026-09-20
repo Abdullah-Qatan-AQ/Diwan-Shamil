@@ -118,7 +118,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Create GitHub Release and attach APK
+      - name: Create draft GitHub Release and attach APK
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION_NAME: ${{ steps.version.outputs.version_name }}
@@ -129,7 +129,8 @@ jobs:
             "android/app/build/outputs/apk/release/app-release.apk" \
             --repo "$GITHUB_REPOSITORY" \
             --title "Diwan Shamil v${VERSION_NAME}" \
-            --generate-notes
+            --draft \
+            --notes ""
 
       - name: Remove signing material
         if: always()
