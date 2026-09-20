@@ -885,6 +885,19 @@ footer {
   padding: 2px 7px;
   margin-inline-start: 8px;
 }
+.mini-position {
+  border: 1px solid var(--line);
+  background: var(--mint);
+  color: var(--green);
+  border-radius: 7px;
+  padding: 2px 7px;
+  margin-inline-start: 6px;
+  font-size: 12px;
+}
+.mini-position:hover {
+  background: var(--gold);
+  color: var(--deep);
+}
 .muted {
   color: var(--muted);
   font-size: 12px;
