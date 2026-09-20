@@ -14,3 +14,5 @@ www/
 *-credentials.txt
 *-signing-info.txt
 *.idsig
+
+.cache/
