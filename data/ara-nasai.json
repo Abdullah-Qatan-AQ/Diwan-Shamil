@@ -29,7 +29,212 @@
     ],
     "sourceSha256": "5b41a56ad3126425eea07c11cff569ad5dd5a3a734a92a876836966c38997d46"
   },
-  "chapters": [],
+  "chapters": [
+    {
+      "id": "1",
+      "arabic": "The Book of Purification"
+    },
+    {
+      "id": "2",
+      "arabic": "The Book of Water"
+    },
+    {
+      "id": "3",
+      "arabic": "The Book of Menstruation and Istihadah"
+    },
+    {
+      "id": "4",
+      "arabic": "The Book of Ghusl and Tayammum"
+    },
+    {
+      "id": "5",
+      "arabic": "The Book of Salah"
+    },
+    {
+      "id": "6",
+      "arabic": "The Book of the Times (of Prayer)"
+    },
+    {
+      "id": "7",
+      "arabic": "The Book of the Adhan (The Call to Prayer)"
+    },
+    {
+      "id": "8",
+      "arabic": "The Book of the Masjids"
+    },
+    {
+      "id": "9",
+      "arabic": "The Book of the Qiblah"
+    },
+    {
+      "id": "10",
+      "arabic": "The Book of Leading the Prayer (Al-Imamah)"
+    },
+    {
+      "id": "11",
+      "arabic": "The Book of the Commencement of the Prayer"
+    },
+    {
+      "id": "12",
+      "arabic": "The Book of The At-Tatbiq (Clasping One's Hands Together)"
+    },
+    {
+      "id": "13",
+      "arabic": "The Book of Forgetfulness (In Prayer)"
+    },
+    {
+      "id": "14",
+      "arabic": "The Book of Jumu'ah (Friday Prayer)"
+    },
+    {
+      "id": "15",
+      "arabic": "The Book of Shortening the Prayer When Traveling"
+    },
+    {
+      "id": "16",
+      "arabic": "The Book of Eclipses"
+    },
+    {
+      "id": "17",
+      "arabic": "The Book of Praying for Rain (Al-Istisqa')"
+    },
+    {
+      "id": "18",
+      "arabic": "The Book of the Fear Prayer"
+    },
+    {
+      "id": "19",
+      "arabic": "The Book of the Prayer for the Two 'Eids"
+    },
+    {
+      "id": "20",
+      "arabic": "The Book of Qiyam Al-Lail (The Night Prayer) and Voluntary Prayers During the Day"
+    },
+    {
+      "id": "21",
+      "arabic": "The Book of Funerals"
+    },
+    {
+      "id": "22",
+      "arabic": "The Book of Fasting"
+    },
+    {
+      "id": "23",
+      "arabic": "The Book of Zakah"
+    },
+    {
+      "id": "24",
+      "arabic": "The Book of Hajj"
+    },
+    {
+      "id": "25",
+      "arabic": "The Book of Jihad"
+    },
+    {
+      "id": "26",
+      "arabic": "The Book of Marriage"
+    },
+    {
+      "id": "27",
+      "arabic": "The Book of Divorce"
+    },
+    {
+      "id": "28",
+      "arabic": "The Book of Horses, Races and Shooting"
+    },
+    {
+      "id": "29",
+      "arabic": "The Book of Endowments"
+    },
+    {
+      "id": "30",
+      "arabic": "The Book of Wills"
+    },
+    {
+      "id": "31",
+      "arabic": "The Book of Presents"
+    },
+    {
+      "id": "32",
+      "arabic": "The Book of Gifts"
+    },
+    {
+      "id": "33",
+      "arabic": "The Book of ar-Ruqba"
+    },
+    {
+      "id": "34",
+      "arabic": "The Book of 'Umra"
+    },
+    {
+      "id": "35",
+      "arabic": "The Book of Agriculture"
+    },
+    {
+      "id": "36",
+      "arabic": "The Book of the Kind Treatment of Women"
+    },
+    {
+      "id": "37",
+      "arabic": "The Book of Fighting [The Prohibition of Bloodshed]"
+    },
+    {
+      "id": "38",
+      "arabic": "The Book of Distribution of Al-Fay'"
+    },
+    {
+      "id": "39",
+      "arabic": "The Book of al-Bay'ah"
+    },
+    {
+      "id": "40",
+      "arabic": "The Book of al-'Aqiqah"
+    },
+    {
+      "id": "41",
+      "arabic": "The Book of al-Fara' and al-'Atirah"
+    },
+    {
+      "id": "42",
+      "arabic": "The Book of Hunting and Slaughtering"
+    },
+    {
+      "id": "43",
+      "arabic": "The Book of ad-Dahaya (Sacrifices)"
+    },
+    {
+      "id": "44",
+      "arabic": "The Book of Financial Transactions"
+    },
+    {
+      "id": "45",
+      "arabic": "The Book of Oaths (qasamah), Retaliation and Blood Money"
+    },
+    {
+      "id": "46",
+      "arabic": "The Book of Cutting off the Hand of the Thief"
+    },
+    {
+      "id": "47",
+      "arabic": "The Book Of Faith and its Signs"
+    },
+    {
+      "id": "48",
+      "arabic": "The Book of Adornment"
+    },
+    {
+      "id": "49",
+      "arabic": "The Book of the Etiquette of Judges"
+    },
+    {
+      "id": "50",
+      "arabic": "The Book of Seeking Refuge with Allah"
+    },
+    {
+      "id": "51",
+      "arabic": "The Book of Drinks"
+    }
+  ],
   "hadiths": [
     {
       "id": null,

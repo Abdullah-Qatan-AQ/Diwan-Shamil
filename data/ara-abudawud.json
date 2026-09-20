@@ -29,7 +29,180 @@
     ],
     "sourceSha256": "bfa4723b34bd395fe4782ca066e19398942ccfce3a9c0aedfa6da05a92c78f8a"
   },
-  "chapters": [],
+  "chapters": [
+    {
+      "id": "1",
+      "arabic": "Purification (Kitab Al-Taharah)"
+    },
+    {
+      "id": "2",
+      "arabic": "Prayer (Kitab Al-Salat)"
+    },
+    {
+      "id": "3",
+      "arabic": "The Book Of The Prayer For Rain (Kitab al-Istisqa')"
+    },
+    {
+      "id": "4",
+      "arabic": "Prayer (Kitab Al-Salat): Detailed Rules of Law about the Prayer during Journey"
+    },
+    {
+      "id": "5",
+      "arabic": "Prayer (Kitab Al-Salat): Voluntary Prayers"
+    },
+    {
+      "id": "6",
+      "arabic": "Prayer (Kitab Al-Salat): Detailed Injunctions about Ramadan"
+    },
+    {
+      "id": "7",
+      "arabic": "Prayer (Kitab Al-Salat): Prostration while reciting the Qur'an"
+    },
+    {
+      "id": "8",
+      "arabic": "Prayer (Kitab Al-Salat): Detailed Injunctions about Witr"
+    },
+    {
+      "id": "9",
+      "arabic": "Zakat (Kitab Al-Zakat)"
+    },
+    {
+      "id": "10",
+      "arabic": "The Book of Lost and Found Items"
+    },
+    {
+      "id": "11",
+      "arabic": "The Rites of Hajj (Kitab Al-Manasik Wa'l-Hajj)"
+    },
+    {
+      "id": "12",
+      "arabic": "Marriage (Kitab Al-Nikah)"
+    },
+    {
+      "id": "13",
+      "arabic": "Divorce (Kitab Al-Talaq)"
+    },
+    {
+      "id": "14",
+      "arabic": "Fasting (Kitab Al-Siyam)"
+    },
+    {
+      "id": "15",
+      "arabic": "Jihad (Kitab Al-Jihad)"
+    },
+    {
+      "id": "16",
+      "arabic": "Sacrifice (Kitab Al-Dahaya)"
+    },
+    {
+      "id": "17",
+      "arabic": "Game (Kitab Al-Said)"
+    },
+    {
+      "id": "18",
+      "arabic": "Wills (Kitab Al-Wasaya)"
+    },
+    {
+      "id": "19",
+      "arabic": "Shares of Inheritance (Kitab Al-Fara'id)"
+    },
+    {
+      "id": "20",
+      "arabic": "Tribute, Spoils, and Rulership (Kitab Al-Kharaj, Wal-Fai' Wal-Imarah)"
+    },
+    {
+      "id": "21",
+      "arabic": "Funerals (Kitab Al-Jana'iz)"
+    },
+    {
+      "id": "22",
+      "arabic": "Oaths and Vows (Kitab Al-Aiman Wa Al-Nudhur)"
+    },
+    {
+      "id": "23",
+      "arabic": "Commercial Transactions (Kitab Al-Buyu)"
+    },
+    {
+      "id": "24",
+      "arabic": "Wages (Kitab Al-Ijarah)"
+    },
+    {
+      "id": "25",
+      "arabic": "The Office of the Judge (Kitab Al-Aqdiyah)"
+    },
+    {
+      "id": "26",
+      "arabic": "Knowledge (Kitab Al-Ilm)"
+    },
+    {
+      "id": "27",
+      "arabic": "Drinks (Kitab Al-Ashribah)"
+    },
+    {
+      "id": "28",
+      "arabic": "Foods (Kitab Al-At'imah)"
+    },
+    {
+      "id": "29",
+      "arabic": "Medicine (Kitab Al-Tibb)"
+    },
+    {
+      "id": "30",
+      "arabic": "Divination and Omens (Kitab Al-Kahanah Wa Al-Tatayyur)"
+    },
+    {
+      "id": "31",
+      "arabic": "The Book of Manumission of Slaves"
+    },
+    {
+      "id": "32",
+      "arabic": "Dialects and Readings of the Qur'an (Kitab Al-Huruf Wa Al-Qira'at)"
+    },
+    {
+      "id": "33",
+      "arabic": "Hot Baths (Kitab Al-Hammam)"
+    },
+    {
+      "id": "34",
+      "arabic": "Clothing (Kitab Al-Libas)"
+    },
+    {
+      "id": "35",
+      "arabic": "Combing the Hair (Kitab Al-Tarajjul)"
+    },
+    {
+      "id": "36",
+      "arabic": "Signet-Rings (Kitab Al-Khatam)"
+    },
+    {
+      "id": "37",
+      "arabic": "Trials and Fierce Battles (Kitab Al-Fitan Wa Al-Malahim)"
+    },
+    {
+      "id": "38",
+      "arabic": "The Promised Deliverer (Kitab Al-Mahdi)"
+    },
+    {
+      "id": "39",
+      "arabic": "Battles (Kitab Al-Malahim)"
+    },
+    {
+      "id": "40",
+      "arabic": "Prescribed Punishments (Kitab Al-Hudud)"
+    },
+    {
+      "id": "41",
+      "arabic": "Types of Blood-Wit (Kitab Al-Diyat)"
+    },
+    {
+      "id": "42",
+      "arabic": "Model Behavior of the Prophet (Kitab Al-Sunnah)"
+    },
+    {
+      "id": "43",
+      "arabic": "General Behavior (Kitab Al-Adab)"
+    }
+  ],
   "hadiths": [
     {
       "id": null,

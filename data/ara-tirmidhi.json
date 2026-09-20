@@ -29,7 +29,204 @@
     ],
     "sourceSha256": "8eacd7c3288e21706f3bf987694ba83a7cb7030453582f029131908d0917fab1"
   },
-  "chapters": [],
+  "chapters": [
+    {
+      "id": "1",
+      "arabic": "The Book on Purification"
+    },
+    {
+      "id": "2",
+      "arabic": "The Book on Salat (Prayer)"
+    },
+    {
+      "id": "3",
+      "arabic": "The Book on Al-Witr"
+    },
+    {
+      "id": "4",
+      "arabic": "The Book on the Day of Friday"
+    },
+    {
+      "id": "5",
+      "arabic": "The Book on the Two Eids"
+    },
+    {
+      "id": "6",
+      "arabic": "The Book on Traveling"
+    },
+    {
+      "id": "7",
+      "arabic": "The Book on Zakat"
+    },
+    {
+      "id": "8",
+      "arabic": "The Book on Fasting"
+    },
+    {
+      "id": "9",
+      "arabic": "The Book on Hajj"
+    },
+    {
+      "id": "10",
+      "arabic": "The Book on Jana''iz (Funerals)"
+    },
+    {
+      "id": "11",
+      "arabic": "The Book on Marriage"
+    },
+    {
+      "id": "12",
+      "arabic": "The Book on Suckling"
+    },
+    {
+      "id": "13",
+      "arabic": "The Book on Divorce and Li'an"
+    },
+    {
+      "id": "14",
+      "arabic": "The Book on Business"
+    },
+    {
+      "id": "15",
+      "arabic": "The Chapters On Judgements From The Messenger of Allah"
+    },
+    {
+      "id": "16",
+      "arabic": "The Book on Blood Money"
+    },
+    {
+      "id": "17",
+      "arabic": "The Book on Legal Punishments (Al-Hudud)"
+    },
+    {
+      "id": "18",
+      "arabic": "The Book on Hunting"
+    },
+    {
+      "id": "19",
+      "arabic": "The Book on Sacrifices"
+    },
+    {
+      "id": "20",
+      "arabic": "The Book on Vows and Oaths"
+    },
+    {
+      "id": "21",
+      "arabic": "The Book on Military Expeditions"
+    },
+    {
+      "id": "22",
+      "arabic": "The Book on Virtues of Jihad"
+    },
+    {
+      "id": "23",
+      "arabic": "The Book on Jihad"
+    },
+    {
+      "id": "24",
+      "arabic": "The Book on Clothing"
+    },
+    {
+      "id": "25",
+      "arabic": "The Book on Food"
+    },
+    {
+      "id": "26",
+      "arabic": "The Book on Drinks"
+    },
+    {
+      "id": "27",
+      "arabic": "Chapters on Righteousness And Maintaining Good Relations With Relatives"
+    },
+    {
+      "id": "28",
+      "arabic": "Chapters on Medicine"
+    },
+    {
+      "id": "29",
+      "arabic": "Chapters On Inheritance"
+    },
+    {
+      "id": "30",
+      "arabic": "Chapters On Wasaya (Wills and Testament)"
+    },
+    {
+      "id": "31",
+      "arabic": "Chapters On Wala' And Gifts"
+    },
+    {
+      "id": "32",
+      "arabic": "Chapters On Al-Qadar"
+    },
+    {
+      "id": "33",
+      "arabic": "Chapters On Al-Fitan"
+    },
+    {
+      "id": "34",
+      "arabic": "Chapters On Dreams"
+    },
+    {
+      "id": "35",
+      "arabic": "Chapters On Witnesses"
+    },
+    {
+      "id": "36",
+      "arabic": "Chapters On Zuhd"
+    },
+    {
+      "id": "37",
+      "arabic": "Chapters on the description of the Day of Judgement, Ar-Riqaq, and Al-Wara'"
+    },
+    {
+      "id": "38",
+      "arabic": "Chapters on the description of Paradise"
+    },
+    {
+      "id": "39",
+      "arabic": "The Book on the Description of Hellfire"
+    },
+    {
+      "id": "40",
+      "arabic": "The Book on Faith"
+    },
+    {
+      "id": "41",
+      "arabic": "Chapters on Knowledge"
+    },
+    {
+      "id": "42",
+      "arabic": "Chapters on Seeking Permission"
+    },
+    {
+      "id": "43",
+      "arabic": "Chapters on Manners"
+    },
+    {
+      "id": "44",
+      "arabic": "Chapters on Parables"
+    },
+    {
+      "id": "45",
+      "arabic": "Chapters on The Virtues of the Qur'an"
+    },
+    {
+      "id": "46",
+      "arabic": "Chapters on Recitation"
+    },
+    {
+      "id": "47",
+      "arabic": "Chapters on Tafsir"
+    },
+    {
+      "id": "48",
+      "arabic": "Chapters on Supplication"
+    },
+    {
+      "id": "49",
+      "arabic": "Chapters on Virtues"
+    }
+  ],
   "hadiths": [
     {
       "id": null,

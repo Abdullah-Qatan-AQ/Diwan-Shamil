@@ -29,7 +29,252 @@
     ],
     "sourceSha256": "bf2ad8cb96d26d8f67393a9e34ddee42d020e388262a6d456825a096156a79fd"
   },
-  "chapters": [],
+  "chapters": [
+    {
+      "id": "1",
+      "arabic": "The Times of Prayer"
+    },
+    {
+      "id": "2",
+      "arabic": "Purity"
+    },
+    {
+      "id": "3",
+      "arabic": "Prayer"
+    },
+    {
+      "id": "4",
+      "arabic": "Forgetfulness in Prayer"
+    },
+    {
+      "id": "5",
+      "arabic": "Jumu'a"
+    },
+    {
+      "id": "6",
+      "arabic": "Prayer in Ramadan"
+    },
+    {
+      "id": "7",
+      "arabic": "Tahajjud"
+    },
+    {
+      "id": "8",
+      "arabic": "Prayer in Congregation"
+    },
+    {
+      "id": "9",
+      "arabic": "Shortening the Prayer"
+    },
+    {
+      "id": "10",
+      "arabic": "The Two 'Ids"
+    },
+    {
+      "id": "11",
+      "arabic": "The Fear Prayer"
+    },
+    {
+      "id": "12",
+      "arabic": "The Eclipse Prayer"
+    },
+    {
+      "id": "13",
+      "arabic": "Asking for Rain"
+    },
+    {
+      "id": "14",
+      "arabic": "The Qibla"
+    },
+    {
+      "id": "15",
+      "arabic": "The Qur'an"
+    },
+    {
+      "id": "16",
+      "arabic": "Burials"
+    },
+    {
+      "id": "17",
+      "arabic": "Zakat"
+    },
+    {
+      "id": "18",
+      "arabic": "Fasting"
+    },
+    {
+      "id": "19",
+      "arabic": "I'tikaf in Ramadan"
+    },
+    {
+      "id": "20",
+      "arabic": "Hajj"
+    },
+    {
+      "id": "21",
+      "arabic": "Jihad"
+    },
+    {
+      "id": "22",
+      "arabic": "Vows and Oaths"
+    },
+    {
+      "id": "23",
+      "arabic": "Sacrificial Animals"
+    },
+    {
+      "id": "24",
+      "arabic": "Slaughtering Animals"
+    },
+    {
+      "id": "25",
+      "arabic": "Game"
+    },
+    {
+      "id": "26",
+      "arabic": "The 'Aqiqa"
+    },
+    {
+      "id": "27",
+      "arabic": "Fara'id"
+    },
+    {
+      "id": "28",
+      "arabic": "Marriage"
+    },
+    {
+      "id": "29",
+      "arabic": "Divorce"
+    },
+    {
+      "id": "30",
+      "arabic": "Suckling"
+    },
+    {
+      "id": "31",
+      "arabic": "Business Transactions"
+    },
+    {
+      "id": "32",
+      "arabic": "Qirad"
+    },
+    {
+      "id": "33",
+      "arabic": "Sharecropping"
+    },
+    {
+      "id": "34",
+      "arabic": "Renting Land"
+    },
+    {
+      "id": "35",
+      "arabic": "Pre-emption in Property"
+    },
+    {
+      "id": "36",
+      "arabic": "Judgements"
+    },
+    {
+      "id": "37",
+      "arabic": "Wills and Testaments"
+    },
+    {
+      "id": "38",
+      "arabic": "Setting Free and Wala'"
+    },
+    {
+      "id": "39",
+      "arabic": "The Mukatab"
+    },
+    {
+      "id": "40",
+      "arabic": "The Mudabbar"
+    },
+    {
+      "id": "41",
+      "arabic": "Hudud"
+    },
+    {
+      "id": "42",
+      "arabic": "Drinks"
+    },
+    {
+      "id": "43",
+      "arabic": "Blood-Money"
+    },
+    {
+      "id": "44",
+      "arabic": "The Oath of Qasama"
+    },
+    {
+      "id": "45",
+      "arabic": "Madina"
+    },
+    {
+      "id": "46",
+      "arabic": "The Decree"
+    },
+    {
+      "id": "47",
+      "arabic": "Good Character"
+    },
+    {
+      "id": "48",
+      "arabic": "Dress"
+    },
+    {
+      "id": "49",
+      "arabic": "The Description of the Prophet, may Allah Bless Him and Grant Him Peace"
+    },
+    {
+      "id": "50",
+      "arabic": "The Evil Eye"
+    },
+    {
+      "id": "51",
+      "arabic": "Hair"
+    },
+    {
+      "id": "52",
+      "arabic": "Visions"
+    },
+    {
+      "id": "53",
+      "arabic": "Greetings"
+    },
+    {
+      "id": "54",
+      "arabic": "General Subjects"
+    },
+    {
+      "id": "55",
+      "arabic": "The Oath of Allegiance"
+    },
+    {
+      "id": "56",
+      "arabic": "Speech"
+    },
+    {
+      "id": "57",
+      "arabic": "Jahannam"
+    },
+    {
+      "id": "58",
+      "arabic": "Sadaqa"
+    },
+    {
+      "id": "59",
+      "arabic": "Knowledge"
+    },
+    {
+      "id": "60",
+      "arabic": "The Supplication of the Unjustly Wronged"
+    },
+    {
+      "id": "61",
+      "arabic": "The Names of the Prophet, may Allah Bless Him and Grant Him Peace"
+    }
+  ],
   "hadiths": [
     {
       "id": null,

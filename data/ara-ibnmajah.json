@@ -29,7 +29,160 @@
     ],
     "sourceSha256": "f01d56cc77701a0780c3517d74d8d28dff6ff108007746d555cc4fac26401e24"
   },
-  "chapters": [],
+  "chapters": [
+    {
+      "id": "0",
+      "arabic": "The Book of the Sunnah"
+    },
+    {
+      "id": "1",
+      "arabic": "The Book of Purification and its Sunnah"
+    },
+    {
+      "id": "2",
+      "arabic": "The Book of the Prayer"
+    },
+    {
+      "id": "3",
+      "arabic": "The Book of the Adhan and the Sunnah Regarding It"
+    },
+    {
+      "id": "4",
+      "arabic": "The Book On The Mosques And The Congregations"
+    },
+    {
+      "id": "5",
+      "arabic": "Establishing the Prayer and the Sunnah Regarding Them"
+    },
+    {
+      "id": "6",
+      "arabic": "Chapters Regarding Funerals"
+    },
+    {
+      "id": "7",
+      "arabic": "Fasting"
+    },
+    {
+      "id": "8",
+      "arabic": "The Chapters Regarding Zakat"
+    },
+    {
+      "id": "9",
+      "arabic": "The Chapters on Marriage"
+    },
+    {
+      "id": "10",
+      "arabic": "The Chapters on Divorce"
+    },
+    {
+      "id": "11",
+      "arabic": "The Chapters on Expiation"
+    },
+    {
+      "id": "12",
+      "arabic": "The Chapters on Business Transactions"
+    },
+    {
+      "id": "13",
+      "arabic": "The Chapters on Rulings"
+    },
+    {
+      "id": "14",
+      "arabic": "The Chapters on Gifts"
+    },
+    {
+      "id": "15",
+      "arabic": "The Chapters on Charity"
+    },
+    {
+      "id": "16",
+      "arabic": "The Chapters on Pawning"
+    },
+    {
+      "id": "17",
+      "arabic": "The Chapters on Pre-emption"
+    },
+    {
+      "id": "18",
+      "arabic": "The Chapters on Lost Property"
+    },
+    {
+      "id": "19",
+      "arabic": "The Chapters on Manumission (of Slaves)"
+    },
+    {
+      "id": "20",
+      "arabic": "The Chapters on Legal Punishments"
+    },
+    {
+      "id": "21",
+      "arabic": "The Chapters on Blood Money"
+    },
+    {
+      "id": "22",
+      "arabic": "The Chapters on Wills"
+    },
+    {
+      "id": "23",
+      "arabic": "Chapters on Shares of Inheritance"
+    },
+    {
+      "id": "24",
+      "arabic": "The Chapters on Jihad"
+    },
+    {
+      "id": "25",
+      "arabic": "Chapters on Hajj Rituals"
+    },
+    {
+      "id": "26",
+      "arabic": "Chapters on Sacrifices"
+    },
+    {
+      "id": "27",
+      "arabic": "Chapters on Slaughtering"
+    },
+    {
+      "id": "28",
+      "arabic": "Chapters on Hunting"
+    },
+    {
+      "id": "29",
+      "arabic": "Chapters on Food"
+    },
+    {
+      "id": "30",
+      "arabic": "Chapters on Drinks"
+    },
+    {
+      "id": "31",
+      "arabic": "Chapters on Medicine"
+    },
+    {
+      "id": "32",
+      "arabic": "Chapters on Dress"
+    },
+    {
+      "id": "33",
+      "arabic": "Etiquette"
+    },
+    {
+      "id": "34",
+      "arabic": "Supplication"
+    },
+    {
+      "id": "35",
+      "arabic": "Interpretation of Dreams"
+    },
+    {
+      "id": "36",
+      "arabic": "Tribulations"
+    },
+    {
+      "id": "37",
+      "arabic": "Zuhd"
+    }
+  ],
   "hadiths": [
     {
       "id": null,

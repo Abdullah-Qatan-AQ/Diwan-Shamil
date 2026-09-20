@@ -53,6 +53,14 @@ def main() -> None:
         columns = sorted(table.column_names)
         items = []
         chapter_map: dict[str, str] = {}
+        target = DATA / filename
+        if target.exists():
+            previous = json.loads(target.read_text(encoding="utf-8"))
+            chapter_map.update({
+                str(chapter["id"]): str(chapter.get("arabic") or chapter.get("name"))
+                for chapter in previous.get("chapters", [])
+                if chapter.get("id") is not None and (chapter.get("arabic") or chapter.get("name"))
+            })
         for row in rows:
             text = str(row.get("text") or "").strip()
             if not text:
@@ -73,6 +81,12 @@ def main() -> None:
                 "sourceUrl": "https://huggingface.co/datasets/quranlab/hadith",
                 "license": "ODbL-1.0 + DbCL-1.0",
             })
+        chapter_ids = sorted(
+            {str(item["chapterId"]) for item in items if item["chapterId"]},
+            key=lambda value: int(value) if value.isdigit() else value,
+        )
+        for chapter_id in chapter_ids:
+            chapter_map.setdefault(chapter_id, "أبواب غير مصنفة")
         payload = {
             "metadata": {
                 "name": arabic_name,
@@ -94,7 +108,6 @@ def main() -> None:
             ],
             "hadiths": items,
         }
-        target = DATA / filename
         target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"Wrote {target.name}: {len(items)} rows, sha256={sha256(target)}", flush=True)
 
