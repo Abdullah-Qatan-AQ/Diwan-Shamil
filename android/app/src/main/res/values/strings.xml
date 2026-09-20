@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">الديوان الشامل</string>
+    <string name="title_activity_main">الديوان الشامل</string>
+    <string name="package_name">com.abdullahqatan.diwan</string>
+    <string name="custom_url_scheme">com.abdullahqatan.diwan</string>
+</resources>

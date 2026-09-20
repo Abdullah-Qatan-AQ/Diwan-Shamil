@@ -27,6 +27,17 @@ python3 -m http.server 4173
 
 ثم افتح [http://localhost:4173](http://localhost:4173). لا يعمل التطبيق بشكل صحيح عند فتح `index.html` مباشرة عبر `file://` لأن المتصفح يمنع بعض طلبات الملفات المحلية.
 
+## بناء تطبيق Android (APK)
+
+يحتوي المستودع أيضًا على طبقة Capacitor تحول نسخة PWA إلى تطبيق Android أصلي؛ لذلك يتم تضمين ملفات التطبيق والبيانات داخل APK، ولا يعتمد التثبيت على إضافة اختصار من المتصفح. بعد تثبيت Node.js وJDK 21 وAndroid SDK Platform 35، شغّل:
+
+```bash
+npm install
+npm run android:build
+```
+
+ينشئ الأمر نسخة debug في `android/app/build/outputs/apk/debug/app-debug.apk`. وتقوم خطوة `prepare:web` بنسخ أحدث ملفات PWA إلى `www/` قبل كل مزامنة، بينما تبقى `www/` وملفات إعداد SDK المحلية خارج Git لأنها نواتج مولدة.
+
 ## النشر
 
 المشروع جاهز للنشر على GitHub Pages أو أي استضافة ملفات ثابتة. يحتوي المستودع على Workflow اختياري في `.github/workflows/pages.yml` ينشر محتوى الفرع `main` تلقائيًا عند تفعيله من إعدادات GitHub Pages باستخدام GitHub Actions.

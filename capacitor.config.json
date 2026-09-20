@@ -1,0 +1,12 @@
+{
+  "appId": "com.abdullahqatan.diwan",
+  "appName": "الديوان الشامل",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}
