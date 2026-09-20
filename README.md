@@ -86,4 +86,4 @@ HTML وCSS وJavaScript حديثة بدون إطار عمل، مع دعم RTL، 
 
 **Abdullah Qatan** · الديوان الشامل — مكتبة عربية للقراءة والبحث.
 
-[فتح المستودع على GitHub](https://github.com/Abdullah-Qatan-AQ/Crybto)
+[فتح المستودع على GitHub](https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil)
