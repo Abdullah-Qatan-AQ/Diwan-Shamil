@@ -9,3 +9,8 @@ android/local.properties
 www/
 *.iml
 .DS_Store
+*.keystore
+*.jks
+*-credentials.txt
+*-signing-info.txt
+*.idsig
