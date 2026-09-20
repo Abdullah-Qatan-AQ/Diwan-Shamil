@@ -77,11 +77,8 @@ select:focus-visible {
   width: 38px;
   height: 38px;
   border-radius: 13px;
-  background: var(--deep);
-  color: #e9c67f;
-  display: grid;
-  place-items: center;
-  font: 25px Amiri;
+  display: block;
+  object-fit: cover;
   box-shadow: 0 5px 14px #102c2726;
 }
 .brand b {
@@ -174,14 +171,14 @@ select:focus-visible {
   width: min(300px, 70vw);
   aspect-ratio: 1;
   margin: auto;
-  border-radius: 36% 64% 56% 44%;
-  background: var(--deep);
-  color: #dabb76;
   display: grid;
   place-items: center;
-  font: 150px Amiri;
-  box-shadow: 22px 22px 0 #c49a5a24;
-  transform: rotate(-5deg);
+}
+.home-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(22px 22px 0 #c49a5a24);
 }
 .home-grid {
   display: grid;
