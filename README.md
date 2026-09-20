@@ -50,6 +50,8 @@ npm run android:build
 
 المشروع جاهز للنشر على GitHub Pages أو أي استضافة ملفات ثابتة. يحتوي المستودع على Workflow اختياري في `.github/workflows/pages.yml` ينشر محتوى الفرع `main` تلقائيًا عند تفعيله من إعدادات GitHub Pages باستخدام GitHub Actions.
 
+يحتوي المستودع أيضًا على Workflow في `.github/workflows/android-release.yml` لبناء APK موقّع وإنشاء GitHub Release عند دفع Tag يطابق رقم الإصدار، مثل `v1.0.4`. يلزم إعداد أسرار keystore في Environment باسم `production`؛ راجع [دليل إصدار Android](docs-android-release.md) لأسماء الأسرار وطريقة التشغيل.
+
 ## تحسين الظهور في محركات البحث
 
 تتضمن صفحة الويب وصفًا عربيًا واضحًا، ووسوم Open Graph وTwitter لمعاينات المشاركة، وبيانات منظمة من نوع `WebApplication`، ورابطًا canonical، وملفي `robots.txt` و`sitemap.xml`. كما تحتوي الصفحة على محتوى وصفي بديل يظهر عند تعطيل JavaScript ليساعد محركات البحث على فهم وظيفة الديوان الشامل ومحتواه.
