@@ -16,9 +16,24 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            def releaseStore = System.getenv('DIWAN_RELEASE_STORE_FILE')
+            def releaseStorePassword = System.getenv('DIWAN_RELEASE_STORE_PASSWORD')
+            def releaseKeyAlias = System.getenv('DIWAN_RELEASE_KEY_ALIAS')
+            def releaseKeyPassword = System.getenv('DIWAN_RELEASE_KEY_PASSWORD')
+            if (releaseStore && releaseStorePassword && releaseKeyAlias && releaseKeyPassword) {
+                storeFile file(releaseStore)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

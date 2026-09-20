@@ -38,6 +38,14 @@ npm run android:build
 
 ينشئ الأمر نسخة debug في `android/app/build/outputs/apk/debug/app-debug.apk`. وتقوم خطوة `prepare:web` بنسخ أحدث ملفات PWA إلى `www/` قبل كل مزامنة، بينما تبقى `www/` وملفات إعداد SDK المحلية خارج Git لأنها نواتج مولدة.
 
+لبناء نسخة Release موقعة، خزّن keystore خارج المستودع ومرّر متغيرات `DIWAN_RELEASE_STORE_FILE` و`DIWAN_RELEASE_STORE_PASSWORD` و`DIWAN_RELEASE_KEY_ALIAS` و`DIWAN_RELEASE_KEY_PASSWORD`، ثم شغّل:
+
+```bash
+./scripts/build-release.sh
+```
+
+توجد أيقونة Android في موارد `mipmap` بمختلف الكثافات، وتُستخدم العلامة البنية ذات النجمة الذهبية المرفقة بالمشروع كأيقونة adaptive وlegacy.
+
 ## النشر
 
 المشروع جاهز للنشر على GitHub Pages أو أي استضافة ملفات ثابتة. يحتوي المستودع على Workflow اختياري في `.github/workflows/pages.yml` ينشر محتوى الفرع `main` تلقائيًا عند تفعيله من إعدادات GitHub Pages باستخدام GitHub Actions.
