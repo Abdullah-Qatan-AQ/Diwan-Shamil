@@ -3,8 +3,8 @@ name: Android Release
 on:
   workflow_dispatch:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -22,6 +22,42 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Create next version and tag
+        id: version
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          current_code=$(sed -nE 's/^[[:space:]]*versionCode ([0-9]+).*/\1/p' android/app/build.gradle | head -n 1)
+          current_name=$(sed -nE 's/^[[:space:]]*versionName "([^"]+)".*/\1/p' android/app/build.gradle | head -n 1)
+          test -n "$current_code"
+          test -n "$current_name"
+
+          IFS=. read -r major minor patch <<< "$current_name"
+          next_code=$((current_code + 1))
+          next_patch=$((patch + 1))
+          next_name="${major}.${minor}.${next_patch}"
+          next_tag="v${next_name}"
+
+          sed -i -E "s/(versionCode )[0-9]+/\\1${next_code}/" android/app/build.gradle
+          sed -i -E "s/(versionName )\"[^\"]+\"/\\1\"${next_name}\"/" android/app/build.gradle
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android/app/build.gradle
+          git commit -m "Prepare Android release ${next_tag} [skip ci]"
+          git tag "$next_tag"
+          git push origin HEAD:main
+          git push origin "$next_tag"
+
+          echo "version_name=$next_name" >> "$GITHUB_OUTPUT"
+          echo "version_code=$next_code" >> "$GITHUB_OUTPUT"
+          echo "tag=$next_tag" >> "$GITHUB_OUTPUT"
 
       - name: Set up Java 21
         uses: actions/setup-java@v5
@@ -47,26 +83,6 @@ jobs:
           printf '%s' "$KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/diwan-shamil-release"
           chmod 600 "$RUNNER_TEMP/diwan-shamil-release"
           test -s "$RUNNER_TEMP/diwan-shamil-release"
-
-      - name: Validate release version
-        id: version
-        shell: bash
-        run: |
-          set -euo pipefail
-          version_name=$(sed -nE 's/^[[:space:]]*versionName "([^"]+)".*/\1/p' android/app/build.gradle | head -n 1)
-          version_code=$(sed -nE 's/^[[:space:]]*versionCode ([0-9]+).*/\1/p' android/app/build.gradle | head -n 1)
-          test -n "$version_name"
-          test -n "$version_code"
-          echo "version_name=$version_name" >> "$GITHUB_OUTPUT"
-          echo "version_code=$version_code" >> "$GITHUB_OUTPUT"
-
-          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
-            expected_tag="v${version_name}"
-            test "$GITHUB_REF_NAME" = "$expected_tag" || {
-              echo "Tag $GITHUB_REF_NAME does not match versionName $version_name (expected $expected_tag)." >&2
-              exit 1
-            }
-          fi
 
       - name: Build signed release APK
         env:
@@ -103,13 +119,13 @@ jobs:
           retention-days: 30
 
       - name: Create GitHub Release and attach APK
-        if: github.ref_type == 'tag'
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION_NAME: ${{ steps.version.outputs.version_name }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
         run: |
           set -euo pipefail
-          gh release create "$GITHUB_REF_NAME" \
+          gh release create "$RELEASE_TAG" \
             "android/app/build/outputs/apk/release/app-release.apk" \
             --repo "$GITHUB_REPOSITORY" \
             --title "Diwan Shamil v${VERSION_NAME}" \

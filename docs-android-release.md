@@ -1,6 +1,6 @@
 # Android Release Automation
 
-يتم بناء APK موقّع تلقائيًا عند دفع Git tag يطابق رقم إصدار التطبيق، مثل `v1.0.4`. أما Push العادي إلى `main` فيستمر بنشر نسخة الويب عبر Workflow الخاص بـ GitHub Pages ولا ينشئ Release Android.
+يتم بناء APK موقّع تلقائيًا عند كل Push إلى `main`. يقرأ Workflow رقم الإصدار الحالي، يزيد `versionCode` بمقدار واحد، يزيد رقم الإصدار الأخير في `versionName`، ينشئ Commit وTag مثل `v1.0.4`، ثم ينشئ GitHub Release ويُرفق APK الموقّع. لا تحتاج إلى إنشاء Tag أو تعديل رقم الإصدار يدويًا.
 
 ## أسرار GitHub المطلوبة
 
@@ -25,17 +25,9 @@ base64 -w 0 diwan-shamil-release > diwan-shamil-release.base64
 
 ## إصدار جديد
 
-1. حدّث `versionCode` إلى رقم أكبر من الإصدار السابق، وحدّث `versionName` في `android/app/build.gradle`.
-2. أنشئ Tag مطابقًا تمامًا لـ `versionName`، مثل:
+لا تحتاج إلى تنفيذ أي أوامر خاصة. عند دفع أي تغيير إلى الفرع `main`، يقوم Workflow `.github/workflows/android-release.yml` تلقائيًا بتثبيت الاعتماديات، وزيادة رقم الإصدار، وإنشاء Commit وTag، واستعادة keystore، وبناء APK موقّع، والتحقق من التوقيع، ورفع Artifact، وإنشاء GitHub Release وإرفاق APK به.
 
-```bash
-git tag v1.0.4
-git push origin v1.0.4
-```
-
-3. سيقوم Workflow `.github/workflows/android-release.yml` بتثبيت الاعتماديات، واستعادة keystore، وبناء APK موقّع، والتحقق من التوقيع، ورفع Artifact، وإنشاء GitHub Release وإرفاق APK به.
-
-يفشل Workflow عمدًا إذا كان اسم الـ tag لا يطابق `versionName`، أو إذا كانت الأسرار ناقصة، أو إذا فشل التحقق من توقيع APK.
+يفشل Workflow إذا كانت الأسرار ناقصة، أو إذا تعذر إنشاء Commit أو Tag، أو إذا فشل بناء APK أو التحقق من توقيعه. تشغيله يدويًا من GitHub Actions ينشئ إصدارًا جديدًا أيضًا.
 
 ## الحماية
 
