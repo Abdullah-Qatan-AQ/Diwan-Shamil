@@ -36,391 +36,391 @@
     },
     {
       "id": "1",
-      "arabic": "Revelation"
+      "arabic": "كتاب الوحي"
     },
     {
       "id": "2",
-      "arabic": "Belief"
+      "arabic": "كتاب الإيمان"
     },
     {
       "id": "3",
-      "arabic": "Knowledge"
+      "arabic": "كتاب العلم"
     },
     {
       "id": "4",
-      "arabic": "Ablutions (Wudu')"
+      "arabic": "كتاب الوضوء"
     },
     {
       "id": "5",
-      "arabic": "Bathing (Ghusl)"
+      "arabic": "كتاب الغسل"
     },
     {
       "id": "6",
-      "arabic": "Menstrual Periods"
+      "arabic": "كتاب الحيض"
     },
     {
       "id": "7",
-      "arabic": "Rubbing hands and feet with dust (Tayammum)"
+      "arabic": "كتاب التيمم"
     },
     {
       "id": "8",
-      "arabic": "Prayers (Salat)"
+      "arabic": "كتاب الصلاة"
     },
     {
       "id": "9",
-      "arabic": "Times of the Prayers"
+      "arabic": "كتاب مواقيت الصلاة"
     },
     {
       "id": "10",
-      "arabic": "Call to Prayers (Adhaan)"
+      "arabic": "كتاب الأذان"
     },
     {
       "id": "11",
-      "arabic": "Friday Prayer"
+      "arabic": "كتاب الجمعة"
     },
     {
       "id": "12",
-      "arabic": "Fear Prayer"
+      "arabic": "كتاب صلاة الخوف"
     },
     {
       "id": "13",
-      "arabic": "The Two Festivals (Eids)"
+      "arabic": "كتاب العيدين"
     },
     {
       "id": "14",
-      "arabic": "Witr Prayer"
+      "arabic": "كتاب الوتر"
     },
     {
       "id": "15",
-      "arabic": "Invoking Allah for Rain (Istisqaa)"
+      "arabic": "كتاب الاستسقاء"
     },
     {
       "id": "16",
-      "arabic": "Eclipses"
+      "arabic": "كتاب الكسوف"
     },
     {
       "id": "17",
-      "arabic": "Prostration During Recital of Qur'an"
+      "arabic": "كتاب السجود عند التلاوة"
     },
     {
       "id": "18",
-      "arabic": "Shortening the Prayers (At-Taqseer)"
+      "arabic": "كتاب القصر"
     },
     {
       "id": "19",
-      "arabic": "Prayer at Night (Tahajjud)"
+      "arabic": "كتاب قيام الليل"
     },
     {
       "id": "20",
-      "arabic": "Virtues of Prayer at Masjid Makkah and Madinah"
+      "arabic": "كتاب فضائل الصلاة في المسجدين"
     },
     {
       "id": "21",
-      "arabic": "Actions while Praying"
+      "arabic": "كتاب الأعمال في الصلاة"
     },
     {
       "id": "22",
-      "arabic": "Forgetfulness in Prayer"
+      "arabic": "كتاب النسيان في الصلاة"
     },
     {
       "id": "23",
-      "arabic": "Funerals (Al-Janaa'iz)"
+      "arabic": "كتاب الجنائز"
     },
     {
       "id": "24",
-      "arabic": "Obligatory Charity Tax (Zakat)"
+      "arabic": "كتاب الزكاة"
     },
     {
       "id": "25",
-      "arabic": "Hajj (Pilgrimage)"
+      "arabic": "كتاب الحج"
     },
     {
       "id": "26",
-      "arabic": "`Umrah (Minor pilgrimage)"
+      "arabic": "كتاب العمرة"
     },
     {
       "id": "27",
-      "arabic": "Pilgrims Prevented from Completing the Pilgrimage"
+      "arabic": "كتاب من منع من الحج"
     },
     {
       "id": "28",
-      "arabic": "Penalty of Hunting while on Pilgrimage"
+      "arabic": "كتاب عقوبة الصيد أثناء الحج"
     },
     {
       "id": "29",
-      "arabic": "Virtues of Madinah"
+      "arabic": "كتاب فضل المدينة"
     },
     {
       "id": "30",
-      "arabic": "Fasting"
+      "arabic": "كتاب الصوم"
     },
     {
       "id": "31",
-      "arabic": "Praying at Night in Ramadaan (Taraweeh)"
+      "arabic": "كتاب التراويح"
     },
     {
       "id": "32",
-      "arabic": "Virtues of the Night of Qadr"
+      "arabic": "كتاب فضل ليلة القدر"
     },
     {
       "id": "33",
-      "arabic": "Retiring to a Mosque for Remembrance of Allah (I'tikaf)"
+      "arabic": "كتاب الاعتكاف"
     },
     {
       "id": "34",
-      "arabic": "Sales and Trade"
+      "arabic": "كتاب البيوع"
     },
     {
       "id": "35",
-      "arabic": "Sales in which a Price is paid for Goods to be Delivered Later (As-Salam)"
+      "arabic": "كتاب السلم"
     },
     {
       "id": "36",
-      "arabic": "Shuf'a"
+      "arabic": "كتاب الشفعة"
     },
     {
       "id": "37",
-      "arabic": "Hiring"
+      "arabic": "كتاب الإجارة"
     },
     {
       "id": "38",
-      "arabic": "Transferance of a Debt from One Person to Another (Al-Hawaala)"
+      "arabic": "كتاب الحوالة"
     },
     {
       "id": "39",
-      "arabic": "Kafalah"
+      "arabic": "كتاب الكفالة"
     },
     {
       "id": "40",
-      "arabic": "Representation, Authorization, Business by Proxy"
+      "arabic": "كتاب الوكالة"
     },
     {
       "id": "41",
-      "arabic": "Agriculture"
+      "arabic": "كتاب الزراعة"
     },
     {
       "id": "42",
-      "arabic": "Distribution of Water"
+      "arabic": "كتاب توزيع الماء"
     },
     {
       "id": "43",
-      "arabic": "Loans, Payment of Loans, Freezing of Property, Bankruptcy"
+      "arabic": "كتاب القروض والديون"
     },
     {
       "id": "44",
-      "arabic": "Khusoomaat"
+      "arabic": "كتاب الخصومات"
     },
     {
       "id": "45",
-      "arabic": "Lost Things Picked up by Someone (Luqatah)"
+      "arabic": "كتاب اللقطة"
     },
     {
       "id": "46",
-      "arabic": "Oppressions"
+      "arabic": "كتاب الظلم"
     },
     {
       "id": "47",
-      "arabic": "Partnership"
+      "arabic": "كتاب الشراكة"
     },
     {
       "id": "48",
-      "arabic": "Mortgaging"
+      "arabic": "كتاب الرهن"
     },
     {
       "id": "49",
-      "arabic": "Manumission of Slaves"
+      "arabic": "كتاب العتق"
     },
     {
       "id": "50",
-      "arabic": "Makaatib"
+      "arabic": "كتاب المكاتبة"
     },
     {
       "id": "51",
-      "arabic": "Gifts"
+      "arabic": "كتاب الهدايا"
     },
     {
       "id": "52",
-      "arabic": "Witnesses"
+      "arabic": "كتاب الشهادات"
     },
     {
       "id": "53",
-      "arabic": "Peacemaking"
+      "arabic": "كتاب الصلح"
     },
     {
       "id": "54",
-      "arabic": "Conditions"
+      "arabic": "كتاب الشروط"
     },
     {
       "id": "55",
-      "arabic": "Wills and Testaments (Wasaayaa)"
+      "arabic": "كتاب الوصايا"
     },
     {
       "id": "56",
-      "arabic": "Fighting for the Cause of Allah (Jihaad)"
+      "arabic": "كتاب الجهاد"
     },
     {
       "id": "57",
-      "arabic": "One-fifth of Booty to the Cause of Allah (Khumus)"
+      "arabic": "كتاب الخمس"
     },
     {
       "id": "58",
-      "arabic": "Jizyah and Mawaada'ah"
+      "arabic": "كتاب الجزية والمعاهدات"
     },
     {
       "id": "59",
-      "arabic": "Beginning of Creation"
+      "arabic": "كتاب بدء الخلق"
     },
     {
       "id": "60",
-      "arabic": "Prophets"
+      "arabic": "كتاب الأنبياء"
     },
     {
       "id": "61",
-      "arabic": "Virtues and Merits of the Prophet (pbuh) and his Companions"
+      "arabic": "كتاب فضائل النبي والصحابة"
     },
     {
       "id": "62",
-      "arabic": "Companions of the Prophet"
+      "arabic": "كتاب الصحابة"
     },
     {
       "id": "63",
-      "arabic": "Merits of the Helpers in Madinah (Ansaar)"
+      "arabic": "كتاب فضائل الأنصار"
     },
     {
       "id": "64",
-      "arabic": "Military Expeditions led by the Prophet (pbuh) (Al-Maghaazi)"
+      "arabic": "كتاب المغازي"
     },
     {
       "id": "65",
-      "arabic": "Prophetic Commentary on the Qur'an (Tafseer of the Prophet (pbuh))"
+      "arabic": "كتاب تفسير النبي"
     },
     {
       "id": "66",
-      "arabic": "Virtues of the Qur'an"
+      "arabic": "كتاب فضائل القرآن"
     },
     {
       "id": "67",
-      "arabic": "Wedlock, Marriage (Nikaah)"
+      "arabic": "كتاب النكاح"
     },
     {
       "id": "68",
-      "arabic": "Divorce"
+      "arabic": "كتاب الطلاق"
     },
     {
       "id": "69",
-      "arabic": "Supporting the Family"
+      "arabic": "كتاب النفقة"
     },
     {
       "id": "70",
-      "arabic": "Food, Meals"
+      "arabic": "كتاب الطعام"
     },
     {
       "id": "71",
-      "arabic": "Sacrifice on Occasion of Birth (`Aqiqa)"
+      "arabic": "كتاب العقيقة"
     },
     {
       "id": "72",
-      "arabic": "Hunting, Slaughtering"
+      "arabic": "كتاب الصيد والذبح"
     },
     {
       "id": "73",
-      "arabic": "Al-Adha Festival Sacrifice (Adaahi)"
+      "arabic": "كتاب الأضاحي"
     },
     {
       "id": "74",
-      "arabic": "Drinks"
+      "arabic": "كتاب الأشربة"
     },
     {
       "id": "75",
-      "arabic": "Patients"
+      "arabic": "كتاب المرضى"
     },
     {
       "id": "76",
-      "arabic": "Medicine"
+      "arabic": "كتاب الطب"
     },
     {
       "id": "77",
-      "arabic": "Dress"
+      "arabic": "كتاب اللباس"
     },
     {
       "id": "78",
-      "arabic": "Good Manners and Form (Al-Adab)"
+      "arabic": "كتاب الآداب"
     },
     {
       "id": "79",
-      "arabic": "Asking Permission"
+      "arabic": "كتاب الاستئذان"
     },
     {
       "id": "80",
-      "arabic": "Invocations"
+      "arabic": "كتاب الأذكار"
     },
     {
       "id": "81",
-      "arabic": "To make the Heart Tender (Ar-Riqaq)"
+      "arabic": "كتاب الرقائق"
     },
     {
       "id": "82",
-      "arabic": "Divine Will (Al-Qadar)"
+      "arabic": "كتاب القدر"
     },
     {
       "id": "83",
-      "arabic": "Oaths and Vows"
+      "arabic": "كتاب الأيمان والنذور"
     },
     {
       "id": "84",
-      "arabic": "Expiation for Unfulfilled Oaths"
+      "arabic": "كتاب كفارة اليمين"
     },
     {
       "id": "85",
-      "arabic": "Laws of Inheritance (Al-Faraa'id)"
+      "arabic": "كتاب الفرائض"
     },
     {
       "id": "86",
-      "arabic": "Limits and Punishments set by Allah (Hudood)"
+      "arabic": "كتاب الحدود"
     },
     {
       "id": "87",
-      "arabic": "Blood Money (Ad-Diyat)"
+      "arabic": "كتاب الديات"
     },
     {
       "id": "88",
-      "arabic": "Apostates"
+      "arabic": "كتاب الردة"
     },
     {
       "id": "89",
-      "arabic": "(Statements made under) Coercion"
+      "arabic": "كتاب الإكراه"
     },
     {
       "id": "90",
-      "arabic": "Tricks"
+      "arabic": "كتاب الحيل"
     },
     {
       "id": "91",
-      "arabic": "Interpretation of Dreams"
+      "arabic": "كتاب تفسير الأحلام"
     },
     {
       "id": "92",
-      "arabic": "Afflictions and the End of the World"
+      "arabic": "كتاب الفتن وأشراط الساعة"
     },
     {
       "id": "93",
-      "arabic": "Judgments (Ahkaam)"
+      "arabic": "كتاب الأحكام"
     },
     {
       "id": "94",
-      "arabic": "Wishes"
+      "arabic": "كتاب الأماني"
     },
     {
       "id": "95",
-      "arabic": "Accepting Information Given by a Truthful Person"
+      "arabic": "كتاب قبول حديث الصادق"
     },
     {
       "id": "96",
-      "arabic": "Holding Fast to the Qur'an and Sunnah"
+      "arabic": "كتاب التمسك بالقرآن والسنة"
     },
     {
       "id": "97",
-      "arabic": "Oneness, Uniqueness of Allah (Tawheed)"
+      "arabic": "كتاب التوحيد"
     }
   ],
   "hadiths": [

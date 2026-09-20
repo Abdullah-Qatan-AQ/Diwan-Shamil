@@ -32,155 +32,155 @@
   "chapters": [
     {
       "id": "0",
-      "arabic": "The Book of the Sunnah"
+      "arabic": "كتاب السنة"
     },
     {
       "id": "1",
-      "arabic": "The Book of Purification and its Sunnah"
+      "arabic": "كتاب الطهارة وسننها"
     },
     {
       "id": "2",
-      "arabic": "The Book of the Prayer"
+      "arabic": "كتاب الصلاة"
     },
     {
       "id": "3",
-      "arabic": "The Book of the Adhan and the Sunnah Regarding It"
+      "arabic": "كتاب الأذان والسنة"
     },
     {
       "id": "4",
-      "arabic": "The Book On The Mosques And The Congregations"
+      "arabic": "كتاب المساجد والجماعات"
     },
     {
       "id": "5",
-      "arabic": "Establishing the Prayer and the Sunnah Regarding Them"
+      "arabic": "كتاب إقامة الصلاة وسننها"
     },
     {
       "id": "6",
-      "arabic": "Chapters Regarding Funerals"
+      "arabic": "كتاب الجنائز"
     },
     {
       "id": "7",
-      "arabic": "Fasting"
+      "arabic": "كتاب الصيام"
     },
     {
       "id": "8",
-      "arabic": "The Chapters Regarding Zakat"
+      "arabic": "كتاب الزكاة"
     },
     {
       "id": "9",
-      "arabic": "The Chapters on Marriage"
+      "arabic": "كتاب النكاح"
     },
     {
       "id": "10",
-      "arabic": "The Chapters on Divorce"
+      "arabic": "كتاب الطلاق"
     },
     {
       "id": "11",
-      "arabic": "The Chapters on Expiation"
+      "arabic": "كتاب الكفارات"
     },
     {
       "id": "12",
-      "arabic": "The Chapters on Business Transactions"
+      "arabic": "كتاب المعاملات التجارية"
     },
     {
       "id": "13",
-      "arabic": "The Chapters on Rulings"
+      "arabic": "كتاب الأحكام"
     },
     {
       "id": "14",
-      "arabic": "The Chapters on Gifts"
+      "arabic": "كتاب الهدايا"
     },
     {
       "id": "15",
-      "arabic": "The Chapters on Charity"
+      "arabic": "كتاب الصدقات"
     },
     {
       "id": "16",
-      "arabic": "The Chapters on Pawning"
+      "arabic": "كتاب الرهن"
     },
     {
       "id": "17",
-      "arabic": "The Chapters on Pre-emption"
+      "arabic": "كتاب الشفعة"
     },
     {
       "id": "18",
-      "arabic": "The Chapters on Lost Property"
+      "arabic": "كتاب اللقطة"
     },
     {
       "id": "19",
-      "arabic": "The Chapters on Manumission (of Slaves)"
+      "arabic": "كتاب العتق"
     },
     {
       "id": "20",
-      "arabic": "The Chapters on Legal Punishments"
+      "arabic": "كتاب الحدود"
     },
     {
       "id": "21",
-      "arabic": "The Chapters on Blood Money"
+      "arabic": "كتاب الديات"
     },
     {
       "id": "22",
-      "arabic": "The Chapters on Wills"
+      "arabic": "كتاب الوصايا"
     },
     {
       "id": "23",
-      "arabic": "Chapters on Shares of Inheritance"
+      "arabic": "كتاب الفرائض"
     },
     {
       "id": "24",
-      "arabic": "The Chapters on Jihad"
+      "arabic": "كتاب الجهاد"
     },
     {
       "id": "25",
-      "arabic": "Chapters on Hajj Rituals"
+      "arabic": "كتاب مناسك الحج"
     },
     {
       "id": "26",
-      "arabic": "Chapters on Sacrifices"
+      "arabic": "كتاب الأضاحي"
     },
     {
       "id": "27",
-      "arabic": "Chapters on Slaughtering"
+      "arabic": "كتاب الذبح"
     },
     {
       "id": "28",
-      "arabic": "Chapters on Hunting"
+      "arabic": "كتاب الصيد"
     },
     {
       "id": "29",
-      "arabic": "Chapters on Food"
+      "arabic": "كتاب الطعام"
     },
     {
       "id": "30",
-      "arabic": "Chapters on Drinks"
+      "arabic": "كتاب الأشربة"
     },
     {
       "id": "31",
-      "arabic": "Chapters on Medicine"
+      "arabic": "كتاب الطب"
     },
     {
       "id": "32",
-      "arabic": "Chapters on Dress"
+      "arabic": "كتاب اللباس"
     },
     {
       "id": "33",
-      "arabic": "Etiquette"
+      "arabic": "كتاب الآداب"
     },
     {
       "id": "34",
-      "arabic": "Supplication"
+      "arabic": "كتاب الدعاء"
     },
     {
       "id": "35",
-      "arabic": "Interpretation of Dreams"
+      "arabic": "كتاب تفسير الأحلام"
     },
     {
       "id": "36",
-      "arabic": "Tribulations"
+      "arabic": "كتاب الفتن"
     },
     {
       "id": "37",
-      "arabic": "Zuhd"
+      "arabic": "كتاب الزهد"
     }
   ],
   "hadiths": [

@@ -32,247 +32,247 @@
   "chapters": [
     {
       "id": "1",
-      "arabic": "The Times of Prayer"
+      "arabic": "كتاب مواقيت الصلاة"
     },
     {
       "id": "2",
-      "arabic": "Purity"
+      "arabic": "كتاب الطهارة"
     },
     {
       "id": "3",
-      "arabic": "Prayer"
+      "arabic": "كتاب الصلاة"
     },
     {
       "id": "4",
-      "arabic": "Forgetfulness in Prayer"
+      "arabic": "كتاب السهو في الصلاة"
     },
     {
       "id": "5",
-      "arabic": "Jumu'a"
+      "arabic": "كتاب الجمعة"
     },
     {
       "id": "6",
-      "arabic": "Prayer in Ramadan"
+      "arabic": "كتاب الصلاة في رمضان"
     },
     {
       "id": "7",
-      "arabic": "Tahajjud"
+      "arabic": "كتاب التهجد"
     },
     {
       "id": "8",
-      "arabic": "Prayer in Congregation"
+      "arabic": "كتاب الصلاة في الجماعة"
     },
     {
       "id": "9",
-      "arabic": "Shortening the Prayer"
+      "arabic": "كتاب القصر"
     },
     {
       "id": "10",
-      "arabic": "The Two 'Ids"
+      "arabic": "كتاب العيدين"
     },
     {
       "id": "11",
-      "arabic": "The Fear Prayer"
+      "arabic": "كتاب صلاة الخوف"
     },
     {
       "id": "12",
-      "arabic": "The Eclipse Prayer"
+      "arabic": "كتاب صلاة الكسوف"
     },
     {
       "id": "13",
-      "arabic": "Asking for Rain"
+      "arabic": "كتاب الاستسقاء"
     },
     {
       "id": "14",
-      "arabic": "The Qibla"
+      "arabic": "كتاب القبلة"
     },
     {
       "id": "15",
-      "arabic": "The Qur'an"
+      "arabic": "كتاب القرآن"
     },
     {
       "id": "16",
-      "arabic": "Burials"
+      "arabic": "كتاب الجنائز"
     },
     {
       "id": "17",
-      "arabic": "Zakat"
+      "arabic": "كتاب الزكاة"
     },
     {
       "id": "18",
-      "arabic": "Fasting"
+      "arabic": "كتاب الصيام"
     },
     {
       "id": "19",
-      "arabic": "I'tikaf in Ramadan"
+      "arabic": "كتاب الاعتكاف في رمضان"
     },
     {
       "id": "20",
-      "arabic": "Hajj"
+      "arabic": "كتاب الحج"
     },
     {
       "id": "21",
-      "arabic": "Jihad"
+      "arabic": "كتاب الجهاد"
     },
     {
       "id": "22",
-      "arabic": "Vows and Oaths"
+      "arabic": "كتاب النذور والأيمان"
     },
     {
       "id": "23",
-      "arabic": "Sacrificial Animals"
+      "arabic": "كتاب الأضاحي"
     },
     {
       "id": "24",
-      "arabic": "Slaughtering Animals"
+      "arabic": "كتاب الذبائح"
     },
     {
       "id": "25",
-      "arabic": "Game"
+      "arabic": "كتاب الصيد"
     },
     {
       "id": "26",
-      "arabic": "The 'Aqiqa"
+      "arabic": "كتاب العقيقة"
     },
     {
       "id": "27",
-      "arabic": "Fara'id"
+      "arabic": "كتاب الفرائض"
     },
     {
       "id": "28",
-      "arabic": "Marriage"
+      "arabic": "كتاب النكاح"
     },
     {
       "id": "29",
-      "arabic": "Divorce"
+      "arabic": "كتاب الطلاق"
     },
     {
       "id": "30",
-      "arabic": "Suckling"
+      "arabic": "كتاب الرضاع"
     },
     {
       "id": "31",
-      "arabic": "Business Transactions"
+      "arabic": "كتاب المعاملات"
     },
     {
       "id": "32",
-      "arabic": "Qirad"
+      "arabic": "كتاب القِراض"
     },
     {
       "id": "33",
-      "arabic": "Sharecropping"
+      "arabic": "كتاب المزارعة"
     },
     {
       "id": "34",
-      "arabic": "Renting Land"
+      "arabic": "كتاب استئجار الأرض"
     },
     {
       "id": "35",
-      "arabic": "Pre-emption in Property"
+      "arabic": "كتاب الشفعة"
     },
     {
       "id": "36",
-      "arabic": "Judgements"
+      "arabic": "كتاب القضاء"
     },
     {
       "id": "37",
-      "arabic": "Wills and Testaments"
+      "arabic": "كتاب الوصايا"
     },
     {
       "id": "38",
-      "arabic": "Setting Free and Wala'"
+      "arabic": "كتاب العتق والولاء"
     },
     {
       "id": "39",
-      "arabic": "The Mukatab"
+      "arabic": "كتاب المكاتبة"
     },
     {
       "id": "40",
-      "arabic": "The Mudabbar"
+      "arabic": "كتاب المدبر"
     },
     {
       "id": "41",
-      "arabic": "Hudud"
+      "arabic": "كتاب الحدود"
     },
     {
       "id": "42",
-      "arabic": "Drinks"
+      "arabic": "كتاب الأشربة"
     },
     {
       "id": "43",
-      "arabic": "Blood-Money"
+      "arabic": "كتاب الديات"
     },
     {
       "id": "44",
-      "arabic": "The Oath of Qasama"
+      "arabic": "كتاب القسامة"
     },
     {
       "id": "45",
-      "arabic": "Madina"
+      "arabic": "كتاب المدينة"
     },
     {
       "id": "46",
-      "arabic": "The Decree"
+      "arabic": "كتاب القدر"
     },
     {
       "id": "47",
-      "arabic": "Good Character"
+      "arabic": "كتاب الأخلاق"
     },
     {
       "id": "48",
-      "arabic": "Dress"
+      "arabic": "كتاب اللباس"
     },
     {
       "id": "49",
-      "arabic": "The Description of the Prophet, may Allah Bless Him and Grant Him Peace"
+      "arabic": "كتاب صفات النبي"
     },
     {
       "id": "50",
-      "arabic": "The Evil Eye"
+      "arabic": "كتاب العين"
     },
     {
       "id": "51",
-      "arabic": "Hair"
+      "arabic": "كتاب الشعر"
     },
     {
       "id": "52",
-      "arabic": "Visions"
+      "arabic": "كتاب الرؤى"
     },
     {
       "id": "53",
-      "arabic": "Greetings"
+      "arabic": "كتاب التحية"
     },
     {
       "id": "54",
-      "arabic": "General Subjects"
+      "arabic": "كتاب مسائل عامة"
     },
     {
       "id": "55",
-      "arabic": "The Oath of Allegiance"
+      "arabic": "كتاب البيعة"
     },
     {
       "id": "56",
-      "arabic": "Speech"
+      "arabic": "كتاب الكلام"
     },
     {
       "id": "57",
-      "arabic": "Jahannam"
+      "arabic": "كتاب جهنم"
     },
     {
       "id": "58",
-      "arabic": "Sadaqa"
+      "arabic": "كتاب الصدقة"
     },
     {
       "id": "59",
-      "arabic": "Knowledge"
+      "arabic": "كتاب العلم"
     },
     {
       "id": "60",
-      "arabic": "The Supplication of the Unjustly Wronged"
+      "arabic": "كتاب دعاء المظلوم"
     },
     {
       "id": "61",
-      "arabic": "The Names of the Prophet, may Allah Bless Him and Grant Him Peace"
+      "arabic": "كتاب أسماء النبي"
     }
   ],
   "hadiths": [

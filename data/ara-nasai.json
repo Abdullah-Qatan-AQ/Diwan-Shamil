@@ -32,207 +32,207 @@
   "chapters": [
     {
       "id": "1",
-      "arabic": "The Book of Purification"
+      "arabic": "كتاب الطهارة"
     },
     {
       "id": "2",
-      "arabic": "The Book of Water"
+      "arabic": "كتاب الماء"
     },
     {
       "id": "3",
-      "arabic": "The Book of Menstruation and Istihadah"
+      "arabic": "كتاب الحيض والاستحاضة"
     },
     {
       "id": "4",
-      "arabic": "The Book of Ghusl and Tayammum"
+      "arabic": "كتاب الغسل والتيمم"
     },
     {
       "id": "5",
-      "arabic": "The Book of Salah"
+      "arabic": "كتاب الصلاة"
     },
     {
       "id": "6",
-      "arabic": "The Book of the Times (of Prayer)"
+      "arabic": "كتاب مواقيت الصلاة"
     },
     {
       "id": "7",
-      "arabic": "The Book of the Adhan (The Call to Prayer)"
+      "arabic": "كتاب الأذان"
     },
     {
       "id": "8",
-      "arabic": "The Book of the Masjids"
+      "arabic": "كتاب المساجد"
     },
     {
       "id": "9",
-      "arabic": "The Book of the Qiblah"
+      "arabic": "كتاب القبلة"
     },
     {
       "id": "10",
-      "arabic": "The Book of Leading the Prayer (Al-Imamah)"
+      "arabic": "كتاب الإمامة"
     },
     {
       "id": "11",
-      "arabic": "The Book of the Commencement of the Prayer"
+      "arabic": "كتاب بدء الصلاة"
     },
     {
       "id": "12",
-      "arabic": "The Book of The At-Tatbiq (Clasping One's Hands Together)"
+      "arabic": "كتاب التشبيك (ضمّ اليدين)"
     },
     {
       "id": "13",
-      "arabic": "The Book of Forgetfulness (In Prayer)"
+      "arabic": "كتاب السهو في الصلاة"
     },
     {
       "id": "14",
-      "arabic": "The Book of Jumu'ah (Friday Prayer)"
+      "arabic": "كتاب الجمعة"
     },
     {
       "id": "15",
-      "arabic": "The Book of Shortening the Prayer When Traveling"
+      "arabic": "كتاب قصر الصلاة عند السفر"
     },
     {
       "id": "16",
-      "arabic": "The Book of Eclipses"
+      "arabic": "كتاب الكسوف"
     },
     {
       "id": "17",
-      "arabic": "The Book of Praying for Rain (Al-Istisqa')"
+      "arabic": "كتاب الاستسقاء"
     },
     {
       "id": "18",
-      "arabic": "The Book of the Fear Prayer"
+      "arabic": "كتاب صلاة الخوف"
     },
     {
       "id": "19",
-      "arabic": "The Book of the Prayer for the Two 'Eids"
+      "arabic": "كتاب صلاة العيدين"
     },
     {
       "id": "20",
-      "arabic": "The Book of Qiyam Al-Lail (The Night Prayer) and Voluntary Prayers During the Day"
+      "arabic": "كتاب قيام الليل والنافلة"
     },
     {
       "id": "21",
-      "arabic": "The Book of Funerals"
+      "arabic": "كتاب الجنائز"
     },
     {
       "id": "22",
-      "arabic": "The Book of Fasting"
+      "arabic": "كتاب الصيام"
     },
     {
       "id": "23",
-      "arabic": "The Book of Zakah"
+      "arabic": "كتاب الزكاة"
     },
     {
       "id": "24",
-      "arabic": "The Book of Hajj"
+      "arabic": "كتاب الحج"
     },
     {
       "id": "25",
-      "arabic": "The Book of Jihad"
+      "arabic": "كتاب الجهاد"
     },
     {
       "id": "26",
-      "arabic": "The Book of Marriage"
+      "arabic": "كتاب النكاح"
     },
     {
       "id": "27",
-      "arabic": "The Book of Divorce"
+      "arabic": "كتاب الطلاق"
     },
     {
       "id": "28",
-      "arabic": "The Book of Horses, Races and Shooting"
+      "arabic": "كتاب الخيل والسباقات والرماية"
     },
     {
       "id": "29",
-      "arabic": "The Book of Endowments"
+      "arabic": "كتاب الوقف"
     },
     {
       "id": "30",
-      "arabic": "The Book of Wills"
+      "arabic": "كتاب الوصايا"
     },
     {
       "id": "31",
-      "arabic": "The Book of Presents"
+      "arabic": "كتاب الهدايا"
     },
     {
       "id": "32",
-      "arabic": "The Book of Gifts"
+      "arabic": "كتاب العطايا"
     },
     {
       "id": "33",
-      "arabic": "The Book of ar-Ruqba"
+      "arabic": "كتاب الرقبة"
     },
     {
       "id": "34",
-      "arabic": "The Book of 'Umra"
+      "arabic": "كتاب العمرة"
     },
     {
       "id": "35",
-      "arabic": "The Book of Agriculture"
+      "arabic": "كتاب الزراعة"
     },
     {
       "id": "36",
-      "arabic": "The Book of the Kind Treatment of Women"
+      "arabic": "كتاب الإحسان إلى النساء"
     },
     {
       "id": "37",
-      "arabic": "The Book of Fighting [The Prohibition of Bloodshed]"
+      "arabic": "كتاب القتال"
     },
     {
       "id": "38",
-      "arabic": "The Book of Distribution of Al-Fay'"
+      "arabic": "كتاب الفَيْء"
     },
     {
       "id": "39",
-      "arabic": "The Book of al-Bay'ah"
+      "arabic": "كتاب البيعة"
     },
     {
       "id": "40",
-      "arabic": "The Book of al-'Aqiqah"
+      "arabic": "كتاب العقيقة"
     },
     {
       "id": "41",
-      "arabic": "The Book of al-Fara' and al-'Atirah"
+      "arabic": "كتاب الفراء والعطيرة"
     },
     {
       "id": "42",
-      "arabic": "The Book of Hunting and Slaughtering"
+      "arabic": "كتاب الصيد والذبح"
     },
     {
       "id": "43",
-      "arabic": "The Book of ad-Dahaya (Sacrifices)"
+      "arabic": "كتاب الأضاحي"
     },
     {
       "id": "44",
-      "arabic": "The Book of Financial Transactions"
+      "arabic": "كتاب المعاملات المالية"
     },
     {
       "id": "45",
-      "arabic": "The Book of Oaths (qasamah), Retaliation and Blood Money"
+      "arabic": "كتاب القَسَامَة والقصاص والديات"
     },
     {
       "id": "46",
-      "arabic": "The Book of Cutting off the Hand of the Thief"
+      "arabic": "كتاب حد السرقة"
     },
     {
       "id": "47",
-      "arabic": "The Book Of Faith and its Signs"
+      "arabic": "كتاب الإيمان وآثاره"
     },
     {
       "id": "48",
-      "arabic": "The Book of Adornment"
+      "arabic": "كتاب الزينة"
     },
     {
       "id": "49",
-      "arabic": "The Book of the Etiquette of Judges"
+      "arabic": "كتاب آداب القضاة"
     },
     {
       "id": "50",
-      "arabic": "The Book of Seeking Refuge with Allah"
+      "arabic": "كتاب الاستعاذة"
     },
     {
       "id": "51",
-      "arabic": "The Book of Drinks"
+      "arabic": "كتاب الأشربة"
     }
   ],
   "hadiths": [

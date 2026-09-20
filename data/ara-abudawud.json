@@ -32,175 +32,175 @@
   "chapters": [
     {
       "id": "1",
-      "arabic": "Purification (Kitab Al-Taharah)"
+      "arabic": "كتاب الطهارة"
     },
     {
       "id": "2",
-      "arabic": "Prayer (Kitab Al-Salat)"
+      "arabic": "كتاب الصلاة"
     },
     {
       "id": "3",
-      "arabic": "The Book Of The Prayer For Rain (Kitab al-Istisqa')"
+      "arabic": "كتاب الاستسقاء"
     },
     {
       "id": "4",
-      "arabic": "Prayer (Kitab Al-Salat): Detailed Rules of Law about the Prayer during Journey"
+      "arabic": "كتاب الصلاة: أحكام السفر في الصلاة"
     },
     {
       "id": "5",
-      "arabic": "Prayer (Kitab Al-Salat): Voluntary Prayers"
+      "arabic": "كتاب الصلاة: النوافل"
     },
     {
       "id": "6",
-      "arabic": "Prayer (Kitab Al-Salat): Detailed Injunctions about Ramadan"
+      "arabic": "كتاب الصلاة: أحكام رمضان"
     },
     {
       "id": "7",
-      "arabic": "Prayer (Kitab Al-Salat): Prostration while reciting the Qur'an"
+      "arabic": "كتاب الصلاة: السجود عند التلاوة"
     },
     {
       "id": "8",
-      "arabic": "Prayer (Kitab Al-Salat): Detailed Injunctions about Witr"
+      "arabic": "كتاب الصلاة: أحكام الوتر"
     },
     {
       "id": "9",
-      "arabic": "Zakat (Kitab Al-Zakat)"
+      "arabic": "كتاب الزكاة"
     },
     {
       "id": "10",
-      "arabic": "The Book of Lost and Found Items"
+      "arabic": "كتاب اللقطة"
     },
     {
       "id": "11",
-      "arabic": "The Rites of Hajj (Kitab Al-Manasik Wa'l-Hajj)"
+      "arabic": "كتاب المناسك والحج"
     },
     {
       "id": "12",
-      "arabic": "Marriage (Kitab Al-Nikah)"
+      "arabic": "كتاب النكاح"
     },
     {
       "id": "13",
-      "arabic": "Divorce (Kitab Al-Talaq)"
+      "arabic": "كتاب الطلاق"
     },
     {
       "id": "14",
-      "arabic": "Fasting (Kitab Al-Siyam)"
+      "arabic": "كتاب الصيام"
     },
     {
       "id": "15",
-      "arabic": "Jihad (Kitab Al-Jihad)"
+      "arabic": "كتاب الجهاد"
     },
     {
       "id": "16",
-      "arabic": "Sacrifice (Kitab Al-Dahaya)"
+      "arabic": "كتاب الضحايا"
     },
     {
       "id": "17",
-      "arabic": "Game (Kitab Al-Said)"
+      "arabic": "كتاب الصيد"
     },
     {
       "id": "18",
-      "arabic": "Wills (Kitab Al-Wasaya)"
+      "arabic": "كتاب الوصايا"
     },
     {
       "id": "19",
-      "arabic": "Shares of Inheritance (Kitab Al-Fara'id)"
+      "arabic": "كتاب الفرائض"
     },
     {
       "id": "20",
-      "arabic": "Tribute, Spoils, and Rulership (Kitab Al-Kharaj, Wal-Fai' Wal-Imarah)"
+      "arabic": "كتاب الخراج والغنائم والإمارة"
     },
     {
       "id": "21",
-      "arabic": "Funerals (Kitab Al-Jana'iz)"
+      "arabic": "كتاب الجنائز"
     },
     {
       "id": "22",
-      "arabic": "Oaths and Vows (Kitab Al-Aiman Wa Al-Nudhur)"
+      "arabic": "كتاب الأيمان والنذور"
     },
     {
       "id": "23",
-      "arabic": "Commercial Transactions (Kitab Al-Buyu)"
+      "arabic": "كتاب البيوع"
     },
     {
       "id": "24",
-      "arabic": "Wages (Kitab Al-Ijarah)"
+      "arabic": "كتاب الإجارة"
     },
     {
       "id": "25",
-      "arabic": "The Office of the Judge (Kitab Al-Aqdiyah)"
+      "arabic": "كتاب القضاء"
     },
     {
       "id": "26",
-      "arabic": "Knowledge (Kitab Al-Ilm)"
+      "arabic": "كتاب العلم"
     },
     {
       "id": "27",
-      "arabic": "Drinks (Kitab Al-Ashribah)"
+      "arabic": "كتاب الأشربة"
     },
     {
       "id": "28",
-      "arabic": "Foods (Kitab Al-At'imah)"
+      "arabic": "كتاب الأطعمة"
     },
     {
       "id": "29",
-      "arabic": "Medicine (Kitab Al-Tibb)"
+      "arabic": "كتاب الطب"
     },
     {
       "id": "30",
-      "arabic": "Divination and Omens (Kitab Al-Kahanah Wa Al-Tatayyur)"
+      "arabic": "كتاب الكهانة والتطير"
     },
     {
       "id": "31",
-      "arabic": "The Book of Manumission of Slaves"
+      "arabic": "كتاب العتق"
     },
     {
       "id": "32",
-      "arabic": "Dialects and Readings of the Qur'an (Kitab Al-Huruf Wa Al-Qira'at)"
+      "arabic": "كتاب الحروف والقراءات"
     },
     {
       "id": "33",
-      "arabic": "Hot Baths (Kitab Al-Hammam)"
+      "arabic": "كتاب الحمّام"
     },
     {
       "id": "34",
-      "arabic": "Clothing (Kitab Al-Libas)"
+      "arabic": "كتاب اللباس"
     },
     {
       "id": "35",
-      "arabic": "Combing the Hair (Kitab Al-Tarajjul)"
+      "arabic": "كتاب تمشيط الشعر"
     },
     {
       "id": "36",
-      "arabic": "Signet-Rings (Kitab Al-Khatam)"
+      "arabic": "كتاب الخواتم"
     },
     {
       "id": "37",
-      "arabic": "Trials and Fierce Battles (Kitab Al-Fitan Wa Al-Malahim)"
+      "arabic": "كتاب الفتن والملاحم"
     },
     {
       "id": "38",
-      "arabic": "The Promised Deliverer (Kitab Al-Mahdi)"
+      "arabic": "كتاب المهدي"
     },
     {
       "id": "39",
-      "arabic": "Battles (Kitab Al-Malahim)"
+      "arabic": "كتاب الملاحم"
     },
     {
       "id": "40",
-      "arabic": "Prescribed Punishments (Kitab Al-Hudud)"
+      "arabic": "كتاب الحدود"
     },
     {
       "id": "41",
-      "arabic": "Types of Blood-Wit (Kitab Al-Diyat)"
+      "arabic": "كتاب الديات"
     },
     {
       "id": "42",
-      "arabic": "Model Behavior of the Prophet (Kitab Al-Sunnah)"
+      "arabic": "كتاب السنة"
     },
     {
       "id": "43",
-      "arabic": "General Behavior (Kitab Al-Adab)"
+      "arabic": "كتاب الأدب"
     }
   ],
   "hadiths": [
