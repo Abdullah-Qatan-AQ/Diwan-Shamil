@@ -40,7 +40,20 @@ jobs:
 
           IFS=. read -r major minor patch <<< "$current_name"
           next_code=$((current_code + 1))
-          next_patch=$((patch + 1))
+          test -n "$major"
+          test -n "$minor"
+
+          # Use the first missing patch number in the current major.minor line.
+          # Example: v1.0.0 and v1.0.2 exist, so the next release is v1.0.1.
+          mapfile -t existing_tags < <(git tag -l "v${major}.${minor}.*" | sed -E "s/^v${major//./\\.}.${minor//./\\.}.([0-9]+)$/\1/" | sort -n)
+          next_patch=0
+          for existing_patch in "${existing_tags[@]}"; do
+            if [[ "$existing_patch" == "$next_patch" ]]; then
+              next_patch=$((next_patch + 1))
+            elif (( existing_patch > next_patch )); then
+              break
+            fi
+          done
           next_name="${major}.${minor}.${next_patch}"
           next_tag="v${next_name}"
 
