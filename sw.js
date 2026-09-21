@@ -1,9 +1,9 @@
-const CACHE = "diwan-v39";
+const CACHE = "diwan-v40";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=31",
-  "./app.js?v=34",
+  "./styles.css?v=32",
+  "./app.js?v=35",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -12,6 +12,7 @@ const ASSETS = [
   "./data/quran.json",
   "./data/surah-meta.json",
   "./data/poetry/index.json",
+  "./data/poetry/poets.json",
   ...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, "0")}.json`),
   "./data/ara-bukhari.json",
   "./data/ara-muslim.json",
