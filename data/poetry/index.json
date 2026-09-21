@@ -3,6 +3,7 @@
   "source": "Kaggle / mdanok / arabic-poetry-dataset",
   "license": "ODbL-1.0",
   "count": 75022,
+  "poetCount": 755,
   "parts": 76,
   "fields": [
     "poet_name",
