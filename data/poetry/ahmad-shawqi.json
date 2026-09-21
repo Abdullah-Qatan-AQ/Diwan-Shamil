@@ -1,0 +1,20 @@
+{
+  "title": "قصائد أحمد شوقي — مختارات من الملك العام",
+  "source": "ويكي مصدر — مؤلف: أحمد شوقي",
+  "sourceUrl": "https://ar.wikisource.org/wiki/%D9%85%D8%A4%D9%84%D9%81:%D8%A3%D8%AD%D9%85%D8%AF_%D8%B4%D9%88%D9%82%D9%8A",
+  "poemSourceUrl": "https://ar.wikisource.org/wiki/%D9%82%D9%85_%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85",
+  "license": "Public Domain (بيان ويكي مصدر: الملك العام في مصر)",
+  "licenseUrl": "https://ar.wikisource.org/wiki/%D9%85%D8%A4%D9%84%D9%81:%D8%A3%D8%AD%D9%85%D8%AF_%D8%B4%D9%88%D9%82%D9%8A",
+  "attribution": "أحمد شوقي (1868–1932) — النص من ويكي مصدر؛ راجع ملف data/poetry/POETRY-LICENSE-SHAWQI.",
+  "count": 1,
+  "parts": 1,
+  "partPattern": "data/poetry/ahmad-shawqi-part-{index}.json",
+  "fields": [
+    "poet_name",
+    "poet_era",
+    "poem_tags",
+    "poem_title",
+    "poem_text",
+    "poem_count"
+  ]
+}

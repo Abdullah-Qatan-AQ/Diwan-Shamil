@@ -2,6 +2,7 @@
 set -euo pipefail
 node --check app.js
 node --check sw.js
+node scripts/check-shawqi.mjs
 python3 - <<'PY'
 import json
 from pathlib import Path
