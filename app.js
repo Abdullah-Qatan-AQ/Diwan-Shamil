@@ -626,9 +626,21 @@ function renderPoetryLoading(name, message = "جاري فتح موسوعة ال�
 }
 function renderPoetryControls() {
   const index = state.poetryIndex;
-  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>${esc(index.title || "موسوعة الشعر العربي")}</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · ${Number(index.poetCount || 0).toLocaleString("ar-EG")} شاعرًا · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-poet-search" type="search" placeholder="ابحث عن اسم الشاعر…" aria-label="البحث عن شاعر"><select id="poetry-poet" aria-label="اختر ديوان الشاعر"><option value="الكل">كل الشعراء</option>${state.poetryPoets.map((poet) => `<option value="${esc(poet.name)}">${esc(poet.name)} · ${Number(poet.count).toLocaleString("ar-EG")} قصيدة</option>`).join("")}</select><input id="poetry-q" type="search" placeholder="بحث في ديوان الشاعر أو كامل الموسوعة"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="poem-count"></span></div><div class="advanced-hint">اختر اسمًا من «دواوين الشعراء» لفتح قسم مستقل يضم جميع قصائده.</div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
+  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>${esc(index.title || "موسوعة الشعر العربي")}</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · ${Number(index.poetCount || 0).toLocaleString("ar-EG")} شاعرًا · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-poet-search" type="search" placeholder="ابحث عن اسم الشاعر…" aria-label="البحث عن شاعر"><select id="poetry-poet" aria-label="اختر ديوان الشاعر"><option value="الكل">كل الشعراء</option>${state.poetryPoets.map((poet) => `<option value="${esc(poet.name)}">${esc(poet.name)} · ${Number(poet.count).toLocaleString("ar-EG")} قصيدة</option>`).join("")}</select><input id="poetry-q" type="search" placeholder="بحث في ديوان الشاعر أو كامل الموسوعة"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="poem-count"></span></div><div id="poet-search-results" class="poet-search-results" aria-live="polite"></div><div class="advanced-hint">اكتب اسم الشاعر ثم اضغط على النتيجة لفتح ديوانه، أو اختره من القائمة.</div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
   const poetSearch = $("#poetry-poet-search");
   const poetSelect = $("#poetry-poet");
+  const poetResults = $("#poet-search-results");
+  const selectPoet = (name) => {
+    state.poetryPoet = name;
+    state.poetryQuery = "";
+    state.poetryLimit = 60;
+    state.poetryShowAll = false;
+    poetSelect.value = name;
+    drawPoems();
+    if (state.poetryLoaded < state.poetryIndex.parts) {
+      ensureAllPoetryLoaded().then(drawPoems).catch(drawPoems);
+    }
+  };
   const updatePoetOptions = () => {
     const query = normalizeArabic(state.poetryPoetSearch);
     const current = state.poetryPoet;
@@ -636,6 +648,19 @@ function renderPoetryControls() {
     poetSelect.innerHTML = '<option value="الكل">كل الشعراء</option>' + matches.map((poet) => `<option value="${esc(poet.name)}">${esc(poet.name)} · ${Number(poet.count).toLocaleString("ar-EG")} قصيدة</option>`).join("");
     poetSelect.value = matches.some((poet) => poet.name === current) ? current : "الكل";
     if (current !== "الكل" && poetSelect.value === "الكل") state.poetryPoet = "الكل";
+    if (!query) {
+      poetResults.innerHTML = "";
+      return;
+    }
+    poetResults.innerHTML = matches.length
+      ? `<span>نتائج الشعراء:</span>${matches.slice(0, 24).map((poet) => `<button type="button" data-poet-result="${esc(poet.name)}">${esc(poet.name)} <small>(${Number(poet.count).toLocaleString("ar-EG")})</small></button>`).join("")}${matches.length > 24 ? `<em>أظهر أول 24 من ${matches.length.toLocaleString("ar-EG")} نتيجة</em>` : ""}`
+      : "<span>لا يوجد شاعر بهذا الاسم.</span>";
+    $$('[data-poet-result]', poetResults).forEach((button) => button.addEventListener("click", () => {
+      poetSearch.value = button.dataset.poetResult;
+      state.poetryPoetSearch = poetSearch.value;
+      selectPoet(button.dataset.poetResult);
+      updatePoetOptions();
+    }));
   };
   poetSearch.value = state.poetryPoetSearch;
   poetSearch.addEventListener("input", (event) => {
