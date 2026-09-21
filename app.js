@@ -968,5 +968,5 @@ window.setTimeout(() => {
   if (!splash) return;
   splash.classList.add("is-hidden");
   window.setTimeout(() => splash.remove(), 360);
-}, 260);
+}, 1100);
 window.__diwan = { state, navigate, goBack, render };

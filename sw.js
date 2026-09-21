@@ -1,9 +1,9 @@
-const CACHE = "diwan-v33";
+const CACHE = "diwan-v34";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=29",
-  "./app.js?v=31",
+  "./styles.css?v=30",
+  "./app.js?v=32",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
