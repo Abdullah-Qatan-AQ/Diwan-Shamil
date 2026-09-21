@@ -1,41 +1,38 @@
-# إصدار Android يدويًا
+# Android Release Automation
 
-لا ينشر هذا المستودع APK تلقائيًا ولا ينشئ GitHub Releases أو Artifacts عند كل تغيير. هذا مقصود حتى لا تظهر نسخ تطويرية للمستخدمين، وحتى يقرر مالك المشروع متى وأين ينشر الإصدار النهائي.
+يتم بناء APK موقّع تلقائيًا عند كل Push إلى `main`. يزيد Workflow `versionCode` بمقدار واحد، ثم يبحث في Tags الموجودة عن أول رقم Patch مفقود ضمن نفس السلسلة. مثلًا، إذا كانت `v1.0.0` و`v1.0.2` موجودتين، فسيستخدم `v1.0.1` بدل القفز إلى `v1.0.3`. بعد ذلك ينشئ Commit وTag، ثم ينشئ **مسودة GitHub Release** ويُرفق APK الموقّع بها. تبقى المسودة غير منشورة حتى تضيف الوصف وتضغط نشر يدويًا.
 
-## المتطلبات
+## أسرار GitHub المطلوبة
 
-ثبّت Node.js، وJDK 21، وAndroid SDK Platform 35، ثم تأكد من أن `ANDROID_HOME` أو `ANDROID_SDK_ROOT` يشير إلى مسار Android SDK الصحيح. لا تُضمَّن ملفات SDK المحلية أو `local.properties` في Git.
+أنشئ Environment باسم `production` من إعدادات المستودع، ثم أضف الأسرار التالية تحت **Secrets**:
 
-## بناء نسخة Debug محلية
-
-```bash
-npm ci
-npm run android:build
-```
-
-ينشئ الأمر `android/app/build/outputs/apk/debug/app-debug.apk`. هذه النسخة للاختبار المحلي فقط ولا تُرفع إلى المستودع.
-
-## بناء نسخة Release موقعة
-
-احتفظ بملف keystore خارج المستودع، ثم عرّف المتغيرات التالية في جلسة البناء فقط:
-
-| المتغير | الغرض |
+| الاسم | القيمة |
 |---|---|
-| `DIWAN_RELEASE_STORE_FILE` | المسار المحلي لملف keystore |
+| `DIWAN_RELEASE_KEYSTORE_B64` | ملف keystore كاملًا بعد تحويله إلى Base64، دون أسطر جديدة |
 | `DIWAN_RELEASE_STORE_PASSWORD` | كلمة مرور keystore |
-| `DIWAN_RELEASE_KEY_ALIAS` | اسم alias للمفتاح |
-| `DIWAN_RELEASE_KEY_PASSWORD` | كلمة مرور المفتاح |
+| `DIWAN_RELEASE_KEY_ALIAS` | اسم alias للمفتاح داخل keystore |
+| `DIWAN_RELEASE_KEY_PASSWORD` | كلمة مرور المفتاح داخل keystore |
 
-بعد ذلك شغّل:
+لا تضع ملف keystore أو كلمات المرور داخل Git. ملف keystore يبقى خارج المستودع، ويُستعاد مؤقتًا على GitHub Actions ثم يُحذف بعد انتهاء المهمة.
+
+لتحويل الملف إلى Base64:
 
 ```bash
-./scripts/build-release.sh
+base64 -w 0 diwan-shamil-release > diwan-shamil-release.base64
 ```
 
-تحقق من توقيع APK قبل توزيعه باستخدام `apksigner verify --verbose`. لا تطبع كلمات المرور أو مسار المفتاح في سجلات عامة، ولا تحفظ ملف keystore أو أي ملف أسرار داخل Git.
+انسخ محتوى `diwan-shamil-release.base64` إلى `DIWAN_RELEASE_KEYSTORE_B64` ثم احذف الملف المؤقت.
 
-## قائمة مراجعة قبل النشر
+## إصدار جديد
 
-حدّث `versionCode` و`versionName` يدويًا، شغّل `npm run verify`، تحقق من JSON ومصادر البيانات، اختبر APK على جهاز أو محاكي، راجع إشعارات الرخص داخل `data/`، ثم أنشئ Release واحدًا بوصف واضح عند اتخاذ قرار النشر. لا تُنشئ مسودات متعددة ولا ترفع APK كـ workflow artifact دائم.
+عند دفع أي تغيير إلى الفرع `main`، يقوم Workflow `.github/workflows/android-release.yml` تلقائيًا بتثبيت الاعتماديات، وزيادة رقم الإصدار، وإنشاء Commit وTag، واستعادة keystore، وبناء APK موقّع، والتحقق من التوقيع، ورفع Artifact، وإنشاء **مسودة GitHub Release** وإرفاق APK بها. بعد ذلك أضف وصف الإصدار من صفحة المسودة واضغط **Publish release** لنشره.
 
-تظل رخصة MIT خاصة بكود التطبيق فقط، بينما تبقى شروط ODbL وDbCL ومصادر البيانات الخارجية نافذة على قواعد البيانات ومشتقاتها. راجع `README.md` وملفات `data/*LICENSE*` و`data/*SOURCES*` قبل كل توزيع.
+يفشل Workflow إذا كانت الأسرار ناقصة، أو إذا تعذر إنشاء Commit أو Tag، أو إذا فشل بناء APK أو التحقق من توقيعه. تشغيله يدويًا من GitHub Actions ينشئ إصدارًا جديدًا أيضًا.
+
+## الحماية
+
+يفضل تفعيل Required reviewers على Environment `production` حتى لا تُنشر إصدارات رسمية إلا بعد مراجعة. لا تستخدم الأسرار في Pull Requests من Forks، ولا تطبع قيمها في سجلات Workflow.
+
+## التحقق من التوقيع
+
+يعرض سجل Workflow نتيجة `apksigner verify --verbose` وبصمة الشهادة. يجب أن تبقى بصمة الشهادة نفسها بين الإصدارات؛ تغييرها يعني استخدام مفتاح مختلف ولن يتمكن Android من تحديث النسخة المثبتة كتحديث عادي.
