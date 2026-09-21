@@ -1,17 +1,28 @@
 # Licenses, Attribution & Removal (NOTICE) — quranlab/hadith
 
-Binding terms are **per row** (`license`, `source`, `attribution`). Summary below.
+Binding terms are **per row** (`license`, `source`, `attribution`). The application distributes only the Arabic configurations.
 
-## Theology gate
-Strictly **Ahl al-Sunnah wa'l-Jamāʿah**. Excluded by design: the Shia Four Books (al-Kāfī, Man lā yaḥḍuruhu al-Faqīh, Tahdhīb al-Aḥkām, al-Istibṣār) and other Shia/Ismāʿīlī collections; Ibāḍī (Musnad al-Rabīʿ b. Ḥabīb); Ahmadiyya/Qādiānī; Quranist/hadith-rejecter sources; hostile-orientalist grade framings.
+## Included Arabic configurations
 
-## Sources & tiers
-- **Arabic matn (65,834 hadith across 13 collections):** public domain; digitisation from `mhashim6/Open-Hadith-Data`, ODbL-1.0 + DbCL-1.0. Attribution required.
-- **Graded multilingual layer (72 languages):** HadeethEnc.com (IslamHouse / Saudi MoIA) — verbatim, version-pinned, with grade + attribution; reproduced under their open-with-attribution terms; removal on request.
-- **Copyrighted full-collection translations (roadmap):** by reference + full attribution under **notice-and-takedown** (removal on rights-holder request via the HF Community tab).
+The project includes all 13 Arabic configurations currently published by QuranLab: the six books, Muwatta Malik, Musnad Ahmad, Sunan al-Darimi, the Forty Hadith of al-Nawawi, Forty Hadith Qudsi, Forty Hadith of Shah Wali Allah al-Dihlawi, and the Arabic HadeethEnc selection.
 
-## Grade integrity
-Grades are **grader-attributed, never asserted by QuranLab**; the matn layer is ungraded; collection-level status lives in the `collections` config, never auto-stamped per row.
+## Open-Hadith-Data layer
 
-## Removal
-Open the dataset's **Community (Discussions)** tab to request removal of any row.
+The Arabic matn for the twelve Open-Hadith-Data-based configurations is described by QuranLab as public-domain source text and digitisation under **ODbL 1.0** for the database and **DbCL 1.0** for the contents. Keep the attribution, source notices, license URI, and any required share-alike notice when redistributing the database or a derivative database.
+
+## HadeethEnc layer
+
+`hadeethenc-ar` is a separate layer. HadeethEnc.com states that its translations/content may be downloaded and republished only if the content is not modified, added to, or deleted from; the publisher and source are clearly identified; the version is stated; the embedded version information is preserved; feedback is sent to HadeethEnc; updates are followed; and unsuitable advertising is not attached to the content. The app keeps the Arabic text and attribution fields and must not silently rewrite this layer.
+
+## Integrity and removal
+
+QuranLab states that grades are attributed to their graders and are not assertions by QuranLab. Do not present a stored grade as an independent verification by this application. Removal or correction requests should be directed to the QuranLab dataset Community tab, and HadeethEnc notices should also be respected.
+
+The MIT license in the repository root applies to the application code only. It does **not** relicense the included hadith data.
+
+## Official references
+
+- QuranLab dataset card and notices: <https://huggingface.co/datasets/quranlab/hadith>
+- ODbL 1.0: <https://opendatacommons.org/licenses/odbl/1-0/>
+- DbCL 1.0: <https://opendatacommons.org/licenses/dbcl/1-0/>
+- HadeethEnc Arabic policies: <https://hadeethenc.com/ar/home>

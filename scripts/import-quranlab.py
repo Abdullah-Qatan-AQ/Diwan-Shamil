@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Import the Arabic QuranLab Hadith configurations as offline JSON files."""
+"""Import all Arabic QuranLab Hadith configurations as offline JSON files."""
 from __future__ import annotations
 
 import hashlib
 import json
-import sys
 import urllib.request
 from pathlib import Path
 
@@ -13,14 +12,21 @@ import pyarrow.parquet as pq
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 BASE = "https://huggingface.co/datasets/quranlab/hadith/resolve/main"
+DATASET_URL = "https://huggingface.co/datasets/quranlab/hadith"
 CONFIGS = {
-    "bukhari-ar": ("ara-bukhari.json", "صحيح البخاري"),
-    "muslim-ar": ("ara-muslim.json", "صحيح مسلم"),
-    "tirmidhi-ar": ("ara-tirmidhi.json", "سنن الترمذي"),
-    "abudawud-ar": ("ara-abudawud.json", "سنن أبي داود"),
-    "nasai-ar": ("ara-nasai.json", "سنن النسائي"),
-    "ibnmajah-ar": ("ara-ibnmajah.json", "سنن ابن ماجه"),
-    "malik-ar": ("ara-malik.json", "موطأ مالك"),
+    "bukhari-ar": ("ara-bukhari.json", "صحيح البخاري", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "muslim-ar": ("ara-muslim.json", "صحيح مسلم", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "tirmidhi-ar": ("ara-tirmidhi.json", "سنن الترمذي", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "abudawud-ar": ("ara-abudawud.json", "سنن أبي داود", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "nasai-ar": ("ara-nasai.json", "سنن النسائي", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "ibnmajah-ar": ("ara-ibnmajah.json", "سنن ابن ماجه", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "malik-ar": ("ara-malik.json", "موطأ مالك", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "ahmad-ar": ("ara-ahmad.json", "مسند أحمد", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "darimi-ar": ("ara-darimi.json", "سنن الدارمي", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "dehlawi-ar": ("ara-dehlawi.json", "الأربعون للشاه ولي الله الدهلوي", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "nawawi-ar": ("ara-nawawi.json", "الأربعون النووية", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "qudsi-ar": ("ara-qudsi.json", "الأربعون القدسية", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
+    "hadeethenc-ar": ("ara-hadeethenc.json", "موسوعة الأحاديث النبوية المترجمة", "HadeethEnc open-with-attribution terms", "Verbatim Arabic selection from HadeethEnc.com (IslamHouse / Saudi Ministry of Islamic Affairs); preserve attribution and text; removal on request"),
 }
 
 
@@ -40,10 +46,18 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def value(row: dict, *keys):
+    for key in keys:
+        candidate = row.get(key)
+        if candidate is not None and str(candidate).strip():
+            return candidate
+    return None
+
+
 def main() -> None:
     cache = ROOT / ".cache" / "quranlab"
     cache.mkdir(parents=True, exist_ok=True)
-    for config, (filename, arabic_name) in CONFIGS.items():
+    for config, (filename, arabic_name, license_name, attribution) in CONFIGS.items():
         source_url = f"{BASE}/{config}/train-00000-of-00001.parquet?download=true"
         parquet = cache / f"{config}.parquet"
         print(f"Downloading {config}...", flush=True)
@@ -65,36 +79,42 @@ def main() -> None:
             text = str(row.get("text") or "").strip()
             if not text:
                 continue
-            chapter_id = row.get("book_number")
-            chapter_name = ""
-            if chapter_id is not None and chapter_name:
-                chapter_map[str(chapter_id)] = chapter_name
-            number = row.get("hadith_number") or row.get("in_book_number") or row.get("urn")
-            items.append({
-                "id": row.get("hadith_uid"),
+            chapter_id = value(row, "book_number")
+            if chapter_id is None:
+                chapter_id = "hadeethenc" if config == "hadeethenc-ar" else "collection"
+            chapter_id = str(chapter_id) if chapter_id is not None else ""
+            number = value(row, "hadith_number", "in_book_number", "hadeethenc_id", "urn")
+            item = {
+                "id": value(row, "hadith_key", "hadith_uid", "urn") or number,
                 "hadithnumber": str(number) if number is not None else "",
                 "arabicText": text,
                 "text": text,
-                "chapterId": str(chapter_id) if chapter_id is not None else "",
-                "chapter": chapter_name,
-                "source": "QuranLab Hadith / Open-Hadith-Data",
-                "sourceUrl": "https://huggingface.co/datasets/quranlab/hadith",
-                "license": "ODbL-1.0 + DbCL-1.0",
-            })
-        chapter_ids = sorted(
-            {str(item["chapterId"]) for item in items if item["chapterId"]},
-            key=lambda value: int(value) if value.isdigit() else value,
-        )
+                "chapterId": chapter_id,
+                "chapter": chapter_map.get(chapter_id, ""),
+                "source": attribution,
+                "sourceUrl": DATASET_URL,
+                "license": license_name,
+            }
+            for field in ("grade", "grader", "grade_source", "grades", "grade_summary", "sunnah_url", "attribution_text", "title", "intro", "explanation"):
+                if row.get(field) is not None:
+                    item[field] = row[field]
+            items.append(item)
+        chapter_ids = sorted({item["chapterId"] for item in items if item["chapterId"]}, key=lambda v: int(v) if v.isdigit() else v)
         for chapter_id in chapter_ids:
-            chapter_map.setdefault(chapter_id, "أبواب غير مصنفة")
+            if chapter_id in {"hadeethenc", "collection"}:
+                chapter_map.setdefault(chapter_id, "الموسوعة كاملة")
+            else:
+                chapter_map.setdefault(chapter_id, "أبواب غير مصنفة")
+        for item in items:
+            item["chapter"] = chapter_map.get(item["chapterId"], "")
         payload = {
             "metadata": {
                 "name": arabic_name,
                 "source": "QuranLab Hadith",
-                "sourceUrl": "https://huggingface.co/datasets/quranlab/hadith",
+                "sourceUrl": DATASET_URL,
                 "config": config,
-                "license": "ODbL-1.0 + DbCL-1.0",
-                "attribution": "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data",
+                "license": license_name,
+                "attribution": attribution,
                 "download": source_url,
                 "originalFormat": "Parquet",
                 "convertedFormat": "JSON",
@@ -102,10 +122,7 @@ def main() -> None:
                 "columnsRead": columns,
                 "sourceSha256": sha256(parquet),
             },
-            "chapters": [
-                {"id": key, "arabic": value}
-                for key, value in sorted(chapter_map.items(), key=lambda pair: int(pair[0]) if pair[0].isdigit() else pair[0])
-            ],
+            "chapters": [{"id": key, "arabic": value} for key, value in sorted(chapter_map.items(), key=lambda pair: int(pair[0]) if pair[0].isdigit() else pair[0])],
             "hadiths": items,
         }
         target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

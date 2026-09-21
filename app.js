@@ -18,6 +18,12 @@ const collections = [
   ["سنن النسائي", "حديث", "data/ara-nasai.json", "hadith"],
   ["سنن ابن ماجه", "حديث", "data/ara-ibnmajah.json", "hadith"],
   ["موطأ مالك", "حديث", "data/ara-malik.json", "hadith"],
+  ["مسند أحمد", "حديث", "data/ara-ahmad.json", "hadith"],
+  ["سنن الدارمي", "حديث", "data/ara-darimi.json", "hadith"],
+  ["الأربعون للشاه ولي الله الدهلوي", "حديث", "data/ara-dehlawi.json", "hadith"],
+  ["الأربعون النووية", "حديث", "data/ara-nawawi.json", "hadith"],
+  ["الأربعون القدسية", "حديث", "data/ara-qudsi.json", "hadith"],
+  ["موسوعة الأحاديث النبوية المترجمة", "حديث", "data/ara-hadeethenc.json", "hadith"],
   ["موسوعة الشعر العربي", "شعر", "data/poetry/index.json", "poetry"],
 ];
 const defaults = { font: 24, theme: "sand", remember: true };
