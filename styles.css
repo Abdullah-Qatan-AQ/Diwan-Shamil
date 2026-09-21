@@ -960,31 +960,3 @@ footer b { color: var(--green); }
 .danger-card h2 { color: var(--red); }
 #reset-app { background: #f7e4df; color: #8f4038; border-color: #dfb6ad; }
 @media (max-width: 700px) { .favorites-grid { grid-template-columns: 1fr; } }
-
-#startup-splash {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 10px;
-  background: var(--deep);
-  color: #f3e5c2;
-  opacity: 1;
-  transition: opacity .32s ease;
-}
-#startup-splash.is-hidden { opacity: 0; pointer-events: none; }
-#startup-splash strong { font: 700 32px Amiri, serif; }
-#startup-splash span { color: #c9d9cf; font-size: 13px; }
-.splash-seal {
-  width: 76px; height: 76px; border: 1px solid #dabb7688; border-radius: 28px;
-  display: grid; place-items: center; font: 48px Amiri;
-  box-shadow: 0 0 0 9px #dabb7614;
-  animation: splash-breathe 1.5s ease-in-out infinite;
-}
-@keyframes splash-breathe { 50% { transform: translateY(-3px) scale(1.03); } }
-@media (prefers-reduced-motion: reduce) {
-  #startup-splash { transition: none; }
-  .splash-seal { animation: none; }
-}
