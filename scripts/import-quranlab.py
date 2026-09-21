@@ -26,7 +26,6 @@ CONFIGS = {
     "dehlawi-ar": ("ara-dehlawi.json", "الأربعون للشاه ولي الله الدهلوي", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
     "nawawi-ar": ("ara-nawawi.json", "الأربعون النووية", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
     "qudsi-ar": ("ara-qudsi.json", "الأربعون القدسية", "ODbL-1.0 + DbCL-1.0", "Arabic matn from QuranLab Hadith, based on mhashim6/Open-Hadith-Data"),
-    "hadeethenc-ar": ("ara-hadeethenc.json", "موسوعة الأحاديث النبوية المترجمة", "HadeethEnc open-with-attribution terms", "Verbatim Arabic selection from HadeethEnc.com (IslamHouse / Saudi Ministry of Islamic Affairs); preserve attribution and text; removal on request"),
 }
 
 
@@ -81,7 +80,7 @@ def main() -> None:
                 continue
             chapter_id = value(row, "book_number")
             if chapter_id is None:
-                chapter_id = "hadeethenc" if config == "hadeethenc-ar" else "collection"
+                chapter_id = "collection"
             chapter_id = str(chapter_id) if chapter_id is not None else ""
             number = value(row, "hadith_number", "in_book_number", "hadeethenc_id", "urn")
             item = {
@@ -101,7 +100,7 @@ def main() -> None:
             items.append(item)
         chapter_ids = sorted({item["chapterId"] for item in items if item["chapterId"]}, key=lambda v: int(v) if v.isdigit() else v)
         for chapter_id in chapter_ids:
-            if chapter_id in {"hadeethenc", "collection"}:
+            if chapter_id == "collection":
                 chapter_map.setdefault(chapter_id, "الموسوعة كاملة")
             else:
                 chapter_map.setdefault(chapter_id, "أبواب غير مصنفة")

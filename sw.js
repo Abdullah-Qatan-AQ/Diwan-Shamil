@@ -1,9 +1,9 @@
-const CACHE = "diwan-v31";
+const CACHE = "diwan-v32";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css?v=28",
-  "./app.js?v=29",
+  "./app.js?v=30",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -25,7 +25,6 @@ const ASSETS = [
   "./data/ara-dehlawi.json",
   "./data/ara-nawawi.json",
   "./data/ara-qudsi.json",
-  "./data/ara-hadeethenc.json",
 ];
 self.addEventListener("install", (e) =>
   e.waitUntil(caches.open(CACHE).then(async (c) => {

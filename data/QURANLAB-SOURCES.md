@@ -1,28 +1,20 @@
-<!-- ÜRETİLEN DOSYA — ELLE DÜZENLEMEYİN. python -m src.gen_sources_doc -->
+<!-- Generated-source note retained for attribution; this project distributes a filtered subset. -->
 
-# Sources — QuranLab — Hadith & Sunnah
+# مصادر QuranLab — النسخة الموزعة
 
-QuranLab is a volunteer effort. Our aim is to present these sources carefully and at high quality, and to help them travel faithfully — in the spirit in which they were written — not to claim them as ours.
+يستخدم هذا المشروع 12 تكوينًا عربيًا من [QuranLab Hadith](https://huggingface.co/datasets/quranlab/hadith)، مبنية على مصادر Open-Hadith-Data ومهيأة للعمل دون اتصال. لم تُضمَّن طبقة HadeethEnc في النسخة الموزعة بسبب شروطها الخاصة المتعلقة بالإصدار والمتابعة.
 
-None of this is ours. Every work here belongs to the scholar who wrote it and to the people who took the trouble to make it readable by a machine — often quietly, for years, without being asked. What we did was gather, align and check. What follows is who to thank.
+## المصادر المستخدمة
 
-## The projects this dataset rests on
+- [fawazahmed0/hadith-api](https://github.com/fawazahmed0/hadith-api) — مراجع ومجموعات الحديث التي يعتمد عليها QuranLab لبعض الكتب.
+- [mhashim6/Open-Hadith-Data](https://github.com/mhashim6/Open-Hadith-Data) — المتون العربية لمسند أحمد والدارمي، بترخيص ODbL 1.0 وDbCL 1.0، مع إشعارات المصدر.
+- [QuranLab Hadith](https://huggingface.co/datasets/quranlab/hadith) — طبقة التجميع والتحقق والبيانات الوصفية المستخدمة في هذا المشروع.
 
-- **[fawazahmed0/hadith-api](https://github.com/fawazahmed0/hadith-api)** — Ḥadīth collections aligned across languages, with multi-grader gradings.
-- **[mhashim6/Open-Hadith-Data](https://github.com/mhashim6/Open-Hadith-Data)** — Arabic matn for Musnad Aḥmad and al-Dārimī (ODbL-1.0 / DbCL-1.0).
-- **[HadeethEnc.com](https://hadeethenc.com)** — A graded, many-language selection of prophetic ḥadīth (IslamHouse / Saudi Ministry of Islamic Affairs).
+## مصادر تمت مراجعتها ولم تُنقل
 
-Which work came through which project, and on what terms, is recorded for every config in [`LICENSES.md`](LICENSES.md) and the tables under `metadata/`.
+- [HadeethEnc.com](https://hadeethenc.com) — لم تُنقل بياناته إلى النسخة النهائية لأن شروطه المنشورة تطلب الحفاظ على المحتوى، ذكر الإصدار، إبقاء معلومات الإصدار، متابعة التحديثات، وقيودًا إضافية على النشر.
+- [sunnah.com](https://sunnah.com) — لم تُستخدم كشطًا أو مصدرًا لإعادة إنتاج مجموعات كاملة؛ تبقى نصوصه ودرجاته خاضعة لشروطه الخاصة.
 
-## Consulted, but never quoted
+## الإسناد والإزالة
 
-Some things we read carefully and published nothing from. They helped us decide what a work is, who wrote it, and where a passage belongs — and then we set them down. We name them because using something and reproducing it are different acts, and both should be said out loud.
-
-- **[Quranpedia](https://quranpedia.net)** — It told us where one commentary's passages belong, and confirmed the school of two authors. Not a word of it is in the data.
-- **[TDV İslâm Ansiklopedisi](https://islamansiklopedisi.org.tr)** — Our first stop when we needed to be sure who an author was and where he stood. Read, never reproduced.
-- **[sunnah.com](https://sunnah.com)** — Each ḥadīth carries a link to its page there, and nothing more — their text and gradings stay theirs.
-- **Scholarly studies and critical editions** — Consulted whenever a work's standing needed better evidence than our own reading. Cited in `metadata/`.
-
-## If we got something wrong
-
-If you hold rights to a work here, or we have credited someone poorly, write to us on the **Community** tab of [`quranlab/hadith`](https://huggingface.co/datasets/quranlab/hadith). A removal request is honoured promptly and without argument; a correction is welcomed with thanks.
+توجد حقوق المصدر وحقول الإسناد داخل ملفات البيانات، مع إشعارات الترخيص في `HADITH-SOURCES.md` و`QURANLAB-LICENSES.md`. تُوجَّه طلبات التصحيح أو الإزالة إلى صفحة Community الخاصة بمصدر QuranLab.
