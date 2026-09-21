@@ -1,0 +1,150 @@
+name: Android Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-release:
+    name: Build, verify, and publish signed APK
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Create next version and tag
+        id: version
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          current_code=$(sed -nE 's/^[[:space:]]*versionCode ([0-9]+).*/\1/p' android/app/build.gradle | head -n 1)
+          current_name=$(sed -nE 's/^[[:space:]]*versionName "([^"]+)".*/\1/p' android/app/build.gradle | head -n 1)
+          test -n "$current_code"
+          test -n "$current_name"
+
+          IFS=. read -r major minor patch <<< "$current_name"
+          next_code=$((current_code + 1))
+          test -n "$major"
+          test -n "$minor"
+
+          # Use the first missing patch number in the current major.minor line.
+          # Example: v1.0.0 and v1.0.2 exist, so the next release is v1.0.1.
+          mapfile -t existing_tags < <(git tag -l "v${major}.${minor}.*" | sed -E "s/^v${major//./\\.}.${minor//./\\.}.([0-9]+)$/\1/" | sort -n)
+          next_patch=0
+          for existing_patch in "${existing_tags[@]}"; do
+            if [[ "$existing_patch" == "$next_patch" ]]; then
+              next_patch=$((next_patch + 1))
+            elif (( existing_patch > next_patch )); then
+              break
+            fi
+          done
+          next_name="${major}.${minor}.${next_patch}"
+          next_tag="v${next_name}"
+
+          sed -i -E "s/(versionCode )[0-9]+/\\1${next_code}/" android/app/build.gradle
+          sed -i -E "s/(versionName )\"[^\"]+\"/\\1\"${next_name}\"/" android/app/build.gradle
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android/app/build.gradle
+          git commit -m "Prepare Android release ${next_tag} [skip ci]"
+          git tag "$next_tag"
+          git push origin HEAD:main
+          git push origin "$next_tag"
+
+          echo "version_name=$next_name" >> "$GITHUB_OUTPUT"
+          echo "version_code=$next_code" >> "$GITHUB_OUTPUT"
+          echo "tag=$next_tag" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Restore signing keystore
+        env:
+          KEYSTORE_B64: ${{ secrets.DIWAN_RELEASE_KEYSTORE_B64 }}
+        run: |
+          set -euo pipefail
+          test -n "$KEYSTORE_B64"
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/diwan-shamil-release"
+          chmod 600 "$RUNNER_TEMP/diwan-shamil-release"
+          test -s "$RUNNER_TEMP/diwan-shamil-release"
+
+      - name: Build signed release APK
+        env:
+          DIWAN_RELEASE_STORE_FILE: ${{ runner.temp }}/diwan-shamil-release
+          DIWAN_RELEASE_STORE_PASSWORD: ${{ secrets.DIWAN_RELEASE_STORE_PASSWORD }}
+          DIWAN_RELEASE_KEY_ALIAS: ${{ secrets.DIWAN_RELEASE_KEY_ALIAS }}
+          DIWAN_RELEASE_KEY_PASSWORD: ${{ secrets.DIWAN_RELEASE_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$DIWAN_RELEASE_STORE_PASSWORD"
+          test -n "$DIWAN_RELEASE_KEY_ALIAS"
+          test -n "$DIWAN_RELEASE_KEY_PASSWORD"
+          npm run android:sync
+          cd android
+          ./gradlew --no-daemon assembleRelease
+
+      - name: Verify APK signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk="android/app/build/outputs/apk/release/app-release.apk"
+          test -s "$apk"
+          apksigner=$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)
+          test -x "$apksigner"
+          "$apksigner" verify --verbose "$apk"
+          "$apksigner" verify --print-certs "$apk" | tee "$RUNNER_TEMP/apk-certificate.txt"
+
+      - name: Upload signed APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: diwan-shamil-${{ steps.version.outputs.version_name }}-signed-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Create draft GitHub Release and attach APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION_NAME: ${{ steps.version.outputs.version_name }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          set -euo pipefail
+          gh release create "$RELEASE_TAG" \
+            "android/app/build/outputs/apk/release/app-release.apk" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Diwan Shamil v${VERSION_NAME}" \
+            --draft \
+            --notes ""
+
+      - name: Remove signing material
+        if: always()
+        run: rm -f "$RUNNER_TEMP/diwan-shamil-release" "$RUNNER_TEMP/apk-certificate.txt"
