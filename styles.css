@@ -379,6 +379,17 @@ select:focus-visible {
   place-items: center;
   margin-top: 7px;
 }
+.ayah > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.entry-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  white-space: nowrap;
+}
 .catalog-tools {
   display: flex;
   gap: 14px;
@@ -888,9 +899,13 @@ footer {
   margin-inline-start: 8px;
 }
 .mini-copy {
-  padding: 2px 7px;
-  margin-inline-start: 6px;
-  font-size: 11px;
+  padding: 6px 10px;
+  margin-inline-start: 0;
+  background: var(--deep);
+  color: #fff;
+  border-color: var(--deep);
+  font-size: 12px;
+  font-weight: 700;
 }
 .mini-copy:hover {
   background: var(--gold);
