@@ -62,6 +62,7 @@ const state = {
   poetryReady: false,
   poetryPoets: [],
   poetryPoet: "الكل",
+  poetryPoetSearch: "",
   poetryLimit: 60,
   poetryShowAll: false,
   poetryAllLoading: false,
@@ -554,6 +555,7 @@ async function openCollection(collection) {
     state.poetryReady = false;
     state.poetryPoets = [];
     state.poetryPoet = "الكل";
+    state.poetryPoetSearch = "";
     state.poetryLimit = 60;
     state.poetryShowAll = false;
     state.poetryAllLoading = false;
@@ -621,8 +623,22 @@ function renderPoetryLoading(name, message = "جاري فتح موسوعة ال�
 }
 function renderPoetryControls() {
   const index = state.poetryIndex;
-  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>${esc(index.title || "موسوعة الشعر العربي")}</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · ${Number(index.poetCount || 0).toLocaleString("ar-EG")} شاعرًا · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><select id="poetry-poet" aria-label="اختر ديوان الشاعر"><option value="الكل">كل الشعراء</option>${state.poetryPoets.map((poet) => `<option value="${esc(poet.name)}">${esc(poet.name)} · ${Number(poet.count).toLocaleString("ar-EG")} قصيدة</option>`).join("")}</select><input id="poetry-q" type="search" placeholder="بحث في ديوان الشاعر أو كامل الموسوعة"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="poem-count"></span></div><div class="advanced-hint">اختر اسمًا من «دواوين الشعراء» لفتح قسم مستقل يضم جميع قصائده.</div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
+  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>${esc(index.title || "موسوعة الشعر العربي")}</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · ${Number(index.poetCount || 0).toLocaleString("ar-EG")} شاعرًا · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-poet-search" type="search" placeholder="ابحث عن اسم الشاعر…" aria-label="البحث عن شاعر"><select id="poetry-poet" aria-label="اختر ديوان الشاعر"><option value="الكل">كل الشعراء</option>${state.poetryPoets.map((poet) => `<option value="${esc(poet.name)}">${esc(poet.name)} · ${Number(poet.count).toLocaleString("ar-EG")} قصيدة</option>`).join("")}</select><input id="poetry-q" type="search" placeholder="بحث في ديوان الشاعر أو كامل الموسوعة"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="poem-count"></span></div><div class="advanced-hint">اختر اسمًا من «دواوين الشعراء» لفتح قسم مستقل يضم جميع قصائده.</div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
+  const poetSearch = $("#poetry-poet-search");
   const poetSelect = $("#poetry-poet");
+  const updatePoetOptions = () => {
+    const query = normalizeArabic(state.poetryPoetSearch);
+    const current = state.poetryPoet;
+    const matches = state.poetryPoets.filter((poet) => !query || normalizeArabic(poet.name).includes(query));
+    poetSelect.innerHTML = '<option value="الكل">كل الشعراء</option>' + matches.map((poet) => `<option value="${esc(poet.name)}">${esc(poet.name)} · ${Number(poet.count).toLocaleString("ar-EG")} قصيدة</option>`).join("");
+    poetSelect.value = matches.some((poet) => poet.name === current) ? current : "الكل";
+    if (current !== "الكل" && poetSelect.value === "الكل") state.poetryPoet = "الكل";
+  };
+  poetSearch.value = state.poetryPoetSearch;
+  poetSearch.addEventListener("input", (event) => {
+    state.poetryPoetSearch = event.target.value;
+    updatePoetOptions();
+  });
   poetSelect.value = state.poetryPoet;
   poetSelect.addEventListener("change", async (event) => {
     state.poetryPoet = event.target.value;
@@ -791,7 +807,7 @@ function drawPoems() {
   const query = state.poetryQuery.toLowerCase();
   const rows = state.poetryParts.filter(
     (item) =>
-      (state.poetryPoet === "الكل" || item.poet_name === state.poetryPoet) &&
+      (state.poetryPoet === "الكل" || normalizeArabic(item.poet_name) === normalizeArabic(state.poetryPoet)) &&
       (state.poetryEra === "الكل" || item.poet_era === state.poetryEra) &&
       (!query ||
         `${item.poet_name || ""} ${item.poem_title || ""} ${cleanText(item.poem_text || "")} ${item.poem_tags || ""}`
