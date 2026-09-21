@@ -67,6 +67,14 @@
       <strong>الديوان الشامل</strong>
       <span>مكتبتك العربية</span>
     </div>
+    <script>
+      window.setTimeout(() => {
+        const splash = document.getElementById("startup-splash");
+        if (!splash) return;
+        splash.classList.add("is-hidden");
+        window.setTimeout(() => splash.remove(), 400);
+      }, 6000);
+    </script>
     <div id="app">
       <div
         style="
@@ -92,6 +100,6 @@
         window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js?v=34"));
       }
     </script>
-    <script src="app.js?v=32" defer></script>
+    <script src="app.js?v=33" defer></script>
   </body>
 </html>
