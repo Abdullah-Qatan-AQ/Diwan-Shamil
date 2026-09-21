@@ -953,8 +953,8 @@ async function downloadLibrary() {
   const urls = [
     "./",
     "./index.html",
-    "./styles.css?v=32",
-    "./app.js?v=35",
+    "./styles.css?v=33",
+    "./app.js?v=36",
     "./manifest.json",
     "./data/quran.json",
     "./data/surah-meta.json",
