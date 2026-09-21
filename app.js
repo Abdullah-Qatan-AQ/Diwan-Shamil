@@ -31,7 +31,7 @@ const collections = [
   ["الأربعون النووية", "حديث", "data/ara-nawawi.json", "hadith"],
   ["الأربعون القدسية", "حديث", "data/ara-qudsi.json", "hadith"],
   ["موسوعة الشعر العربي", "شعر", "data/poetry/index.json", "poetry"],
-  ["قصائد أحمد شوقي — ملك عام", "شعر", "data/poetry/ahmad-shawqi.json", "poetry"],
+  ["قصائد أحمد شوقي", "شعر", "data/poetry/ahmad-shawqi.json", "poetry"],
 ];
 const defaults = { font: 24, theme: "sand", remember: true };
 const readJson = (key, fallback) => {
