@@ -116,6 +116,29 @@ function showStatus(message, kind = "ok") {
   clearTimeout(showStatus.timer);
   showStatus.timer = setTimeout(() => element.remove(), 5000);
 }
+async function copyText(text, label = "النص") {
+  const value = String(text || "").trim();
+  if (!value) return;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      throw new Error("Clipboard API unavailable");
+    }
+  } catch {
+    const textarea = document.createElement("textarea");
+    textarea.value = value;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    if (!copied) throw new Error("Copy failed");
+  }
+  showStatus(`تم نسخ ${label}`);
+}
 function setTheme(theme) {
   if (!["sand", "night", "green", "paper"].includes(theme)) return;
   settings.theme = theme;
@@ -314,10 +337,11 @@ function drawAyahs(query = "") {
     (rows
       .map(
         (ayah) =>
-          `<p class="ayah" data-entry-id="quran-${state.surah}-${ayah.verse}"><span>${esc(ayah.text)}</span><b>${ayah.verse}</b><button class="mini-position" type="button" data-save-position='${esc(JSON.stringify({ id: `quran-${state.surah}-${ayah.verse}`, type: "quran", title: `${surah.name} · الآية ${ayah.verse}`, collection: "القرآن الكريم", surah: state.surah, targetId: `quran-${state.surah}-${ayah.verse}`, verse: ayah.verse, scrollY: Math.round(window.scrollY) }))}' aria-label="حفظ موضع الآية">⌖</button></p>`,
+          `<p class="ayah" data-entry-id="quran-${state.surah}-${ayah.verse}"><span>${esc(ayah.text)}</span><b>${ayah.verse}</b><button class="mini-copy" type="button" data-copy="${esc(ayah.text)}" aria-label="نسخ الآية">نسخ</button><button class="mini-position" type="button" data-save-position='${esc(JSON.stringify({ id: `quran-${state.surah}-${ayah.verse}`, type: "quran", title: `${surah.name} · الآية ${ayah.verse}`, collection: "القرآن الكريم", surah: state.surah, targetId: `quran-${state.surah}-${ayah.verse}`, verse: ayah.verse, scrollY: Math.round(window.scrollY) }))}' aria-label="حفظ موضع الآية">⌖</button></p>`,
       )
       .join("") || '<div class="empty">لا توجد آيات مطابقة</div>');
   $(".font-readout").textContent = `${state.font}px`;
+  $$(`[data-copy]`, $("#ayahs")).forEach((button) => button.addEventListener("click", () => copyText(button.dataset.copy, "الآية").catch(() => showStatus("تعذر نسخ النص", "error"))));
   bindPositionButtons($("#ayahs"));
 }
 function setFont(delta) {
@@ -661,12 +685,13 @@ function drawHadith() {
   $("#hadith-list").innerHTML = visible.map(({ item, text, number }) => {
     const id = `hadith-${info.name}-${number}`;
     const position = { id: `hadith-position-${info.name}-${number}`, type: "hadith", title: `${info.name} · حديث ${number}`, collection: info.name, targetId: id, scrollY: Math.round(window.scrollY) };
-    return `<article class="hadith" data-entry-id="${esc(id)}"><div class="hadith-meta"><b>حديث ${esc(number)}</b><span>${esc(info.name)}</span><button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(text.slice(0, 80))}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع الحديث">⌖</button></div><p>${esc(text)}</p></article>`;
+    return `<article class="hadith" data-entry-id="${esc(id)}"><div class="hadith-meta"><b>حديث ${esc(number)}</b><span>${esc(info.name)}</span><button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(text.slice(0, 80))}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-copy" data-copy="${esc(text)}" aria-label="نسخ الحديث">نسخ</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع الحديث">⌖</button></div><p>${esc(text)}</p></article>`;
   }).join("") || '<div class="empty">لا توجد نتائج مطابقة</div>';
   $("#hadith-count").textContent = `${matches.length.toLocaleString("ar-EG")} حديث`;
   $("#hadith-status").textContent = matches.length > visible.length ? `عرض ${visible.length.toLocaleString("ar-EG")} من ${matches.length.toLocaleString("ar-EG")} حديث` : "اكتملت النتائج";
   $("#hadith-more").hidden = matches.length <= visible.length;
   $$('[data-save]').forEach((button) => button.addEventListener("click", () => { toggleBookmark({ id: button.dataset.save, type: "hadith", title: button.dataset.title, collection: info.name, targetId: button.dataset.save, scrollY: Math.round(window.scrollY) }); drawHadith(); }));
+  $$(`[data-copy]`, $("#hadith-list")).forEach((button) => button.addEventListener("click", () => copyText(button.dataset.copy, "الحديث").catch(() => showStatus("تعذر نسخ النص", "error"))));
   bindPositionButtons($("#hadith-list"));
 }
 
@@ -765,7 +790,8 @@ function drawPoems() {
       .map((item) => {
         const id = `poem-${item.poem_title}-${item.poet_name}`;
         const position = { id: `poem-position-${item.poem_title}-${item.poet_name}`, type: "poem", title: `${item.poem_title || "قصيدة"} · ${item.poet_name || "شاعر"}`, collection: "موسوعة الشعر العربي", targetId: id, scrollY: Math.round(window.scrollY) };
-        return `<article class="poem" data-entry-id="${esc(id)}"><header><b>${esc(item.poem_title || "قصيدة")}</b><span>${esc(item.poet_name || "شاعر")} · ${esc(item.poet_era || "")} <button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(item.poem_title || "قصيدة")}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع القصيدة">⌖</button></span></header><p>${esc(cleanText(item.poem_text || ""))}</p></article>`;
+        const poemText = cleanText(item.poem_text || "");
+        return `<article class="poem" data-entry-id="${esc(id)}"><header><b>${esc(item.poem_title || "قصيدة")}</b><span>${esc(item.poet_name || "شاعر")} · ${esc(item.poet_era || "")} <button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(item.poem_title || "قصيدة")}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-copy" data-copy="${esc(poemText)}" aria-label="نسخ القصيدة">نسخ</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع القصيدة">⌖</button></span></header><p>${esc(poemText)}</p></article>`;
       })
       .join("") || '<div class="empty">لا توجد نتائج في الأجزاء المحملة</div>';
   const total = Number(state.poetryIndex?.count || 0);
@@ -788,6 +814,7 @@ function drawPoems() {
     }),
   );
   bindPositionButtons($("#poems"));
+  $$(`[data-copy]`, $("#poems")).forEach((button) => button.addEventListener("click", () => copyText(button.dataset.copy, "القصيدة").catch(() => showStatus("تعذر نسخ النص", "error"))));
 }
 
 function sourcesView() {

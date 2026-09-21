@@ -1,4 +1,4 @@
-const CACHE = "diwan-v37";
+const CACHE = "diwan-v38";
 const ASSETS = [
   "./",
   "./index.html",

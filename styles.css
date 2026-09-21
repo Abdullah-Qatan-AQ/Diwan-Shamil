@@ -798,7 +798,8 @@ footer {
 }
 .home-actions button,
 .settings-card button,
-.mini-save {
+.mini-save,
+.mini-copy {
   border: 1px solid var(--line);
   background: var(--mint);
   color: var(--deep);
@@ -885,6 +886,15 @@ footer {
 .mini-save {
   padding: 2px 7px;
   margin-inline-start: 8px;
+}
+.mini-copy {
+  padding: 2px 7px;
+  margin-inline-start: 6px;
+  font-size: 11px;
+}
+.mini-copy:hover {
+  background: var(--gold);
+  color: var(--deep);
 }
 .mini-position {
   border: 1px solid var(--line);
