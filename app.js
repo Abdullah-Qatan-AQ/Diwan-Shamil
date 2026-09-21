@@ -67,6 +67,7 @@ const state = {
   poetryShowAll: false,
   poetryAllLoading: false,
   poetryLoadPromise: null,
+  poetryLoadError: "",
   poetrySearchToken: 0,
   hadithData: null,
   hadithLoading: false,
@@ -552,7 +553,8 @@ async function openCollection(collection) {
     state.poetryParts = [];
     state.poetryLoaded = 0;
     state.poetryLoading = true;
-    state.poetryReady = false;
+    state.poetryAllLoading = false;
+    state.poetryLoadError = "";
     state.poetryPoets = [];
     state.poetryPoet = "الكل";
     state.poetryPoetSearch = "";
@@ -575,9 +577,10 @@ async function openCollection(collection) {
       state.poetryReady = true;
       renderPoetryControls();
       if (state.resumePosition?.type === "poem") restoreSavedPosition();
-    } catch {
+    } catch (error) {
       if (token === state.renderToken) {
         state.poetryLoading = false;
+        state.poetryReady = false;
         showStatus("تعذر تحميل فهرس الشعر.", "error");
         renderPoetryLoading(collection.name, "تعذر تحميل فهرس الشعر");
       }
@@ -641,15 +644,17 @@ function renderPoetryControls() {
   });
   poetSelect.value = state.poetryPoet;
   poetSelect.addEventListener("change", async (event) => {
+    const poetSearchToken = ++state.poetrySearchToken;
     state.poetryPoet = event.target.value;
     state.poetryQuery = "";
     state.poetryLimit = 60;
     state.poetryShowAll = false;
-    if (state.poetryLoaded < state.poetryIndex.parts) {
-      $("#poems").innerHTML = '<div class="loading-more">جاري فتح ديوان الشاعر كاملًا…</div>';
-      await ensureAllPoetryLoaded();
-    }
     drawPoems();
+    if (state.poetryLoaded < state.poetryIndex.parts) {
+      ensureAllPoetryLoaded().then(() => {
+        if (poetSearchToken === state.poetrySearchToken) drawPoems();
+      }).catch(() => drawPoems());
+    }
   });
   $("#poetry-q").addEventListener("focus", focusWithinViewport);
   $("#poetry-q").addEventListener("input", async (event) => {
@@ -658,10 +663,11 @@ function renderPoetryControls() {
     const searchToken = ++state.poetrySearchToken;
     const needsFullSearch = state.poetryQuery.trim() && state.poetryLoaded < state.poetryIndex.parts;
     if (needsFullSearch) {
-      $("#poems").innerHTML = '<div class="loading-more">جاري البحث في كامل موسوعة الشعر…</div>';
-      $("#poem-count").textContent = "يتم تحميل بقية القصائد للبحث الكامل…";
-      await ensureAllPoetryLoaded();
-      if (searchToken !== state.poetrySearchToken) return;
+      ensureAllPoetryLoaded().then(() => {
+        if (searchToken === state.poetrySearchToken) drawPoems();
+      }).catch(() => {
+        if (searchToken === state.poetrySearchToken) drawPoems();
+      });
     }
     drawPoems();
   });
@@ -672,7 +678,11 @@ function renderPoetryControls() {
     if (state.poetryShowAll && state.poetryLoaded < state.poetryIndex.parts) {
       $("#poems").innerHTML = '<div class="loading-more">جاري تحميل كامل موسوعة الشعر لإظهار كل النصوص…</div>';
       $("#poem-count").textContent = "يتم تحميل جميع القصائد…";
-      await ensureAllPoetryLoaded();
+      try {
+        await ensureAllPoetryLoaded();
+      } catch {
+        showStatus("تعذر تحميل بقية القصائد. يمكنك متابعة قراءة الأجزاء المتاحة.", "error");
+      }
     }
     if (searchToken === state.poetrySearchToken) drawPoems();
   });
@@ -744,6 +754,9 @@ async function ensureAllPoetryLoaded() {
     try {
       while (state.poetryLoaded < state.poetryIndex.parts) await loadPoetryPart();
       fillEras();
+    } catch (error) {
+      state.poetryLoadError = error?.message || "تعذر تحميل جزء من الموسوعة";
+      throw error;
     } finally {
       state.poetryAllLoading = false;
       state.poetryLoadPromise = null;
@@ -766,8 +779,10 @@ async function loadPoetryPart() {
     const partUrl = pattern.replace("{index}", String(state.poetryLoaded).padStart(3, "0"));
     const part = await fetchJson(partUrl);
     const rows = Array.isArray(part) ? part : (Array.isArray(part?.data) ? part.data : []);
+    if (!rows.length) throw new Error(`الجزء ${state.poetryLoaded + 1} فارغ`);
     state.poetryParts.push(...rows);
     state.poetryLoaded += 1;
+    state.poetryLoadError = "";
   } finally {
     state.poetryLoading = false;
     updatePoetryStatus();
@@ -792,7 +807,9 @@ function updatePoetryStatus(message = "") {
   if (element) {
     const total = Number(state.poetryIndex?.count || 0);
     const loaded = state.poetryParts.length;
-    element.textContent = message || (complete
+    element.textContent = message || (state.poetryLoadError
+      ? `تعذر تحميل بقية الموسوعة بعد ${loaded.toLocaleString("ar-EG")} قصيدة — يمكنك متابعة الأجزاء المتاحة أو إعادة المحاولة`
+      : complete
       ? `اكتمل تحميل الديوان: ${total.toLocaleString("ar-EG")} قصيدة`
       : `المحمّل الآن: ${loaded.toLocaleString("ar-EG")} من ${total.toLocaleString("ar-EG")} قصيدة — اضغط «إظهار الكل» للبحث في الموسوعة كاملة`);
   }
@@ -804,14 +821,13 @@ function drawPoems() {
       '<div class="loading-more">جاري تحميل القصائد…</div>';
     return;
   }
-  const query = state.poetryQuery.toLowerCase();
+  const query = normalizeArabic(state.poetryQuery);
   const rows = state.poetryParts.filter(
     (item) =>
       (state.poetryPoet === "الكل" || normalizeArabic(item.poet_name) === normalizeArabic(state.poetryPoet)) &&
       (state.poetryEra === "الكل" || item.poet_era === state.poetryEra) &&
       (!query ||
-        `${item.poet_name || ""} ${item.poem_title || ""} ${cleanText(item.poem_text || "")} ${item.poem_tags || ""}`
-          .toLowerCase()
+        normalizeArabic(`${item.poet_name || ""} ${item.poem_title || ""} ${cleanText(item.poem_text || "")} ${item.poem_tags || ""}`)
           .includes(query)),
   );
   const focused = state.resumePosition?.targetId
