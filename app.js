@@ -60,6 +60,8 @@ const state = {
   poetryEra: "الكل",
   poetryLoading: false,
   poetryReady: false,
+  poetryPoets: [],
+  poetryPoet: "الكل",
   poetryLimit: 60,
   poetryShowAll: false,
   poetryAllLoading: false,
@@ -550,6 +552,8 @@ async function openCollection(collection) {
     state.poetryLoaded = 0;
     state.poetryLoading = true;
     state.poetryReady = false;
+    state.poetryPoets = [];
+    state.poetryPoet = "الكل";
     state.poetryLimit = 60;
     state.poetryShowAll = false;
     state.poetryAllLoading = false;
@@ -558,6 +562,8 @@ async function openCollection(collection) {
       const index = await fetchJson(collection.file);
       if (token !== state.renderToken || state.view !== "poetry") return;
       state.poetryIndex = index;
+      const poetIndex = await fetchJson("./data/poetry/poets.json");
+      state.poetryPoets = Array.isArray(poetIndex?.poets) ? poetIndex.poets : [];
       state.poetryLoading = false;
       await loadPoetryPart();
       if (state.resumePosition?.type === "poem" && state.resumePosition.targetId) {
@@ -615,7 +621,20 @@ function renderPoetryLoading(name, message = "جاري فتح موسوعة ال�
 }
 function renderPoetryControls() {
   const index = state.poetryIndex;
-  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>${esc(index.title || "موسوعة الشعر العربي")}</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · ${Number(index.poetCount || 0).toLocaleString("ar-EG")} شاعرًا · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><input id="poetry-q" type="search" placeholder="بحث في كامل موسوعة الشعر: الشاعر أو العنوان أو النص"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="poem-count"></span></div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
+  shell(`<div class="book-overview"><div><span class="kicker">شعر</span><h2>${esc(index.title || "موسوعة الشعر العربي")}</h2><p>${Number(index.count).toLocaleString("ar-EG")} قصيدة · ${Number(index.poetCount || 0).toLocaleString("ar-EG")} شاعرًا · تحميل تدريجي كامل</p></div><div class="book-seal">شعر</div></div><div class="reading-toolbar"><select id="poetry-poet" aria-label="اختر ديوان الشاعر"><option value="الكل">كل الشعراء</option>${state.poetryPoets.map((poet) => `<option value="${esc(poet.name)}">${esc(poet.name)} · ${Number(poet.count).toLocaleString("ar-EG")} قصيدة</option>`).join("")}</select><input id="poetry-q" type="search" placeholder="بحث في ديوان الشاعر أو كامل الموسوعة"><select id="poetry-era"><option>الكل</option></select><button id="poetry-all" class="toggle-all" type="button" aria-pressed="false">إظهار الكل</button><span id="poem-count"></span></div><div class="advanced-hint">اختر اسمًا من «دواوين الشعراء» لفتح قسم مستقل يضم جميع قصائده.</div><div id="poems"></div><button id="load-more" class="load-more" type="button" hidden>تحميل المزيد</button><div id="poem-status" class="loading-more"></div>`);
+  const poetSelect = $("#poetry-poet");
+  poetSelect.value = state.poetryPoet;
+  poetSelect.addEventListener("change", async (event) => {
+    state.poetryPoet = event.target.value;
+    state.poetryQuery = "";
+    state.poetryLimit = 60;
+    state.poetryShowAll = false;
+    if (state.poetryLoaded < state.poetryIndex.parts) {
+      $("#poems").innerHTML = '<div class="loading-more">جاري فتح ديوان الشاعر كاملًا…</div>';
+      await ensureAllPoetryLoaded();
+    }
+    drawPoems();
+  });
   $("#poetry-q").addEventListener("focus", focusWithinViewport);
   $("#poetry-q").addEventListener("input", async (event) => {
     state.poetryQuery = event.target.value;
@@ -772,6 +791,7 @@ function drawPoems() {
   const query = state.poetryQuery.toLowerCase();
   const rows = state.poetryParts.filter(
     (item) =>
+      (state.poetryPoet === "الكل" || item.poet_name === state.poetryPoet) &&
       (state.poetryEra === "الكل" || item.poet_era === state.poetryEra) &&
       (!query ||
         `${item.poet_name || ""} ${item.poem_title || ""} ${cleanText(item.poem_text || "")} ${item.poem_tags || ""}`
@@ -798,9 +818,10 @@ function drawPoems() {
       })
       .join("") || '<div class="empty">لا توجد نتائج في الأجزاء المحملة</div>';
   const total = Number(state.poetryIndex?.count || 0);
-  const scope = complete ? total : state.poetryParts.length;
+  const poetTotal = state.poetryPoet === "الكل" ? total : Number(state.poetryPoets.find((poet) => poet.name === state.poetryPoet)?.count || rows.length);
+  const scope = complete ? poetTotal : state.poetryParts.length;
   $("#poem-count").textContent = complete
-    ? `${rows.length.toLocaleString("ar-EG")} نتيجة مطابقة من ${scope.toLocaleString("ar-EG")} قصيدة`
+    ? `${rows.length.toLocaleString("ar-EG")} قصيدة في ${state.poetryPoet === "الكل" ? "الموسوعة" : `ديوان ${state.poetryPoet}`} من أصل ${scope.toLocaleString("ar-EG")} قصيدة`
     : `${rows.length.toLocaleString("ar-EG")} نتيجة في الجزء المحمّل (${scope.toLocaleString("ar-EG")} قصيدة)`;
   updatePoetryStatus();
   $$("[data-save]").forEach((button) =>
@@ -922,6 +943,7 @@ async function downloadLibrary() {
     "./data/quran.json",
     "./data/surah-meta.json",
     "./data/poetry/index.json",
+    "./data/poetry/poets.json",
     ...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, "0")}.json`),
     "./data/poetry/ahmad-shawqi.json",
     "./data/poetry/ahmad-shawqi-part-000.json",

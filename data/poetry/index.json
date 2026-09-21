@@ -12,5 +12,6 @@
     "poem_title",
     "poem_text",
     "poem_count"
-  ]
+  ],
+  "poetsFile": "data/poetry/poets.json"
 }
