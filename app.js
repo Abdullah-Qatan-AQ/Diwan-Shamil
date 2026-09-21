@@ -8,6 +8,13 @@ const esc = (value) =>
         char
       ],
   );
+const cleanText = (value) =>
+  String(value ?? "")
+    .replace(/<br\s*\/?>(?=\s*\[|\s*$)/gi, "\n")
+    .replace(/<br\s*\/?\s*>/gi, "\n")
+    .replace(/<\/?[^>]+>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .trim();
 
 const collections = [
   ["القرآن الكريم", "قرآن", "data/quran.json", "quran"],
@@ -426,7 +433,7 @@ function normalizeArabic(value) {
     .trim();
 }
 function getHadithText(item) {
-  return String(item.text || item.arabic || item.arabicText || item.hadith || "").trim();
+  return cleanText(item.text || item.arabic || item.arabicText || item.hadith || "");
 }
 function getHadithNumber(item) {
   return item.hadithnumber || item.idInBook || item.id || "";
@@ -739,7 +746,7 @@ function drawPoems() {
     (item) =>
       (state.poetryEra === "الكل" || item.poet_era === state.poetryEra) &&
       (!query ||
-        `${item.poet_name || ""} ${item.poem_title || ""} ${item.poem_text || ""} ${item.poem_tags || ""}`
+        `${item.poet_name || ""} ${item.poem_title || ""} ${cleanText(item.poem_text || "")} ${item.poem_tags || ""}`
           .toLowerCase()
           .includes(query)),
   );
@@ -758,7 +765,7 @@ function drawPoems() {
       .map((item) => {
         const id = `poem-${item.poem_title}-${item.poet_name}`;
         const position = { id: `poem-position-${item.poem_title}-${item.poet_name}`, type: "poem", title: `${item.poem_title || "قصيدة"} · ${item.poet_name || "شاعر"}`, collection: "موسوعة الشعر العربي", targetId: id, scrollY: Math.round(window.scrollY) };
-        return `<article class="poem" data-entry-id="${esc(id)}"><header><b>${esc(item.poem_title || "قصيدة")}</b><span>${esc(item.poet_name || "شاعر")} · ${esc(item.poet_era || "")} <button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(item.poem_title || "قصيدة")}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع القصيدة">⌖</button></span></header><p>${esc(item.poem_text || "")}</p></article>`;
+        return `<article class="poem" data-entry-id="${esc(id)}"><header><b>${esc(item.poem_title || "قصيدة")}</b><span>${esc(item.poet_name || "شاعر")} · ${esc(item.poet_era || "")} <button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(item.poem_title || "قصيدة")}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع القصيدة">⌖</button></span></header><p>${esc(cleanText(item.poem_text || ""))}</p></article>`;
       })
       .join("") || '<div class="empty">لا توجد نتائج في الأجزاء المحملة</div>';
   const total = Number(state.poetryIndex?.count || 0);
@@ -956,4 +963,10 @@ function render() {
 }
 persist();
 render();
+window.setTimeout(() => {
+  const splash = document.querySelector("#startup-splash");
+  if (!splash) return;
+  splash.classList.add("is-hidden");
+  window.setTimeout(() => splash.remove(), 360);
+}, 260);
 window.__diwan = { state, navigate, goBack, render };
