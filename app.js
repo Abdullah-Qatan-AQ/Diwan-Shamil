@@ -26,13 +26,12 @@ const isArabicDefinition = (value) => {
   const text = String(value ?? "").trim();
   return /[\u0600-\u06ff]/u.test(text) && !/[\p{Script=Latin}]/u.test(text);
 };
-const arabicWordPattern = /([\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF][\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF\u0640ًٌٍَُِّْٰۖۗۚۛۜۙۘ۝۞ۣ۟۠ۡۢۤۥۦۧۨ۩۪ۭ۫۬]*)/gu;
-const arabicWordOnlyPattern = /^[\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF][\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF\u0640ًٌٍَُِّْٰۖۗۚۛۜۙۘ۝۞ۣ۟۠ۡۢۤۥۦۧۨ۩۪ۭ۫۬]*$/u;
 function renderLexicalText(value) {
-  return cleanText(value).split(arabicWordPattern).map((token) => {
-    if (!arabicWordOnlyPattern.test(token)) return esc(token);
-    const word = lexicalWord(token);
-    return `<button type="button" class="lexical-word" data-word="${esc(word)}" aria-label="شرح كلمة ${esc(word)}">${esc(token)}</button>`;
+  return cleanText(value).split(/(\s+)/).map((token) => {
+    const match = token.match(/^([^\u0600-\u06ff]*)([\u0600-\u06ff]+)([^\u0600-\u06ff]*)$/i);
+    if (!match) return esc(token);
+    const word = lexicalWord(match[2]);
+    return `${esc(match[1])}<button type="button" class="lexical-word" data-word="${esc(word)}" aria-label="شرح كلمة ${esc(word)}">${esc(match[2])}</button>${esc(match[3])}`;
   }).join("");
 }
 const renderPoemText = renderLexicalText;
