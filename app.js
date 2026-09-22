@@ -502,19 +502,18 @@ function drawAyahs(query = "") {
   const basmala =
     surah.number === 9
       ? ""
-      : `<div class="basmala">${renderLexicalText("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ")}</div>`;
+      : `<div class="basmala">${esc("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ")}</div>`;
   $("#ayahs").innerHTML =
     basmala +
     (rows
       .map(
         (ayah) =>
-          `<p class="ayah" data-entry-id="quran-${state.surah}-${ayah.verse}"><span>${renderLexicalText(ayah.text)}</span><b>${ayah.verse}</b><span class="entry-actions"><button class="mini-copy" type="button" data-copy="${esc(ayah.text)}" aria-label="نسخ الآية">نسخ النص</button><button class="mini-position" type="button" data-save-position='${esc(JSON.stringify({ id: `quran-${state.surah}-${ayah.verse}`, type: "quran", title: `${surah.name} · الآية ${ayah.verse}`, collection: "القرآن الكريم", surah: state.surah, targetId: `quran-${state.surah}-${ayah.verse}`, verse: ayah.verse, scrollY: Math.round(window.scrollY) }))}' aria-label="حفظ موضع الآية">⌖</button></span></p>`,
+          `<p class="ayah" data-entry-id="quran-${state.surah}-${ayah.verse}"><span>${esc(ayah.text)}</span><b>${ayah.verse}</b><span class="entry-actions"><button class="mini-copy" type="button" data-copy="${esc(ayah.text)}" aria-label="نسخ الآية">نسخ النص</button><button class="mini-position" type="button" data-save-position='${esc(JSON.stringify({ id: `quran-${state.surah}-${ayah.verse}`, type: "quran", title: `${surah.name} · الآية ${ayah.verse}`, collection: "القرآن الكريم", surah: state.surah, targetId: `quran-${state.surah}-${ayah.verse}`, verse: ayah.verse, scrollY: Math.round(window.scrollY) }))}' aria-label="حفظ موضع الآية">⌖</button></span></p>`,
       )
       .join("") || '<div class="empty">لا توجد آيات مطابقة</div>');
   $(".font-readout").textContent = `${state.font}px`;
   $$(`[data-copy]`, $("#ayahs")).forEach((button) => button.addEventListener("click", () => copyText(button.dataset.copy, "الآية").catch(() => showStatus("تعذر نسخ النص", "error"))));
   bindPositionButtons($("#ayahs"));
-  bindLexicalWords($("#ayahs"));
 }
 function setFont(delta) {
   state.font = Math.max(16, Math.min(40, state.font + delta));
@@ -940,7 +939,7 @@ function drawHadith() {
   $("#hadith-list").innerHTML = visible.map(({ item, text, number }) => {
     const id = `hadith-${info.name}-${number}`;
     const position = { id: `hadith-position-${info.name}-${number}`, type: "hadith", title: `${info.name} · حديث ${number}`, collection: info.name, targetId: id, scrollY: Math.round(window.scrollY) };
-    return `<article class="hadith" data-entry-id="${esc(id)}"><div class="hadith-meta"><b>حديث ${esc(number)}</b><span>${esc(info.name)}</span><span class="entry-actions"><button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(text.slice(0, 80))}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-copy" data-copy="${esc(text)}" aria-label="نسخ الحديث">نسخ النص</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع الحديث">⌖</button></span></div><p>${renderLexicalText(text)}</p></article>`;
+    return `<article class="hadith" data-entry-id="${esc(id)}"><div class="hadith-meta"><b>حديث ${esc(number)}</b><span>${esc(info.name)}</span><span class="entry-actions"><button type="button" class="mini-save" data-save="${esc(id)}" data-title="${esc(text.slice(0, 80))}">${state.bookmarks.some((saved) => saved.id === id) ? "★" : "☆"}</button><button type="button" class="mini-copy" data-copy="${esc(text)}" aria-label="نسخ الحديث">نسخ النص</button><button type="button" class="mini-position" data-save-position='${esc(JSON.stringify(position))}' aria-label="حفظ موضع الحديث">⌖</button></span></div><p>${esc(text)}</p></article>`;
   }).join("") || '<div class="empty">لا توجد نتائج مطابقة</div>';
   $("#hadith-count").textContent = `${matches.length.toLocaleString("ar-EG")} حديث`;
   $("#hadith-status").textContent = matches.length > visible.length ? `عرض ${visible.length.toLocaleString("ar-EG")} من ${matches.length.toLocaleString("ar-EG")} حديث` : "اكتملت النتائج";
@@ -948,7 +947,6 @@ function drawHadith() {
   $$('[data-save]').forEach((button) => button.addEventListener("click", () => { toggleBookmark({ id: button.dataset.save, type: "hadith", title: button.dataset.title, collection: info.name, targetId: button.dataset.save, scrollY: Math.round(window.scrollY) }); drawHadith(); }));
   $$(`[data-copy]`, $("#hadith-list")).forEach((button) => button.addEventListener("click", () => copyText(button.dataset.copy, "الحديث").catch(() => showStatus("تعذر نسخ النص", "error"))));
   bindPositionButtons($("#hadith-list"));
-  bindLexicalWords($("#hadith-list"));
 }
 
 async function openPoetry(collection) {
@@ -1201,6 +1199,7 @@ async function downloadLibrary() {
     "./data/poetry/POETRY-LICENSE-SHAWQI",
     "./data/lexicon/lexicon-core.json",
     "./data/lexicon/original-glosses.json",
+    "./data/lexicon/poetry-words.json",
     "./data/lexicon/lexicon.json",
     "./data/lexicon/poetry-coverage.json",
     "./data/lexicon/coverage/index.json",

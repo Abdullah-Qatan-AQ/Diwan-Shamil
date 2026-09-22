@@ -3,7 +3,7 @@
 // Original Arabic glosses authored for this project; not copied from third-party dictionaries.
 import fs from "node:fs";
 
-const source = "عبدالله قطان — معنى أصلي للمشروع (MIT)";
+const source = "Abdullah Qatan — Original project gloss (MIT)";
 const words = {
   "الله": "اسم عَلَم للمعبود الحق في الإسلام.",
   "الرب": "السيد المالك المدبر الخالق.",
