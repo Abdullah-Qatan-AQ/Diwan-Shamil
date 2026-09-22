@@ -253,6 +253,14 @@ async function loadLexicon() {
     state.lexicon = {};
     state.lexiconCoverage = new Set();
   }
+  try {
+    const original = decode(await fetchJson("./data/lexicon/original-glosses.json", 12000));
+    for (const [key, values] of Object.entries(original.entries)) {
+      state.lexicon[key] = [...values, ...(state.lexicon[key] || [])];
+    }
+  } catch {
+    // المعاني الأصلية اختيارية عند تشغيل نسخة قديمة من الحزمة.
+  }
   // حمّل الفهرس الكامل لاحقًا لتحسين التغطية، من دون تعطيل النافذة أو استبدال الفهرس السريع.
   void (async () => {
     try {
@@ -1192,6 +1200,7 @@ async function downloadLibrary() {
     "./data/poetry/supplemental.json",
     "./data/poetry/POETRY-LICENSE-SHAWQI",
     "./data/lexicon/lexicon-core.json",
+    "./data/lexicon/original-glosses.json",
     "./data/lexicon/lexicon.json",
     "./data/lexicon/poetry-coverage.json",
     "./data/lexicon/coverage/index.json",
