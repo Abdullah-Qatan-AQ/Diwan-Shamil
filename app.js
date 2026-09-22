@@ -15,7 +15,9 @@ const cleanText = (value) =>
     .replace(/<\/?[^>]+>/g, "")
     .replace(/&nbsp;/gi, " ")
     .trim();
-const lexicalWord = (value) => String(value ?? "").replace(/[ًٌٍَُِّْـ]/g, "").trim();
+const lexicalWord = (value) => String(value ?? "")
+  .replace(/[ًٌٍَُِّْـٰۖۗۚۛۜۙۘ۝۞ۣ۟۠ۡۢۤۥۦۧۨ۩۪ۭ۫۬]/gu, "")
+  .trim();
 const normalizeLexiconKey = (value) => lexicalWord(value)
   .replace(/[إأآٱ]/g, "ا")
   .replace(/ى/g, "ي")
@@ -24,9 +26,11 @@ const isArabicDefinition = (value) => {
   const text = String(value ?? "").trim();
   return /[\u0600-\u06ff]/u.test(text) && !/[\p{Script=Latin}]/u.test(text);
 };
+const arabicWordPattern = /([\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF][\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF\u0640ًٌٍَُِّْٰۖۗۚۛۜۙۘ۝۞ۣ۟۠ۡۢۤۥۦۧۨ۩۪ۭ۫۬]*)/gu;
+const arabicWordOnlyPattern = /^[\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF][\u0621-\u063A\u0641-\u064A\u0671-\u06D3\u06FA-\u06FF\u0640ًٌٍَُِّْٰۖۗۚۛۜۙۘ۝۞ۣ۟۠ۡۢۤۥۦۧۨ۩۪ۭ۫۬]*$/u;
 function renderLexicalText(value) {
-  return cleanText(value).split(/([\u0621-\u063A\u0641-\u064A]+)/gu).map((token) => {
-    if (!/^[\u0621-\u063A\u0641-\u064A]+$/u.test(token)) return esc(token);
+  return cleanText(value).split(arabicWordPattern).map((token) => {
+    if (!arabicWordOnlyPattern.test(token)) return esc(token);
     const word = lexicalWord(token);
     return `<button type="button" class="lexical-word" data-word="${esc(word)}" aria-label="شرح كلمة ${esc(word)}">${esc(token)}</button>`;
   }).join("");
