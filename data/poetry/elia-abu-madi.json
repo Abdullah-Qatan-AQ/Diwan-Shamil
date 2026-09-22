@@ -1,0 +1,10 @@
+{
+  "title": "قصائد إيليا أبي ماضي",
+  "source": "ويكي مصدر",
+  "license": "CC BY-SA 4.0 / نص المؤلف في الملك العام بحسب صفحات المصدر",
+  "count": 2,
+  "poetCount": 1,
+  "parts": 1,
+  "partPattern": "data/poetry/elia-abu-madi-part-{index}.json",
+  "fields": ["poet_name", "poet_era", "poem_tags", "poem_title", "poem_text"]
+}
