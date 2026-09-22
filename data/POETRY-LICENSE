@@ -2,19 +2,22 @@ Arabic Poetry Dataset
 
 Source: https://www.kaggle.com/datasets/mdanok/arabic-poetry-dataset
 Original publisher: mdanok
-License: Open Data Commons Open Database License (ODbL) 1.0
 
-The dataset page states that the contents were scraped from aldiwan.net. This copy is redistributed with attribution to the dataset publisher and source. The ODbL terms apply to the database and its use; this file does not claim that every underlying poem is public domain.
+The Kaggle data card identifies the database under the Open Database License (ODbL 1.0) and the database contents under the Database Contents License (DbCL 1.0). This repository redistributes a modified database: records missing a poet name, poem title, or poem text were excluded from the searchable copy. The source attribution and machine-readable source links are retained.
 
-License text: https://opendatacommons.org/licenses/odbl/1-0/
+Database license: https://opendatacommons.org/licenses/odbl/1-0/
+Contents license: https://opendatacommons.org/licenses/dbcl/1-0/
 
-Additional independent public-domain source:
-Ahmed Shawqi (1868–1932), selected poem «قم للمعلم» from Wikisource.
-Source and rights note: data/poetry/POETRY-LICENSE-SHAWQI
+The dataset page states that the contents were scraped from aldiwan.net. Neither ODbL nor DbCL is a blanket assertion that every underlying poem is public domain or that every text may be reused in every jurisdiction. Users must independently assess any underlying copyright, moral rights, database rights, and territorial restrictions before redistribution or commercial use.
 
-Additional independent modern-poet source:
-Elia Abu Madi (1889–1957), two selected poems transcribed from Arabic Wikisource:
+Additional independent source — Ahmed Shawqi:
+Ahmed Shawqi (1868–1932), selected poem «قم للمعلم» from Arabic Wikisource. See data/poetry/POETRY-LICENSE-SHAWQI for source-specific attribution and limitations.
+
+Additional independent source — Elia Abu Madi:
+Two selected poems transcribed from Arabic Wikisource:
 - https://ar.wikisource.org/wiki/جئت_لا_أعلم_من_أين_ولكني_أتيت
 - https://ar.wikisource.org/wiki/أيلول_الشاعر
-The Wikisource pages provide the source text and attribution. Wikisource content is available under CC BY-SA 4.0; the pages also describe the author's work as public domain under the applicable source-law analysis. The app keeps attribution and source links and does not extend that status to every work or jurisdiction.
-License: https://creativecommons.org/licenses/by-sa/4.0/
+
+The Wikisource pages publish their content under CC BY-SA 4.0 and include source-law public-domain notes. The application preserves attribution and source links, but does not extend those notes to every work, edition, jurisdiction, or use. See https://creativecommons.org/licenses/by-sa/4.0/deed.ar and the source pages before reuse.
+
+This file is an attribution and provenance notice, not legal advice or a worldwide clearance opinion. The code license in the repository does not relicense the poetry database or the underlying texts.
