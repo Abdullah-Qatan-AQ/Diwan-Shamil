@@ -1,0 +1,13 @@
+import fs from "node:fs";
+const file = "app.js";
+let text = fs.readFileSync(file, "utf8");
+text = text.replace("75,025<small> إدخال شعري · 756 شاعرًا</small>", "74,011<small> إدخالًا شعريًا · 750 شاعرًا</small>");
+text = text.replace("تضم المجموعة الأساسية <b>75,022 قصيدة من 755 شاعرًا</b>، موزعة على 76 جزءًا للتحميل التدريجي والقراءة دون اتصال، ومعها قصيدة مستقلة لأحمد شوقي من مصدر عام؛ أي 75,025 إدخالًا شعريًا و756 شاعرًا عند جمع المصدرين.", "تضم الموسوعة <b>74,008 قصائد من 748 شاعرًا</b> من المصدر الأساسي بعد استبعاد 1,014 سجلًا بلا نص أو عنوان، موزعة على 76 جزءًا للتحميل التدريجي، ومعها 3 قصائد موثقة إضافية لشوقي وإيليا؛ أي 74,011 إدخالًا و750 شاعرًا. لا يدّعي هذا الرقم اكتمال الأعمال الكاملة لأي شاعر.");
+text = text.replace("<h2>إيليا أبو ماضي — مصدر موثق</h2><p>أضيفت قصيدتان مختارتان لإيليا أبي ماضي من صفحات ويكي مصدر", "<h2>إيليا أبو ماضي — مصدر إضافي</h2><p>تظهر قصيدتان موثقتان لإيليا أبي ماضي داخل الموسوعة الموحدة من صفحات ويكي مصدر");
+text = text.replace("<h2>أحمد شوقي — ملك عام</h2><p>أضيفت قصيدة «قم للمعلم» كمصدر مستقل", "<h2>أحمد شوقي — مصدر إضافي</h2><p>تظهر قصيدة «قم للمعلم» داخل الموسوعة الموحدة من مصدر مستقل");
+fs.writeFileSync(file, text);
+const sw = "sw.js";
+let serviceWorker = fs.readFileSync(sw, "utf8").replaceAll("diwan-library-v5", "diwan-library-v6");
+serviceWorker = serviceWorker.replace("./data/poetry/index.json", "./data/poetry/index.json", 1);
+if (!serviceWorker.includes("./data/poetry/supplemental.json")) serviceWorker = serviceWorker.replace("...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, \"0\")}.json`),", "...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, \"0\")}.json`),\n  \"./data/poetry/supplemental.json\",");
+fs.writeFileSync(sw, serviceWorker);

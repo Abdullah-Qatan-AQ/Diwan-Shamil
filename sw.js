@@ -14,6 +14,7 @@ const ASSETS = [
   "./data/poetry/index.json",
   "./data/poetry/poets.json",
   ...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, "0")}.json`),
+  "./data/poetry/supplemental.json",
   "./data/ara-bukhari.json",
   "./data/ara-muslim.json",
   "./data/ara-tirmidhi.json",
