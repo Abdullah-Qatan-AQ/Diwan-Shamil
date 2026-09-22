@@ -20,6 +20,10 @@ const normalizeLexiconKey = (value) => lexicalWord(value)
   .replace(/[إأآٱ]/g, "ا")
   .replace(/ى/g, "ي")
   .replace(/ة/g, "ه");
+const isArabicDefinition = (value) => {
+  const text = String(value ?? "").trim();
+  return /[\u0600-\u06ff]/u.test(text) && !/[\p{Script=Latin}]/u.test(text);
+};
 function renderPoemText(value) {
   return cleanText(value).split(/(\s+)/).map((token) => {
     const match = token.match(/^([^\u0600-\u06ff]*)([\u0600-\u06ff]+)([^\u0600-\u06ff]*)$/i);
@@ -185,6 +189,7 @@ async function showWordMeaning(rawWord) {
   if (state.lexiconPromise) await state.lexiconPromise;
   const candidates = lexiconCandidates(word);
   const entries = candidates.flatMap((candidate) => state.lexicon[candidate] || [])
+    .filter((entry) => isArabicDefinition(entry?.meaning))
     .filter((entry, index, all) => all.findIndex((item) => `${item.source}|${item.meaning}` === `${entry.source}|${entry.meaning}`) === index);
   const hasContextualCoverage = !entries.length && candidates.some((candidate) => state.lexiconCoverage.has(candidate));
   const body = entries.length
@@ -226,7 +231,7 @@ async function loadLexicon() {
         : (Array.isArray(values) ? values : []);
       if (!result[key]) result[key] = [];
       for (const entry of decoded) {
-        if (entry?.meaning && /[\u0600-\u06ff]/.test(entry.meaning) && !/[A-Za-z]/.test(entry.meaning) && !result[key].some((item) => item.meaning === entry.meaning && item.source === entry.source)) {
+        if (entry?.meaning && isArabicDefinition(entry.meaning) && !result[key].some((item) => item.meaning === entry.meaning && item.source === entry.source)) {
           result[key].push(entry);
         }
       }
