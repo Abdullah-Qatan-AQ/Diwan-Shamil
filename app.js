@@ -16,6 +16,10 @@ const cleanText = (value) =>
     .replace(/&nbsp;/gi, " ")
     .trim();
 const lexicalWord = (value) => String(value ?? "").replace(/[ًٌٍَُِّْـ]/g, "").trim();
+const normalizeLexiconKey = (value) => lexicalWord(value)
+  .replace(/[إأآٱ]/g, "ا")
+  .replace(/ى/g, "ي")
+  .replace(/ة/g, "ه");
 function renderPoemText(value) {
   return cleanText(value).split(/(\s+)/).map((token) => {
     const match = token.match(/^([^\u0600-\u06ff]*)([\u0600-\u06ff]+)([^\u0600-\u06ff]*)$/i);
@@ -89,6 +93,8 @@ const state = {
     : [],
   resumePosition: null,
   wordMeaningCache: {},
+  lexicon: {},
+  lexiconPromise: null,
 };
 
 function persist() {
@@ -154,26 +160,20 @@ function renderWordMeaning(word, body, loading = false) {
 async function showWordMeaning(rawWord) {
   const word = lexicalWord(rawWord);
   if (!word) return;
+  if (state.lexiconPromise) await state.lexiconPromise;
   const cached = state.wordMeaningCache[word];
   if (cached) {
     renderWordMeaning(word, cached);
     return;
   }
   renderWordMeaning(word, "", true);
-  const api = `https://ar.wiktionary.org/w/rest.php/v1/page/${encodeURIComponent(word)}`;
-  try {
-    const response = await fetch(api, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    const extract = wiktionaryPlainText(data?.source).slice(0, 1800);
-    const body = extract
-      ? `<p>${esc(extract).replace(/\n/g, "<br>")}</p>`
-      : '<p class="muted">لم يُعثر على مدخل واضح لهذه الكلمة. يمكنك فتح صفحة الكلمة في المصدر للاطلاع على البدائل والتصريفات.</p>';
-    state.wordMeaningCache[word] = body;
-    renderWordMeaning(word, body);
-  } catch {
-    renderWordMeaning(word, '<p class="muted">تعذر الاتصال بالمعجم الآن. افتح رابط المصدر للبحث يدويًا أو أعد المحاولة لاحقًا.</p>');
-  }
+  const entry = state.lexicon[normalizeLexiconKey(word)];
+  const extract = wiktionaryPlainText(entry?.source).slice(0, 1800);
+  const body = extract
+    ? `<p>${esc(extract).replace(/\n/g, "<br>")}</p>`
+    : '<p class="muted">لا يوجد تعريف لهذه الكلمة ضمن المعجم المحلي المضمّن. أُضيفت الكلمة إلى واجهة البحث دون أي اتصال خارجي.</p>';
+  state.wordMeaningCache[word] = body;
+  renderWordMeaning(word, body);
 }
 function bindLexicalWords(root) {
   $$(".lexical-word", root).forEach((button) => button.addEventListener("click", () => showWordMeaning(button.dataset.word)));
@@ -188,6 +188,18 @@ function wiktionaryPlainText(source) {
     .replace(/[\t ]+/g, " ")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
+}
+async function loadLexicon() {
+  const files = ["./data/lexicon/wiktionary.json", "./data/lexicon/wiktionary2.json"];
+  try {
+    const entries = await Promise.all(files.map((file) => fetchJson(file)));
+    state.lexicon = entries.reduce((index, entry) => {
+      if (entry?.key && entry?.source) index[normalizeLexiconKey(entry.key)] = entry;
+      return index;
+    }, {});
+  } catch {
+    state.lexicon = {};
+  }
 }
 async function copyText(text, label = "النص") {
   const value = String(text || "").trim();
@@ -995,7 +1007,7 @@ function drawPoems() {
 }
 
 function sourcesView() {
-  shell(`<div class="page-head"><div><span class="kicker">شفافية وإسناد</span><h1>التراخيص والمصادر</h1><p class="muted">كود التطبيق مرخص MIT، أما البيانات الخارجية فتحتفظ برخص مصادرها.</p></div><strong class="count">74,011<small> إدخالًا شعريًا · 750 شاعرًا</small></strong></div><div class="settings-grid"><article class="settings-card"><h2>كود التطبيق</h2><p>كود الديوان الشامل مرخص وفق <b>MIT License</b>. يجب إبقاء إشعار حقوق النشر ونص الرخصة الموجودين في المستودع.</p><p><a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/LICENSE" target="_blank" rel="noopener">قراءة رخصة الكود</a></p></article><article class="settings-card"><h2>بيانات الحديث</h2><p>المجموعات الاثنتا عشرة العربية مأخوذة من QuranLab/Open-Hadith-Data. قاعدة البيانات تحت <b>ODbL 1.0</b> ومحتوى قاعدة البيانات تحت <b>DbCL 1.0</b> وفق بطاقة المصدر.</p><p>يجب إبقاء الإسناد وروابط الرخصة، وقد تنطبق شروط Share-Alike على قاعدة البيانات المشتقة. هذه الرخصة لا تعيد ترخيص كود التطبيق.</p><p><a href="https://huggingface.co/datasets/quranlab/hadith" target="_blank" rel="noopener">مصدر QuranLab</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">ODbL</a> · <a href="https://opendatacommons.org/licenses/dbcl/1-0/" target="_blank" rel="noopener">DbCL</a></p></article><article class="settings-card"><h2>الشعر العربي — ODbL</h2><p>موسوعة الشعر العربي الحالية من Kaggle / mdanok، مع تطبيق شروط <b>ODbL 1.0</b> على قاعدة البيانات. لا تفترض هذه الرخصة أن كل نص شعري ملك عام.</p><p><a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/data/POETRY-LICENSE" target="_blank" rel="noopener">ترخيص المصدر الحالي</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">نص ODbL</a></p></article><article class="settings-card"><h2>موسوعة الشعر العربي</h2><p>تضم الموسوعة <b>74,008 قصائد من 748 شاعرًا</b> من المصدر الأساسي بعد استبعاد 1,014 سجلًا بلا نص أو عنوان، موزعة على 76 جزءًا للتحميل التدريجي، ومعها 3 قصائد موثقة إضافية لشوقي وإيليا؛ أي 74,011 إدخالًا و750 شاعرًا. لا يدّعي هذا الرقم اكتمال الأعمال الكاملة لأي شاعر.</p><p>المجموعة الأساسية منسوبة إلى <b>Arabic Poetry Dataset</b> (الناشر: mdanok)، وتذكر بطاقة المصدر أنها جُمعت من موقع الديوان. يحتفظ التطبيق بإسناد المصدر وروابط الرخص، ولا يقدّم ضمانًا بأن كل نص شعري ملك عام أو قابل لإعادة الاستخدام في كل دولة.</p><p><b>الرخصة:</b> قاعدة البيانات موزعة وفق <b>ODbL 1.0</b> مع إبقاء النسبة ورابط المصدر وإشعار الرخصة عند إعادة التوزيع. هذه الرخصة تخص قاعدة البيانات، ولا تُنشئ تلقائيًا ترخيصًا جديدًا للنصوص الشعرية المفردة؛ لذلك لا يقدّم التطبيق ادعاءً بأن كل قصيدة ملك عام أو أن كل نص قابل لإعادة الاستخدام في كل بلد.</p><p><a href="https://www.kaggle.com/datasets/mdanok/arabic-poetry-dataset" target="_blank" rel="noopener">صفحة مجموعة البيانات</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">نص ODbL 1.0</a> · <a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/data/POETRY-LICENSE" target="_blank" rel="noopener">بيان الترخيص المحلي</a></p><p class="muted">للاستخدام التجاري أو إعادة النشر خارج التطبيق، راجع حالة حقوق النصوص في بلدك واحفظ إشعارات المصدر المطلوبة.</p></article><article class="settings-card"><h2>إيليا أبو ماضي — مصدر إضافي</h2><p>تظهر قصيدتان موثقتان لإيليا أبي ماضي داخل الموسوعة الموحدة من صفحات ويكي مصدر، مع إبقاء النسبة وروابط المصدر. صفحات المصدر تعرض النصوص وتتضمن ملاحظات عن وضع الحقوق بحسب قانون المصدر، بينما تنشر ويكي مصدر محتواها وفق CC BY-SA 4.0. يجب التحقق من الحقوق في الدولة والاستخدام المقصود قبل إعادة التوزيع.</p><p><a href="https://ar.wikisource.org/wiki/جئت_لا_أعلم_من_أين_ولكني_أتيت" target="_blank" rel="noopener">جئت لا أعلم من أين</a> · <a href="https://ar.wikisource.org/wiki/أيلول_الشاعر" target="_blank" rel="noopener">أيلول الشاعر</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></p></article><article class="settings-card"><h2>أحمد شوقي — مصدر إضافي</h2><p>تظهر قصيدة «قم للمعلم» داخل الموسوعة الموحدة من مصدر مستقل من ويكي مصدر. تذكر صفحة المؤلف أن أعمال أحمد شوقي (1868–1932) آلت إلى الملك العام في مصر. يحتفظ التطبيق بنسبة المؤلف ورابط النص، ولا يخلط هذا المصدر بقاعدة ODbL.</p><p><a href="https://ar.wikisource.org/wiki/%D9%82%D9%85_%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85" target="_blank" rel="noopener">النص في ويكي مصدر</a> · <a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/data/poetry/POETRY-LICENSE-SHAWQI" target="_blank" rel="noopener">بيان الترخيص المحلي</a></p><p class="muted">قد تختلف حالة الملكية العامة بحسب الدولة. راجع سياسة المصدر قبل إعادة التوزيع.</p></article><article class="settings-card"><h2>شرح الكلمات</h2><p>عند النقر على أي كلمة في القصيدة، يطلب التطبيق معناها من <b>ويكاموس العربي</b> عبر واجهة Wikimedia العامة. لا تُخزَّن نسخة كاملة من المعجم داخل التطبيق، وقد لا يتوفر تعريف لكل كلمة أو دون اتصال.</p><p>محتوى ويكاموس منشور وفق <b>CC BY-SA 4.0</b> مع الإسناد ورابط المصدر. واجهة الطلب التقنية مقدمة من Wikimedia؛ راجع شروط المصدر قبل أي إعادة توزيع مستقلة للتعريفات.</p><p><a href="https://ar.wiktionary.org/" target="_blank" rel="noopener">ويكاموس العربي</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" target="_blank" rel="noopener">نص CC BY-SA 4.0</a> · <a href="https://www.mediawiki.org/wiki/API:Main_page" target="_blank" rel="noopener">توثيق Wikimedia API</a></p></article><article class="settings-card"><h2>مصادر القرآن</h2><p>للقرآن ومصادره المستقلة ملفات توثيق منفصلة داخل المستودع. لا تعني رخصة MIT للكود أن هذه البيانات أصبحت MIT.</p><p><a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/tree/main/data" target="_blank" rel="noopener">ملفات المصادر والتراخيص</a></p></article><article class="settings-card"><h2>تنبيه مهم</h2><p>تغيير صيغة البيانات إلى JavaScript أو SQLite أو APK لا يجعل النصوص ملكًا للمشروع ولا يزيل شروط المصدر. لا يثبت التطبيق صحة الأحاديث ولا يقدم فتوى.</p><p class="muted">هذا توثيق عملي وليس استشارة قانونية.</p></article></div>`);
+  shell(`<div class="page-head"><div><span class="kicker">شفافية وإسناد</span><h1>التراخيص والمصادر</h1><p class="muted">كود التطبيق مرخص MIT، أما البيانات الخارجية فتحتفظ برخص مصادرها.</p></div><strong class="count">74,011<small> إدخالًا شعريًا · 750 شاعرًا</small></strong></div><div class="settings-grid"><article class="settings-card"><h2>كود التطبيق</h2><p>كود الديوان الشامل مرخص وفق <b>MIT License</b>. يجب إبقاء إشعار حقوق النشر ونص الرخصة الموجودين في المستودع.</p><p><a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/LICENSE" target="_blank" rel="noopener">قراءة رخصة الكود</a></p></article><article class="settings-card"><h2>بيانات الحديث</h2><p>المجموعات الاثنتا عشرة العربية مأخوذة من QuranLab/Open-Hadith-Data. قاعدة البيانات تحت <b>ODbL 1.0</b> ومحتوى قاعدة البيانات تحت <b>DbCL 1.0</b> وفق بطاقة المصدر.</p><p>يجب إبقاء الإسناد وروابط الرخصة، وقد تنطبق شروط Share-Alike على قاعدة البيانات المشتقة. هذه الرخصة لا تعيد ترخيص كود التطبيق.</p><p><a href="https://huggingface.co/datasets/quranlab/hadith" target="_blank" rel="noopener">مصدر QuranLab</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">ODbL</a> · <a href="https://opendatacommons.org/licenses/dbcl/1-0/" target="_blank" rel="noopener">DbCL</a></p></article><article class="settings-card"><h2>الشعر العربي — ODbL</h2><p>موسوعة الشعر العربي الحالية من Kaggle / mdanok، مع تطبيق شروط <b>ODbL 1.0</b> على قاعدة البيانات. لا تفترض هذه الرخصة أن كل نص شعري ملك عام.</p><p><a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/data/POETRY-LICENSE" target="_blank" rel="noopener">ترخيص المصدر الحالي</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">نص ODbL</a></p></article><article class="settings-card"><h2>موسوعة الشعر العربي</h2><p>تضم الموسوعة <b>74,008 قصائد من 748 شاعرًا</b> من المصدر الأساسي بعد استبعاد 1,014 سجلًا بلا نص أو عنوان، موزعة على 76 جزءًا للتحميل التدريجي، ومعها 3 قصائد موثقة إضافية لشوقي وإيليا؛ أي 74,011 إدخالًا و750 شاعرًا. لا يدّعي هذا الرقم اكتمال الأعمال الكاملة لأي شاعر.</p><p>المجموعة الأساسية منسوبة إلى <b>Arabic Poetry Dataset</b> (الناشر: mdanok)، وتذكر بطاقة المصدر أنها جُمعت من موقع الديوان. يحتفظ التطبيق بإسناد المصدر وروابط الرخص، ولا يقدّم ضمانًا بأن كل نص شعري ملك عام أو قابل لإعادة الاستخدام في كل دولة.</p><p><b>الرخصة:</b> قاعدة البيانات موزعة وفق <b>ODbL 1.0</b> مع إبقاء النسبة ورابط المصدر وإشعار الرخصة عند إعادة التوزيع. هذه الرخصة تخص قاعدة البيانات، ولا تُنشئ تلقائيًا ترخيصًا جديدًا للنصوص الشعرية المفردة؛ لذلك لا يقدّم التطبيق ادعاءً بأن كل قصيدة ملك عام أو أن كل نص قابل لإعادة الاستخدام في كل بلد.</p><p><a href="https://www.kaggle.com/datasets/mdanok/arabic-poetry-dataset" target="_blank" rel="noopener">صفحة مجموعة البيانات</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">نص ODbL 1.0</a> · <a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/data/POETRY-LICENSE" target="_blank" rel="noopener">بيان الترخيص المحلي</a></p><p class="muted">للاستخدام التجاري أو إعادة النشر خارج التطبيق، راجع حالة حقوق النصوص في بلدك واحفظ إشعارات المصدر المطلوبة.</p></article><article class="settings-card"><h2>إيليا أبو ماضي — مصدر إضافي</h2><p>تظهر قصيدتان موثقتان لإيليا أبي ماضي داخل الموسوعة الموحدة من صفحات ويكي مصدر، مع إبقاء النسبة وروابط المصدر. صفحات المصدر تعرض النصوص وتتضمن ملاحظات عن وضع الحقوق بحسب قانون المصدر، بينما تنشر ويكي مصدر محتواها وفق CC BY-SA 4.0. يجب التحقق من الحقوق في الدولة والاستخدام المقصود قبل إعادة التوزيع.</p><p><a href="https://ar.wikisource.org/wiki/جئت_لا_أعلم_من_أين_ولكني_أتيت" target="_blank" rel="noopener">جئت لا أعلم من أين</a> · <a href="https://ar.wikisource.org/wiki/أيلول_الشاعر" target="_blank" rel="noopener">أيلول الشاعر</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></p></article><article class="settings-card"><h2>أحمد شوقي — مصدر إضافي</h2><p>تظهر قصيدة «قم للمعلم» داخل الموسوعة الموحدة من مصدر مستقل من ويكي مصدر. تذكر صفحة المؤلف أن أعمال أحمد شوقي (1868–1932) آلت إلى الملك العام في مصر. يحتفظ التطبيق بنسبة المؤلف ورابط النص، ولا يخلط هذا المصدر بقاعدة ODbL.</p><p><a href="https://ar.wikisource.org/wiki/%D9%82%D9%85_%D9%84%D9%84%D9%85%D8%B9%D9%84%D9%85" target="_blank" rel="noopener">النص في ويكي مصدر</a> · <a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/data/poetry/POETRY-LICENSE-SHAWQI" target="_blank" rel="noopener">بيان الترخيص المحلي</a></p><p class="muted">قد تختلف حالة الملكية العامة بحسب الدولة. راجع سياسة المصدر قبل إعادة التوزيع.</p></article><article class="settings-card"><h2>شرح الكلمات دون اتصال</h2><p>عند النقر على كلمة في القصيدة، يبحث التطبيق أولًا في ملفات المعجم JSON المضمّنة داخل المستودع. لا يعتمد هذا الجزء على طلبات خارجية، وتظل النتيجة متاحة بعد تنزيل المكتبة للعمل دون إنترنت.</p><p>المدخلات المضمّنة من ويكاموس العربي وفق <b>CC BY-SA 4.0</b> مع الإسناد ورابط المصدر. قد لا يتوفر تعريف لكل كلمة؛ عندها يوضح التطبيق أن المدخل غير موجود بدل فتح خدمة خارجية.</p><p><a href="https://ar.wiktionary.org/" target="_blank" rel="noopener">ويكاموس العربي (المصدر)</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" target="_blank" rel="noopener">نص CC BY-SA 4.0</a> · <a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/tree/main/data/lexicon" target="_blank" rel="noopener">ملفات المعجم المحلية</a></p></article><article class="settings-card"><h2>مصادر القرآن</h2><p>للقرآن ومصادره المستقلة ملفات توثيق منفصلة داخل المستودع. لا تعني رخصة MIT للكود أن هذه البيانات أصبحت MIT.</p><p><a href="https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/tree/main/data" target="_blank" rel="noopener">ملفات المصادر والتراخيص</a></p></article><article class="settings-card"><h2>تنبيه مهم</h2><p>تغيير صيغة البيانات إلى JavaScript أو SQLite أو APK لا يجعل النصوص ملكًا للمشروع ولا يزيل شروط المصدر. لا يثبت التطبيق صحة الأحاديث ولا يقدم فتوى.</p><p class="muted">هذا توثيق عملي وليس استشارة قانونية.</p></article></div>`);
 }
 function settingsMarkup() {
   return `<div class="settings-backdrop" id="settings-modal" role="presentation"><section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title"><button class="modal-close" id="settings-close" type="button" aria-label="إغلاق">×</button><div class="page-head"><div><span class="kicker">تخصيص</span><h1 id="settings-title">الإعدادات</h1></div></div><section class="settings-grid"><article class="settings-card"><h2>المظهر والقراءة</h2><label>الثيم</label><div class="theme-choices"><button type="button" data-theme="sand">رملي</button><button type="button" data-theme="night">ليلي</button><button type="button" data-theme="green">أخضر</button><button type="button" data-theme="paper">ورقي</button></div><label>حجم الخط <b id="settings-font">${state.font}px</b></label><input id="settings-font-range" type="range" min="16" max="40" value="${state.font}"><label class="check"><input id="remember" type="checkbox" ${settings.remember ? "checked" : ""}> تذكر آخر سورة</label></article><article class="settings-card"><h2>المحفوظات والنسخ الاحتياطي</h2><p>لديك <b>${state.bookmarks.length}</b> مفضلة و<b>${state.readingPositions.length}</b> موضع قراءة.</p><button id="export-data" type="button">تصدير نسخة احتياطية</button><button id="import-data" type="button">استيراد نسخة احتياطية</button><input id="import-file" type="file" accept="application/json" hidden><div class="bookmark-list">${state.bookmarks.slice(0, 12).map((item) => `<div class="bookmark-row"><span>${esc(item.title || item.id)}</span><button type="button" data-remove="${esc(item.id)}">حذف</button></div>`).join("") || '<p class="muted">لا توجد مفضلات بعد.</p>'}</div></article><article class="settings-card"><h2>القراءة دون إنترنت</h2><p>بيانات القرآن والحديث والشعر مضمّنة في نسخة التطبيق ويمكن تنزيلها كاملة.</p><button id="download-library" type="button">تنزيل المكتبة الأساسية</button><button id="clear-cache" type="button">مسح التنزيلات</button><button id="open-sources" type="button">التراخيص والمصادر</button></article><article class="settings-card danger-card"><h2>إعادة ضبط التطبيق</h2><p>يمسح المفضلة والمواضع والثيم والإعدادات المحلية، ثم يعيد فتح التطبيق من البداية.</p><button id="reset-app" type="button">إعادة تعيين كل التطبيق</button></article></section><p class="modal-credit">من صنع Abdullah Qatan · مرخص برخصة MIT</p></section></div>`;
@@ -1100,6 +1112,8 @@ async function downloadLibrary() {
     ...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, "0")}.json`),
     "./data/poetry/supplemental.json",
     "./data/poetry/POETRY-LICENSE-SHAWQI",
+    "./data/lexicon/wiktionary.json",
+    "./data/lexicon/wiktionary2.json",
     ...collections
       .filter((item) => item[3] === "hadith")
       .map((item) => `./${item[2]}`),
@@ -1168,6 +1182,7 @@ function render() {
   else if (state.view === "poetry") renderPoetryLoading("موسوعة الشعر العربي");
   else home();
 }
+state.lexiconPromise = loadLexicon();
 persist();
 render();
 window.__diwan = { state, navigate, goBack, render };
