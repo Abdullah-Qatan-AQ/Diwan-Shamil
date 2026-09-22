@@ -50,7 +50,7 @@ npm run android:build
 
 المشروع جاهز للنشر اليدوي على أي استضافة ملفات ثابتة عند اختيار المالك ذلك. لا يتضمن المستودع نشرًا تلقائيًا أو نسخة مستضافة مفعّلة.
 
-يحتوي المستودع أيضًا على Workflow في `.github/workflows/android-release.yml` لبناء APK موقّع وإنشاء **مسودة GitHub Release** عند تشغيله يدويًا من GitHub Actions. لا تُنشأ مسودات أو سجلات بناء جديدة مع تحديثات الموقع العادية؛ يلزم إعداد أسرار keystore في Environment باسم `production`. راجع [دليل إصدار Android](docs-android-release.md) لأسماء الأسرار والتفاصيل.
+يحتوي المستودع أيضًا على Workflow في `.github/workflows/android-release.yml` لبناء APK موقّع وإنشاء **مسودة GitHub Release** تلقائيًا عند كل تغيير يصل إلى `main`. يزيد Workflow رقم البناء، ويختار أول رقم Tag مفقود ضمن السلسلة، ثم تبقى المسودة بانتظار إضافة الوصف ونشرها يدويًا؛ يلزم إعداد أسرار keystore في Environment باسم `production`. راجع [دليل إصدار Android](docs-android-release.md) لأسماء الأسرار والتفاصيل.
 
 ## تحسين الظهور في محركات البحث
 
