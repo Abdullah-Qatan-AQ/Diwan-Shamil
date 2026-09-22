@@ -170,7 +170,7 @@ function renderWordMeaning(word, body, loading = false) {
   const modal = document.createElement("div");
   modal.id = "word-meaning-modal";
   modal.className = "settings-backdrop lexical-modal";
-  modal.innerHTML = `<section class="settings-modal lexical-card" role="dialog" aria-modal="true" aria-labelledby="word-meaning-title"><button class="modal-close" type="button" aria-label="إغلاق">×</button><span class="kicker">شرح من المعجم</span><h2 id="word-meaning-title">${esc(word)}</h2><div class="lexical-body">${loading ? '<div class="loading-more">جاري البحث في المعجم…</div>' : body}</div><p class="lexical-source">المصدر: <a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">ويكاموس العربي</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></p></section>`;
+  modal.innerHTML = `<section class="settings-modal lexical-card" role="dialog" aria-modal="true" aria-labelledby="word-meaning-title"><button class="modal-close" type="button" aria-label="إغلاق">×</button><span class="kicker">الترجمة الحرفية ومعنى الكلمة</span><h2 id="word-meaning-title">${esc(word)}</h2><div class="lexical-body">${loading ? '<div class="loading-more">جاري قراءة الترجمة المحلية…</div>' : body}</div><p class="lexical-source">المصدر المحلي: <a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">ويكاموس العربي</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></p></section>`;
   document.body.appendChild(modal);
   const close = () => modal.remove();
   $(".modal-close", modal).addEventListener("click", close);
@@ -196,10 +196,10 @@ async function showWordMeaning(rawWord) {
     .filter((entry, index, all) => all.findIndex((item) => `${item.source}|${item.meaning}` === `${entry.source}|${entry.meaning}`) === index);
   const hasContextualCoverage = !entries.length && candidates.some((candidate) => state.lexiconCoverage.has(candidate));
   const body = entries.length
-    ? entries.slice(0, 8).map((entry, index) => `<p><b>${index + 1}.</b> ${esc(entry.meaning || "")} <small class="muted">— ${esc(entry.source || "مصدر محلي")}${entry.pos ? ` · ${esc(entry.pos)}` : ""}</small></p>`).join("")
+    ? `<p class="literal-translation"><b>الترجمة الحرفية:</b> ${esc(entries[0].meaning || "")}</p>${entries.slice(0, 8).map((entry, index) => `<p><b>${index + 1}.</b> ${esc(entry.meaning || "")} <small class="muted">— ${esc(entry.source || "مصدر محلي")}${entry.pos ? ` · ${esc(entry.pos)}` : ""}</small></p>`).join("")}`
     : hasContextualCoverage
-      ? '<p class="muted">هذه الكلمة مغطاة في نصوص الديوان، لكن لا يوجد لها تعريف عربي موثّق ضمن المصادر المفتوحة المضمّنة. يُرجى قراءة معناها من سياق البيت.</p>'
-      : '<p class="muted">لا يوجد تعريف لهذه الكلمة ضمن المعجم المحلي المضمّن. أُضيفت الكلمة إلى واجهة البحث دون أي اتصال خارجي.</p>';
+      ? '<p class="muted">هذه الكلمة موجودة في نصوص القرآن أو الحديث أو الشعر، لكن لا توجد لها ترجمة حرفية موثقة في الملفات المحلية الحالية؛ لم يتم اختلاق معنى.</p>'
+      : '<p class="muted">لا توجد ترجمة حرفية موثقة لهذه الكلمة في المعجم المحلي المضمّن.</p>';
   state.wordMeaningCache[word] = body;
   renderWordMeaning(word, body);
 }
@@ -1191,7 +1191,10 @@ async function downloadLibrary() {
     ...Array.from({ length: 76 }, (_, index) => `./data/poetry/part-${String(index).padStart(3, "0")}.json`),
     "./data/poetry/supplemental.json",
     "./data/poetry/POETRY-LICENSE-SHAWQI",
+    "./data/lexicon/lexicon-core.json",
     "./data/lexicon/lexicon.json",
+    "./data/lexicon/poetry-coverage.json",
+    "./data/lexicon/coverage/index.json",
     "./data/lexicon/wiktionary.json",
     "./data/lexicon/wiktionary2.json",
     ...collections
