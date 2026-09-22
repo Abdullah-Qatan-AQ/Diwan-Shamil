@@ -575,6 +575,26 @@ select:focus-visible {
   font: var(--reading-size) / var(--reading-line-height, 2) Amiri;
   margin: 10px 0;
 }
+.lexical-word {
+  border: 0;
+  border-bottom: 1px dashed #c49a5a99;
+  padding: 0 2px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+.lexical-word:hover,
+.lexical-word:focus-visible {
+  color: var(--green);
+  background: #dceae466;
+}
+.lexical-modal { z-index: 70; }
+.lexical-card { max-width: 640px; }
+.lexical-card h2 { font: 700 38px Amiri; color: var(--deep); margin: 8px 0 16px; }
+.lexical-body { min-height: 90px; padding: 16px; border-radius: 14px; background: var(--paper); border: 1px solid var(--line); font: 19px / 1.9 Amiri; }
+.lexical-body p { margin: 0; white-space: pre-line; }
+.lexical-source { margin: 16px 0 0; color: var(--muted); font-size: 11px; }
+.lexical-source a { color: var(--green); }
 .loading-more {
   text-align: center;
   padding: 14px;
