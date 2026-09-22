@@ -1,4 +1,4 @@
-const CACHE = "diwan-v45";
+const CACHE = "diwan-v47";
 const ASSETS = [
   "./",
   "./index.html",
@@ -17,6 +17,7 @@ const ASSETS = [
   "./data/poetry/supplemental.json",
   "./data/lexicon/lexicon.json",
   "./data/lexicon/lexicon-core.json",
+  "./data/lexicon/poetry-coverage.json",
   "./data/lexicon/wiktionary.json",
   "./data/lexicon/wiktionary2.json",
   "./data/ara-bukhari.json",

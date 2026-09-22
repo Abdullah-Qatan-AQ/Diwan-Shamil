@@ -94,6 +94,7 @@ const state = {
   resumePosition: null,
   wordMeaningCache: {},
   lexicon: {},
+  lexiconCoverage: new Set(),
   lexiconPromise: null,
 };
 
@@ -182,11 +183,15 @@ async function showWordMeaning(rawWord) {
   // افتح النافذة فورًا؛ لا ننتظر قراءة ملف المعجم الكبير قبل إعطاء المستخدم استجابة.
   renderWordMeaning(word, "", true);
   if (state.lexiconPromise) await state.lexiconPromise;
-  const entries = lexiconCandidates(word).flatMap((candidate) => state.lexicon[candidate] || [])
+  const candidates = lexiconCandidates(word);
+  const entries = candidates.flatMap((candidate) => state.lexicon[candidate] || [])
     .filter((entry, index, all) => all.findIndex((item) => `${item.source}|${item.meaning}` === `${entry.source}|${entry.meaning}`) === index);
+  const hasContextualCoverage = !entries.length && candidates.some((candidate) => state.lexiconCoverage.has(candidate));
   const body = entries.length
     ? entries.slice(0, 8).map((entry, index) => `<p><b>${index + 1}.</b> ${esc(entry.meaning || "")} <small class="muted">— ${esc(entry.source || "مصدر محلي")}${entry.pos ? ` · ${esc(entry.pos)}` : ""}</small></p>`).join("")
-    : '<p class="muted">لا يوجد تعريف لهذه الكلمة ضمن المعجم المحلي المضمّن. أُضيفت الكلمة إلى واجهة البحث دون أي اتصال خارجي.</p>';
+    : hasContextualCoverage
+      ? '<p class="muted">هذه الكلمة مغطاة في نصوص الديوان، لكن لا يوجد لها تعريف عربي موثّق ضمن المصادر المفتوحة المضمّنة. يُرجى قراءة معناها من سياق البيت.</p>'
+      : '<p class="muted">لا يوجد تعريف لهذه الكلمة ضمن المعجم المحلي المضمّن. أُضيفت الكلمة إلى واجهة البحث دون أي اتصال خارجي.</p>';
   state.wordMeaningCache[word] = body;
   renderWordMeaning(word, body);
 }
@@ -221,33 +226,46 @@ async function loadLexicon() {
         : (Array.isArray(values) ? values : []);
       if (!result[key]) result[key] = [];
       for (const entry of decoded) {
-        if (entry?.meaning && !result[key].some((item) => item.meaning === entry.meaning && item.source === entry.source)) {
+        if (entry?.meaning && /[\u0600-\u06ff]/.test(entry.meaning) && !/[A-Za-z]/.test(entry.meaning) && !result[key].some((item) => item.meaning === entry.meaning && item.source === entry.source)) {
           result[key].push(entry);
         }
       }
     }
-    return result;
+    return {
+      entries: result,
+      coverage: new Set(Array.isArray(data.coverage) ? data.coverage.map(normalizeLexiconKey) : []),
+    };
   };
   try {
     // هذا الملف الصغير مبني من نفس JSON المحلي ويضمن تعريفًا سريعًا أثناء القراءة دون نت.
-    state.lexicon = decode(await fetchJson("./data/lexicon/lexicon-core.json", 12000));
+    const core = decode(await fetchJson("./data/lexicon/lexicon-core.json", 12000));
+    state.lexicon = core.entries;
+    state.lexiconCoverage = core.coverage;
   } catch {
     state.lexicon = {};
+    state.lexiconCoverage = new Set();
   }
   // حمّل الفهرس الكامل لاحقًا لتحسين التغطية، من دون تعطيل النافذة أو استبدال الفهرس السريع.
   void (async () => {
     try {
       const full = decode(await fetchJson("./data/lexicon/lexicon.json", 45000));
-      for (const [key, values] of Object.entries(full)) {
+      for (const [key, values] of Object.entries(full.entries)) {
         if (!state.lexicon[key]) state.lexicon[key] = values;
         else for (const entry of values) {
           if (!state.lexicon[key].some((item) => item.meaning === entry.meaning && item.source === entry.source)) state.lexicon[key].push(entry);
         }
       }
+      for (const key of full.coverage || []) state.lexiconCoverage.add(key);
     } catch {
       // يبقى الفهرس المحلي السريع صالحًا حتى إن تعذر تحليل الملف الكامل.
     }
   })();
+  try {
+    const coverage = await fetchJson("./data/lexicon/poetry-coverage.json", 12000);
+    state.lexiconCoverage = new Set((coverage.coverage || []).map(normalizeLexiconKey));
+  } catch {
+    // التغطية الإضافية اختيارية؛ يبقى المعجم الأساسي صالحًا دونها.
+  }
 }
 async function copyText(text, label = "النص") {
   const value = String(text || "").trim();
