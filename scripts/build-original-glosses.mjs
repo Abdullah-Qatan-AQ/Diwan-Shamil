@@ -328,6 +328,15 @@ const words = {
 };
 
 const entries = Object.fromEntries(Object.entries(words).map(([key, meaning]) => [key, [{ meaning, source, pos: "معنى أصلي" }]]));
-const output = { version: "2026-09-22", license: "MIT", copyright: "Copyright (c) 2026 Abdullah Qatan", author: "Abdullah Qatan", entries };
+try {
+  const existing = JSON.parse(fs.readFileSync("data/lexicon/original-glosses.json", "utf8"));
+  for (const [key, values] of Object.entries(existing.entries || {})) {
+    if (!entries[key]) entries[key] = values;
+    else for (const value of values) if (!entries[key].some((item) => item.meaning === value.meaning && item.source === value.source)) entries[key].push(value);
+  }
+} catch {
+  // Build from the curated source list when no previous merged file exists.
+}
+const output = { version: "2026-09-22", license: "MIT", copyright: "Copyright (c) 2026 Abdullah Qatan", author: "Abdullah Qatan", scope: "معانٍ عربية أصلية وملاحظات أولية غير جازمة؛ راجع السياق قبل الاعتماد.", notice: "قد تكون بعض المعاني غير صحيحة أو غير مكتملة، وليست بديلًا عن المعاجم المتخصصة.", entries };
 fs.writeFileSync("data/lexicon/original-glosses.json", `${JSON.stringify(output, null, 2)}\n`);
 console.log(JSON.stringify({ entries: Object.keys(entries).length, bytes: fs.statSync("data/lexicon/original-glosses.json").size }));
