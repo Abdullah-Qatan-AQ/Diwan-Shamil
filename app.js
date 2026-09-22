@@ -174,13 +174,14 @@ function renderWordMeaning(word, body, loading = false) {
 async function showWordMeaning(rawWord) {
   const word = lexicalWord(rawWord);
   if (!word) return;
-  if (state.lexiconPromise) await state.lexiconPromise;
   const cached = state.wordMeaningCache[word];
   if (cached) {
     renderWordMeaning(word, cached);
     return;
   }
+  // افتح النافذة فورًا؛ لا ننتظر قراءة ملف المعجم الكبير قبل إعطاء المستخدم استجابة.
   renderWordMeaning(word, "", true);
+  if (state.lexiconPromise) await state.lexiconPromise;
   const entries = lexiconCandidates(word).flatMap((candidate) => state.lexicon[candidate] || [])
     .filter((entry, index, all) => all.findIndex((item) => `${item.source}|${item.meaning}` === `${entry.source}|${entry.meaning}`) === index);
   const body = entries.length
@@ -204,24 +205,49 @@ function wiktionaryPlainText(source) {
     .trim();
 }
 async function loadLexicon() {
-  try {
-    const data = await fetchJson("./data/lexicon/lexicon.json");
-    if (data?.compact && Array.isArray(data.sources) && data.entries) {
-      state.lexicon = Object.fromEntries(Object.entries(data.entries).map(([key, values]) => [
-        key,
-        values.map(([meaning, sourceId, pos]) => ({
-          meaning,
-          pos,
-          source: data.sources[sourceId]?.[0] || "مصدر محلي",
-          license: data.sources[sourceId]?.[1] || "",
-        })),
-      ]));
-    } else {
-      state.lexicon = data?.entries && typeof data.entries === "object" ? data.entries : {};
+  const decode = (data) => {
+    if (!data?.entries || typeof data.entries !== "object") return {};
+    const result = {};
+    for (const [rawKey, values] of Object.entries(data.entries)) {
+      const key = normalizeLexiconKey(rawKey);
+      if (!key) continue;
+      const decoded = data.compact && Array.isArray(data.sources)
+        ? (Array.isArray(values) ? values.map(([meaning, sourceId, pos]) => ({
+            meaning,
+            pos,
+            source: data.sources[sourceId]?.[0] || "مصدر محلي",
+            license: data.sources[sourceId]?.[1] || "",
+          })) : [])
+        : (Array.isArray(values) ? values : []);
+      if (!result[key]) result[key] = [];
+      for (const entry of decoded) {
+        if (entry?.meaning && !result[key].some((item) => item.meaning === entry.meaning && item.source === entry.source)) {
+          result[key].push(entry);
+        }
+      }
     }
+    return result;
+  };
+  try {
+    // هذا الملف الصغير مبني من نفس JSON المحلي ويضمن تعريفًا سريعًا أثناء القراءة دون نت.
+    state.lexicon = decode(await fetchJson("./data/lexicon/lexicon-core.json", 12000));
   } catch {
     state.lexicon = {};
   }
+  // حمّل الفهرس الكامل لاحقًا لتحسين التغطية، من دون تعطيل النافذة أو استبدال الفهرس السريع.
+  void (async () => {
+    try {
+      const full = decode(await fetchJson("./data/lexicon/lexicon.json", 45000));
+      for (const [key, values] of Object.entries(full)) {
+        if (!state.lexicon[key]) state.lexicon[key] = values;
+        else for (const entry of values) {
+          if (!state.lexicon[key].some((item) => item.meaning === entry.meaning && item.source === entry.source)) state.lexicon[key].push(entry);
+        }
+      }
+    } catch {
+      // يبقى الفهرس المحلي السريع صالحًا حتى إن تعذر تحليل الملف الكامل.
+    }
+  })();
 }
 async function copyText(text, label = "النص") {
   const value = String(text || "").trim();
