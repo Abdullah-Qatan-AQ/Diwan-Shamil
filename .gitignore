@@ -11,6 +11,10 @@ www/
 .DS_Store
 *.keystore
 *.jks
+*.p12
+*.pfx
+*.pem
+*.key
 *-credentials.txt
 *-signing-info.txt
 *.idsig
