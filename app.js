@@ -261,8 +261,11 @@ async function loadLexicon() {
     }
   })();
   try {
-    const coverage = await fetchJson("./data/lexicon/poetry-coverage.json", 12000);
-    state.lexiconCoverage = new Set((coverage.coverage || []).map(normalizeLexiconKey));
+    const manifest = await fetchJson("./data/lexicon/coverage/index.json", 12000);
+    const shards = await Promise.all((manifest.shards || []).map((path) => fetchJson(path, 12000)));
+    state.lexiconCoverage = new Set(
+      shards.flatMap((shard) => shard.coverage || []).map(normalizeLexiconKey),
+    );
   } catch {
     // التغطية الإضافية اختيارية؛ يبقى المعجم الأساسي صالحًا دونها.
   }

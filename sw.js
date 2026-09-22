@@ -1,4 +1,4 @@
-const CACHE = "diwan-v47";
+const CACHE = "diwan-v48";
 const ASSETS = [
   "./",
   "./index.html",
@@ -18,6 +18,8 @@ const ASSETS = [
   "./data/lexicon/lexicon.json",
   "./data/lexicon/lexicon-core.json",
   "./data/lexicon/poetry-coverage.json",
+  "./data/lexicon/coverage/index.json",
+  ...Array.from({ length: 8 }, (_, index) => `./data/lexicon/coverage/part-${String(index + 1).padStart(2, "0")}.json`),
   "./data/lexicon/wiktionary.json",
   "./data/lexicon/wiktionary2.json",
   "./data/ara-bukhari.json",

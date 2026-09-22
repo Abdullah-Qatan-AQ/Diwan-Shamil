@@ -8,7 +8,8 @@
     "android:sync": "npm run prepare:web && cap sync android",
     "android:open": "cap open android",
     "android:build": "npm run android:sync && cd android && ./gradlew assembleDebug",
-    "verify": "node --check app.js"
+    "verify": "node --check app.js && node --check scripts/build-poetry-coverage-shards.mjs",
+    "build:lexicon-coverage": "node scripts/build-poetry-coverage.mjs && node scripts/build-poetry-coverage-shards.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^7.4.3",
