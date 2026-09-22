@@ -16,10 +16,22 @@ def key(value):
             .replace("ٱ", "ا").replace("ى", "ي").replace("ة", "ه").strip())
 
 
+def valid_arabic_meaning(value):
+    meaning = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not meaning or not re.search(r"[\u0600-\u06ff]", meaning):
+        return False
+    # لا نخلط الترجمة الإنجليزية أو النقل الصوتي بالتعريف العربي.
+    if re.search(r"[A-Za-zʔāīūĀĪŪ]", meaning):
+        return False
+    if re.search(r"https?://|www\.|\{\{|\}\}|<[^>]+>", meaning):
+        return False
+    return True
+
+
 def add(index, word, meaning, source, license_url, pos=""):
     k = key(word)
     meaning = re.sub(r"\s+", " ", str(meaning or "")).strip()
-    if not k or not meaning:
+    if not k or not valid_arabic_meaning(meaning):
         return
     item = {"text": str(word).strip(), "meaning": meaning, "source": source, "license": license_url}
     if pos:

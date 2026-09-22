@@ -9,6 +9,7 @@
     "android:open": "cap open android",
     "android:build": "npm run android:sync && cd android && ./gradlew assembleDebug",
     "verify": "node --check app.js && node --check scripts/build-poetry-coverage-shards.mjs",
+    "quality:lexicon": "node scripts/filter-lexicon-quality.mjs && node scripts/build-lexicon-core.mjs",
     "build:lexicon-coverage": "node scripts/build-poetry-coverage.mjs && node scripts/build-poetry-coverage-shards.mjs"
   },
   "dependencies": {
