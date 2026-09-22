@@ -1,6 +1,6 @@
 # المعاني الأصلية للمشروع
 
-هذا الملف يخص `data/lexicon/original-glosses.json` والسكربت الذي يبنيه `scripts/build-original-glosses.mjs` فقط.
+هذا الملف يخص `data/lexicon/original-glosses.json` و`data/lexicon/poetry-original-glosses.json` والسكربت الذي يبني الملف الأول `scripts/build-original-glosses.mjs`.
 
 ```text
 MIT License
@@ -28,8 +28,12 @@ SOFTWARE.
 
 ## النطاق
 
-المعاني الموجودة في `original-glosses.json` صيغت خصيصًا لهذا المشروع، وعددها الحالي 318 مدخلًا، ولا ينبغي اعتبارها نسخًا من تعريفات المعاجم الخارجية. ترخيص MIT يمنح الإذن باستخدام هذه المعاني الأصلية والسكربت، مع إبقاء إشعار حقوق النشر.
+المعاني الموجودة في `original-glosses.json` صيغت خصيصًا لهذا المشروع، وعددها الحالي 318 مدخلًا. ويضيف `poetry-original-glosses.json` عدد 49 مدخلًا أصليًا موجزًا. لا ينبغي اعتبار هذه الصياغات نسخًا من تعريفات المعاجم الخارجية، وقد يختلف المعنى الدقيق بحسب السياق. ترخيص MIT يمنح الإذن باستخدام هذه المعاني الأصلية والسكربت، مع إبقاء إشعار حقوق النشر.
 
 لا يمتد هذا الترخيص إلى `data/quran.json` أو ملفات الحديث أو ملفات الشعر أو ملفات المعجم المستوردة أو المشتقة من مصادر خارجية. تلك الملفات تبقى تحت تراخيصها وإشعارات الإسناد الخاصة بها كما هو موضح في `data/HADITH-SOURCES.md` و`data/POETRY-LICENSE` و`data/QURANLAB-LICENSES.md` و`data/lexicon/README.md`. لا يستطيع مؤلف المشروع تغيير رخصة طرف ثالث إلى MIT من طرف واحد.
 
 هذا إشعار ترخيص للمشروع وليس رأيًا قانونيًا أو إخلاءً من شروط أي مصدر.
+
+مرجع المستودع: https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil
+
+مرجع الملف الإضافي: https://github.com/Abdullah-Qatan-AQ/Diwan-Shamil/blob/main/data/lexicon/poetry-original-glosses.json
