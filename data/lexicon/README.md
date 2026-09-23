@@ -6,7 +6,7 @@
 |---|---|---|
 | [Arabic WordNet 4.1](https://github.com/Salah-Sal/arabic-wordnet-v4) | مجموعات دلالية وتعريفات عربية | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 | [Kaikki / Wiktionary العربية](https://kaikki.org/dictionary/Arabic/index.html) | مداخل Wiktionary العربية والصيغ المصرفة | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
-| `original-glosses.json` | 1867 معنى عربيًا أصليًا صيغت خصيصًا لهذا المشروع، ومنها المعاني الإضافية للكلمات الشعرية و1500 ملاحظة أولية غير جازمة | MIT باسم `Abdullah Qatan` |
+| `original-glosses.json` | 2919 مدخلًا وشرحًا أصليًا، تشمل 1000 إضافة، وأدوات عربية، وشرح الحروف الهجائية الثمانية والعشرين | MIT باسم `Abdullah Qatan` |
 | `poetry-words.json` | فهرس كل الكلمات المستخرجة من نصوص الشعر | ODbL 1.0 + DbCL 1.0، وليس MIT |
 
 لا تُضاف أي تعريفات من مواقع تجارية أو مصادر لا تسمح بإعادة التوزيع. وقبل إدخال أي تعريف يمرّ عبر بوابة جودة تستبعد النص الإنجليزي، والنقل الصوتي اللاتيني، والروابط، ووسوم القوالب. لذلك قد تظهر لبعض الكلمات رسالة «لا يوجد تعريف عربي موثّق» بدل اختراع معنى غير صحيح؛ وهذا مقصود للحفاظ على الدقة.
@@ -37,4 +37,4 @@ npm run verify:lexicon
 npm run quality:lexicon
 ```
 
-ملف المعاني الأصلية موثق تفصيلًا في `ORIGINAL-GLOSSES-LICENSE.md`. وتوجد إضافات أصلية مستقلة في `original-additions.json` و`original-letters.json`، ويغطيها `ORIGINAL-ADDITIONS-LICENSE.md`. ترخيص MIT لا يغيّر شروط مصادر البيانات الخارجية.
+ملف المعاني والكلمات والحروف الأصلية موحد في `original-glosses.json` وموثق تفصيلًا في `ORIGINAL-GLOSSES-LICENSE.md`. ترخيص MIT لا يغيّر شروط مصادر البيانات الخارجية.

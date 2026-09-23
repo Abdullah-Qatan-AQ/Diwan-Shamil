@@ -18,8 +18,6 @@ const ASSETS = [
   "./data/lexicon/lexicon.json",
   "./data/lexicon/lexicon-core.json",
   "./data/lexicon/original-glosses.json",
-  "./data/lexicon/original-additions.json",
-  "./data/lexicon/original-letters.json",
   "./data/lexicon/poetry-coverage.json",
   "./data/lexicon/coverage/index.json",
   ...Array.from({ length: 8 }, (_, index) => `./data/lexicon/coverage/part-${String(index + 1).padStart(2, "0")}.json`),
