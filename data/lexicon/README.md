@@ -37,4 +37,4 @@ npm run verify:lexicon
 npm run quality:lexicon
 ```
 
-ملف المعاني الأصلية موثق تفصيلًا في `ORIGINAL-GLOSSES-LICENSE.md`. ترخيص MIT لا يغيّر شروط مصادر البيانات الخارجية.
+ملف المعاني الأصلية موثق تفصيلًا في `ORIGINAL-GLOSSES-LICENSE.md`. وتوجد إضافات أصلية مستقلة في `original-additions.json` و`original-letters.json`، ويغطيها `ORIGINAL-ADDITIONS-LICENSE.md`. ترخيص MIT لا يغيّر شروط مصادر البيانات الخارجية.
