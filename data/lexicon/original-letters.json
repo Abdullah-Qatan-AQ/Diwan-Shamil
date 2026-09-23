@@ -3,57 +3,701 @@
   "license": "MIT",
   "copyright": "Copyright (c) 2026 Abdullah Qatan",
   "author": "Abdullah Qatan",
-  "scope": "معانٍ تفسيرية أصلية لأدوات وحروف عربية شائعة؛ لا تمثل نقلًا من معجم خارجي.",
-  "notice": "المعنى يتغير بحسب السياق والإعراب، وهذه ملاحظات أولية وليست بديلًا عن المراجع المتخصصة.",
+  "scope": "أدوات وعبارات عربية قصيرة ومتلاصقة صيغت لهذا المشروع؛ ليست تعريفات منقولة من مصدر خارجي.",
+  "notice": "هذه شروح تفسيرية أولية وقد يختلف الاستعمال باختلاف اللهجة والسياق؛ لا تُعد بديلاً عن المعجم المتخصص.",
   "entries": {
-    "يا": [{"meaning": "أداة نداء تُوجّه الخطاب إلى من يُراد تنبيهه أو دعوته.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة نداء"}],
-    "أيا": [{"meaning": "أداة نداء تُستعمل غالبًا لتنبيه المخاطب البعيد أو المقدر بعده.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة نداء"}],
-    "هيا": [{"meaning": "أداة حثّ أو دعوة إلى الإقبال أو المبادرة.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة حث"}],
-    "ألا": [{"meaning": "أداة تنبيه، وقد تأتي للعرض أو التحضيض بحسب السياق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة تنبيه"}],
-    "إن": [{"meaning": "أداة توكيد تنصب الاسم وترفع الخبر في استعمالها الناسخ.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف ناسخ"}],
-    "أن": [{"meaning": "أداة تصل الجملة بما قبلها، وقد تنصب المضارع في مواضع مخصوصة.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف مصدري"}],
-    "إنما": [{"meaning": "أداة قصر تربط الحكم بالشيء المذكور وتحدّد نطاقه.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة قصر"}],
-    "لكن": [{"meaning": "أداة استدراك تنقل الكلام إلى قيد أو معنى مغاير لما قد يُفهم أولًا.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف استدراك"}],
-    "أو": [{"meaning": "أداة تفصل بين احتمالين أو أكثر، وقد تفيد التخيير أو التقسيم.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف عطف"}],
-    "بل": [{"meaning": "أداة انتقال تُعرض بها فكرة لاحقة بدل توجيه سابق أو لتصحيحه.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف إضراب"}],
-    "ثم": [{"meaning": "أداة ترتيب تُشعر بتعاقب أمرين مع مهلة أو انفصال بينهما.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف عطف"}],
-    "و": [{"meaning": "أداة وصل تجمع بين مفردات أو جمل دون أن تحدد وحدها نوع العلاقة بينها.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف عطف"}],
-    "ف": [{"meaning": "أداة وصل تُشعر بالتعقيب أو النتيجة أو الترتيب القريب.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف عطف"}],
-    "من": [{"meaning": "أداة جر قد تدل على ابتداء المسار أو الجزء أو بيان النوع.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "إلى": [{"meaning": "أداة جر تُشير إلى نهاية اتجاه أو غاية زمنية أو معنوية.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "عن": [{"meaning": "أداة جر تُفيد المجاوزة أو البعد أو نقل القول عن صاحبه.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "على": [{"meaning": "أداة جر قد تُصوّر استعلاءً أو التزامًا أو اعتمادًا بحسب السياق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "في": [{"meaning": "أداة جر تُحدّد إطارًا مكانيًا أو زمانيًا أو معنويًا لوقوع الشيء.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "الباء": [{"meaning": "حرف جر يربط الفعل بوسيلة أو مصاحبة أو سبب أو ملابسة.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "اللام": [{"meaning": "حرف جر قد يدل على اختصاص أو ملك أو غاية أو تعليل.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "ك": [{"meaning": "حرف تشبيه يصل شيئًا بآخر في صفة أو هيئة مشتركة.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف جر"}],
-    "حتى": [{"meaning": "أداة غاية أو انتهاء، وقد تصل الكلام بما بعدها على وجه يحدده السياق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة غاية"}],
-    "هل": [{"meaning": "أداة استفهام تطلب التحقق من وقوع الخبر أو عدم وقوعه.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة استفهام"}],
-    "أ": [{"meaning": "همزة استفهام تفتح سؤالًا عن إثبات أمر أو نفيه أو تعيينه.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة استفهام"}],
-    "ما": [{"meaning": "لفظ يتنوع عمله، وقد يستعمل للسؤال أو النفي أو الموصول أو الوصف العام.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة متعددة الوظائف"}],
-    "لا": [{"meaning": "أداة نفي أو نهي أو نفي للجنس بحسب تركيب الجملة.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة نفي"}],
-    "لم": [{"meaning": "أداة نفي وجزم تصلح لنفي الفعل المضارع مع إحالة معناه إلى الماضي.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة نفي"}],
-    "لن": [{"meaning": "أداة نفي ونصب تُوجّه معنى الفعل المضارع إلى الاستقبال المنفي.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة نفي"}],
-    "قد": [{"meaning": "أداة تقرّب وقوع الفعل أو تؤكد تحققه، ويتعين معناها من السياق والزمن.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة احتمال"}],
-    "سـ": [{"meaning": "بادئة تدل غالبًا على استقبال الفعل وقرب وقوعه.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف استقبال"}],
-    "سوف": [{"meaning": "أداة استقبال تجعل الفعل متجهًا إلى زمن لاحق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف استقبال"}],
-    "إذا": [{"meaning": "أداة تربط وقوع جواب بوقوع شرط أو وقت متوقع.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة شرط"}],
-    "إنْ": [{"meaning": "أداة شرط تربط حصول نتيجة بتحقق أمر سابق عليها.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة شرط"}],
-    "لو": [{"meaning": "أداة شرط تفترض أمرًا غير واقع أو بعيد الوقوع لبيان أثره.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة شرط"}],
-    "لولا": [{"meaning": "أداة تربط امتناع أمر بوجود أمر آخر أو تستعمل للتحضيض.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة شرط"}],
-    "لعل": [{"meaning": "أداة رجاء أو توقع، وقد تحمل معنى الإشفاق بحسب المقام.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف ناسخ"}],
-    "كأن": [{"meaning": "أداة تشبيه أو تقريب لصورة ذهنية من صورة أخرى.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف ناسخ"}],
-    "ليت": [{"meaning": "أداة تمنٍّ تعبّر عن طلب أمر محبوب عسير أو غير متحقق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف ناسخ"}],
-    "متى": [{"meaning": "أداة سؤال عن الزمن، وقد تصلح للشرط في تركيب مخصوص.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "اسم استفهام"}],
-    "أين": [{"meaning": "أداة سؤال عن المكان أو الموضع.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "اسم استفهام"}],
-    "كيف": [{"meaning": "أداة سؤال عن الهيئة أو الطريقة أو الحال.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "اسم استفهام"}],
-    "مَن": [{"meaning": "لفظ يُسأل به عن العاقل، وقد يأتي للوصل أو الشرط.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "اسم استفهام"}],
-    "أي": [{"meaning": "لفظ يطلب تعيين واحد من مجموعة أو يربط الوصف بموصوف.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "اسم استفهام"}],
-    "بلْ": [{"meaning": "صيغة وصل تفيد العدول عن توجيه سابق إلى بيان لاحق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "حرف انتقال"}],
-    "إذ": [{"meaning": "لفظ يحدد زمنًا ماضيًا أو يربط الخبر بظرف سابق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "ظرف"}],
-    "حيث": [{"meaning": "لفظ يحدد مكانًا أو موضعًا معنويًا ويصل الجملة بما يفسره.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "ظرف"}],
-    "مع": [{"meaning": "لفظ يدل على المصاحبة أو اجتماع الشيئين في زمان أو حال.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "ظرف"}],
-    "دون": [{"meaning": "لفظ يدل على الانخفاض أو التجاوز أو الاستثناء بحسب السياق.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "ظرف"}],
-    "غير": [{"meaning": "لفظ ينقل المعنى إلى المخالفة أو الاستثناء من الوصف المذكور.", "source": "Abdullah Qatan — Original project gloss (MIT)", "pos": "أداة استثناء"}]
+    "يا": [
+      {
+        "meaning": "أداة نداء تُوجّه الخطاب إلى من يُراد تنبيهه أو دعوته.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة نداء"
+      }
+    ],
+    "أيا": [
+      {
+        "meaning": "أداة نداء تُستعمل غالبًا لتنبيه المخاطب البعيد أو المقدر بعده.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة نداء"
+      }
+    ],
+    "هيا": [
+      {
+        "meaning": "أداة حثّ أو دعوة إلى الإقبال أو المبادرة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة حث"
+      }
+    ],
+    "ألا": [
+      {
+        "meaning": "أداة تنبيه، وقد تأتي للعرض أو التحضيض بحسب السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة تنبيه"
+      }
+    ],
+    "إن": [
+      {
+        "meaning": "أداة توكيد تنصب الاسم وترفع الخبر في استعمالها الناسخ.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف ناسخ"
+      }
+    ],
+    "أن": [
+      {
+        "meaning": "أداة تصل الجملة بما قبلها، وقد تنصب المضارع في مواضع مخصوصة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف مصدري"
+      }
+    ],
+    "إنما": [
+      {
+        "meaning": "أداة قصر تربط الحكم بالشيء المذكور وتحدّد نطاقه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة قصر"
+      }
+    ],
+    "لكن": [
+      {
+        "meaning": "أداة استدراك تنقل الكلام إلى قيد أو معنى مغاير لما قد يُفهم أولًا.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف استدراك"
+      }
+    ],
+    "أو": [
+      {
+        "meaning": "أداة تفصل بين احتمالين أو أكثر، وقد تفيد التخيير أو التقسيم.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف عطف"
+      }
+    ],
+    "بل": [
+      {
+        "meaning": "أداة انتقال تُعرض بها فكرة لاحقة بدل توجيه سابق أو لتصحيحه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف إضراب"
+      }
+    ],
+    "ثم": [
+      {
+        "meaning": "أداة ترتيب تُشعر بتعاقب أمرين مع مهلة أو انفصال بينهما.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف عطف"
+      }
+    ],
+    "و": [
+      {
+        "meaning": "أداة وصل تجمع بين مفردات أو جمل دون أن تحدد وحدها نوع العلاقة بينها.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف عطف"
+      }
+    ],
+    "ف": [
+      {
+        "meaning": "أداة وصل تُشعر بالتعقيب أو النتيجة أو الترتيب القريب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف عطف"
+      }
+    ],
+    "من": [
+      {
+        "meaning": "أداة جر قد تدل على ابتداء المسار أو الجزء أو بيان النوع.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "إلى": [
+      {
+        "meaning": "أداة جر تُشير إلى نهاية اتجاه أو غاية زمنية أو معنوية.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "عن": [
+      {
+        "meaning": "أداة جر تُفيد المجاوزة أو البعد أو نقل القول عن صاحبه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "على": [
+      {
+        "meaning": "أداة جر قد تُصوّر استعلاءً أو التزامًا أو اعتمادًا بحسب السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "في": [
+      {
+        "meaning": "أداة جر تُحدّد إطارًا مكانيًا أو زمانيًا أو معنويًا لوقوع الشيء.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "الباء": [
+      {
+        "meaning": "حرف جر يربط الفعل بوسيلة أو مصاحبة أو سبب أو ملابسة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "اللام": [
+      {
+        "meaning": "حرف جر قد يدل على اختصاص أو ملك أو غاية أو تعليل.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "ك": [
+      {
+        "meaning": "حرف تشبيه يصل شيئًا بآخر في صفة أو هيئة مشتركة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف جر"
+      }
+    ],
+    "حتى": [
+      {
+        "meaning": "أداة غاية أو انتهاء، وقد تصل الكلام بما بعدها على وجه يحدده السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة غاية"
+      }
+    ],
+    "هل": [
+      {
+        "meaning": "أداة استفهام تطلب التحقق من وقوع الخبر أو عدم وقوعه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة استفهام"
+      }
+    ],
+    "أ": [
+      {
+        "meaning": "همزة استفهام تفتح سؤالًا عن إثبات أمر أو نفيه أو تعيينه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة استفهام"
+      }
+    ],
+    "ما": [
+      {
+        "meaning": "لفظ يتنوع عمله، وقد يستعمل للسؤال أو النفي أو الموصول أو الوصف العام.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة متعددة الوظائف"
+      }
+    ],
+    "لا": [
+      {
+        "meaning": "أداة نفي أو نهي أو نفي للجنس بحسب تركيب الجملة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة نفي"
+      }
+    ],
+    "لم": [
+      {
+        "meaning": "أداة نفي وجزم تصلح لنفي الفعل المضارع مع إحالة معناه إلى الماضي.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة نفي"
+      }
+    ],
+    "لن": [
+      {
+        "meaning": "أداة نفي ونصب تُوجّه معنى الفعل المضارع إلى الاستقبال المنفي.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة نفي"
+      }
+    ],
+    "قد": [
+      {
+        "meaning": "أداة تقرّب وقوع الفعل أو تؤكد تحققه، ويتعين معناها من السياق والزمن.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة احتمال"
+      }
+    ],
+    "سـ": [
+      {
+        "meaning": "بادئة تدل غالبًا على استقبال الفعل وقرب وقوعه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف استقبال"
+      }
+    ],
+    "سوف": [
+      {
+        "meaning": "أداة استقبال تجعل الفعل متجهًا إلى زمن لاحق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف استقبال"
+      }
+    ],
+    "إذا": [
+      {
+        "meaning": "أداة تربط وقوع جواب بوقوع شرط أو وقت متوقع.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة شرط"
+      }
+    ],
+    "إنْ": [
+      {
+        "meaning": "أداة شرط تربط حصول نتيجة بتحقق أمر سابق عليها.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة شرط"
+      }
+    ],
+    "لو": [
+      {
+        "meaning": "أداة شرط تفترض أمرًا غير واقع أو بعيد الوقوع لبيان أثره.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة شرط"
+      }
+    ],
+    "لولا": [
+      {
+        "meaning": "أداة تربط امتناع أمر بوجود أمر آخر أو تستعمل للتحضيض.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة شرط"
+      }
+    ],
+    "لعل": [
+      {
+        "meaning": "أداة رجاء أو توقع، وقد تحمل معنى الإشفاق بحسب المقام.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف ناسخ"
+      }
+    ],
+    "كأن": [
+      {
+        "meaning": "أداة تشبيه أو تقريب لصورة ذهنية من صورة أخرى.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف ناسخ"
+      }
+    ],
+    "ليت": [
+      {
+        "meaning": "أداة تمنٍّ تعبّر عن طلب أمر محبوب عسير أو غير متحقق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف ناسخ"
+      }
+    ],
+    "متى": [
+      {
+        "meaning": "أداة سؤال عن الزمن، وقد تصلح للشرط في تركيب مخصوص.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "اسم استفهام"
+      }
+    ],
+    "أين": [
+      {
+        "meaning": "أداة سؤال عن المكان أو الموضع.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "اسم استفهام"
+      }
+    ],
+    "كيف": [
+      {
+        "meaning": "أداة سؤال عن الهيئة أو الطريقة أو الحال.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "اسم استفهام"
+      }
+    ],
+    "مَن": [
+      {
+        "meaning": "لفظ يُسأل به عن العاقل، وقد يأتي للوصل أو الشرط.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "اسم استفهام"
+      }
+    ],
+    "أي": [
+      {
+        "meaning": "لفظ يطلب تعيين واحد من مجموعة أو يربط الوصف بموصوف.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "اسم استفهام"
+      }
+    ],
+    "بلْ": [
+      {
+        "meaning": "صيغة وصل تفيد العدول عن توجيه سابق إلى بيان لاحق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "حرف انتقال"
+      }
+    ],
+    "إذ": [
+      {
+        "meaning": "لفظ يحدد زمنًا ماضيًا أو يربط الخبر بظرف سابق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
+      }
+    ],
+    "حيث": [
+      {
+        "meaning": "لفظ يحدد مكانًا أو موضعًا معنويًا ويصل الجملة بما يفسره.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
+      }
+    ],
+    "مع": [
+      {
+        "meaning": "لفظ يدل على المصاحبة أو اجتماع الشيئين في زمان أو حال.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
+      }
+    ],
+    "دون": [
+      {
+        "meaning": "لفظ يدل على الانخفاض أو التجاوز أو الاستثناء بحسب السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
+      }
+    ],
+    "غير": [
+      {
+        "meaning": "لفظ ينقل المعنى إلى المخالفة أو الاستثناء من الوصف المذكور.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة استثناء"
+      }
+    ],
+    "أيه": [
+      {
+        "meaning": "صيغة نداء أو تنبيه للمخاطَب، وقد تأتي في الكلام العامي بمعنى يا هذا أو انتبه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "نداء واستفهام عامي"
+      }
+    ],
+    "أيها": [
+      {
+        "meaning": "تركيب نداء يتبعه اسم معرف، مثل أيها القارئ.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب نداء"
+      }
+    ],
+    "أيتها": [
+      {
+        "meaning": "تركيب نداء للمؤنث يتبعه اسم معرف.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب نداء"
+      }
+    ],
+    "أيش": [
+      {
+        "meaning": "أداة استفهام عامية عن الشيء أو الفعل، بمعنى ماذا أو ما هذا.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "استفهام عامي"
+      }
+    ],
+    "ليش": [
+      {
+        "meaning": "أداة استفهام عامية عن السبب، بمعنى لماذا.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "استفهام عامي"
+      }
+    ],
+    "لماذا": [
+      {
+        "meaning": "أداة استفهام يطلب بها بيان السبب أو العلة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "استفهام عن السبب"
+      }
+    ],
+    "لمَ": [
+      {
+        "meaning": "صيغة مختصرة من لماذا، تستعمل للسؤال عن السبب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "استفهام عن السبب"
+      }
+    ],
+    "أية": [
+      {
+        "meaning": "صيغة مؤنثة من أي، تستعمل للتعيين أو السؤال عن واحد من أشياء.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "أداة تعيين"
+      }
+    ],
+    "لما": [
+      {
+        "meaning": "أداة نفي تفيد أن الفعل لم يحدث حتى وقت الكلام، وقد تأتي ظرفاً بحسب السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "نفي وظرف"
+      }
+    ],
+    "عند": [
+      {
+        "meaning": "ظرف يدل على القرب أو المصاحبة في المكان أو الزمان أو الحال.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
+      }
+    ],
+    "قبل": [
+      {
+        "meaning": "ظرف يدل على التقدم في الزمان أو المكان أو الترتيب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
+      }
+    ],
+    "بعد": [
+      {
+        "meaning": "ظرف يدل على التأخر في الزمان أو المكان أو الترتيب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
+      }
+    ],
+    "بين": [
+      {
+        "meaning": "لفظ يدل على التوسط أو الفصل أو العلاقة بين طرفين أو أكثر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "مكان وعلاقة"
+      }
+    ],
+    "فوق": [
+      {
+        "meaning": "ظرف يدل على العلو المكاني أو التفوق المجازي.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف مكان"
+      }
+    ],
+    "تحت": [
+      {
+        "meaning": "ظرف يدل على الانخفاض المكاني أو المرتبة الأدنى.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف مكان"
+      }
+    ],
+    "منذ": [
+      {
+        "meaning": "لفظ يحدد ابتداء المدة الزمنية أو استمرارها من وقت معين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "زمن"
+      }
+    ],
+    "منه": [
+      {
+        "meaning": "تركيب من حرف الجر من والضمير المتصل، يدل على المصدر أو التبعيض أو الانفصال.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "جار ومجرور"
+      }
+    ],
+    "منها": [
+      {
+        "meaning": "تركيب يدل على المصدر أو التبعيض أو الانفصال عن مؤنث أو جماعة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "جار ومجرور"
+      }
+    ],
+    "إليه": [
+      {
+        "meaning": "تركيب يدل على الاتجاه أو الإضافة إلى مخاطب أو غائب مذكر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "جار ومجرور"
+      }
+    ],
+    "عليه": [
+      {
+        "meaning": "تركيب يدل على الاستعلاء أو التعلق أو المسؤولية بحسب السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "جار ومجرور"
+      }
+    ],
+    "فيه": [
+      {
+        "meaning": "تركيب يدل على الظرفية أو التعلق بشيء مذكر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "جار ومجرور"
+      }
+    ],
+    "بها": [
+      {
+        "meaning": "تركيب يدل على الاستعانة أو الملابسة أو المصاحبة مع مؤنث أو جماعة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "جار ومجرور"
+      }
+    ],
+    "لها": [
+      {
+        "meaning": "تركيب يدل على الملك أو الاختصاص أو الاتجاه إلى مؤنث أو جماعة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "جار ومجرور"
+      }
+    ],
+    "كما": [
+      {
+        "meaning": "تركيب يدل على المماثلة أو المصاحبة أو القدر بحسب السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "كذلك": [
+      {
+        "meaning": "لفظ يدل على المماثلة، بمعنى على هذا النحو أيضاً.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة ومماثلة"
+      }
+    ],
+    "أيضاً": [
+      {
+        "meaning": "لفظ يدل على الإضافة والمشاركة، بمعنى كذلك أو زيادة على ما سبق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إضافة"
+      }
+    ],
+    "حن": [
+      {
+        "meaning": "فعل يدل على الميل أو الشوق أو إصدار صوت الحنين بحسب السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "فعل"
+      }
+    ],
+    "حنّ": [
+      {
+        "meaning": "فعل يدل على الاشتياق أو الميل، وقد يدل على صوت الحنين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "فعل"
+      }
+    ],
+    "إنه": [
+      {
+        "meaning": "تركيب من أداة التوكيد وضمير الغائب، يستأنف خبراً مؤكداً عن مذكر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إنها": [
+      {
+        "meaning": "تركيب من أداة التوكيد وضمير الغائب، يستأنف خبراً مؤكداً عن مؤنث.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "أنه": [
+      {
+        "meaning": "تركيب يربط مضموناً بجملة سابقة مع توكيده، عن مذكر أو شيء.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "أنها": [
+      {
+        "meaning": "تركيب يربط مضموناً بجملة سابقة مع توكيده، عن مؤنث أو جماعة غير عاقلة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إني": [
+      {
+        "meaning": "تركيب توكيد يتحدث فيه المتكلم عن نفسه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إنا": [
+      {
+        "meaning": "تركيب توكيد يتحدث فيه المتكلم باسم نفسه أو جماعته.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إنك": [
+      {
+        "meaning": "تركيب توكيد يوجّه الكلام إلى مخاطب مفرد.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إنكم": [
+      {
+        "meaning": "تركيب توكيد يوجّه الكلام إلى جماعة من المخاطبين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "أنتم": [
+      {
+        "meaning": "ضمير منفصل يدل على جماعة المخاطبين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "نحن": [
+      {
+        "meaning": "ضمير منفصل يدل على المتكلم ومعه غيره.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هو": [
+      {
+        "meaning": "ضمير منفصل يدل على غائب مذكر مفرد.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هي": [
+      {
+        "meaning": "ضمير منفصل يدل على غائبة مؤنثة مفردة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هم": [
+      {
+        "meaning": "ضمير منفصل يدل على جماعة الغائبين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هن": [
+      {
+        "meaning": "ضمير منفصل يدل على جماعة الغائبات.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هذا": [
+      {
+        "meaning": "اسم إشارة للمفرد المذكر القريب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "هذه": [
+      {
+        "meaning": "اسم إشارة للمفرد المؤنث القريب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "ذلك": [
+      {
+        "meaning": "اسم إشارة للمفرد المذكر البعيد أو المستحضر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "تلك": [
+      {
+        "meaning": "اسم إشارة للمفرد المؤنث البعيد أو المستحضر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "هنا": [
+      {
+        "meaning": "ظرف إشارة إلى مكان قريب أو حاضر في السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة مكان"
+      }
+    ],
+    "هناك": [
+      {
+        "meaning": "ظرف إشارة إلى مكان بعيد أو مشار إليه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة مكان"
+      }
+    ],
+    "حين": [
+      {
+        "meaning": "لفظ يدل على وقت أو مدة غير محددة بدقة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "زمن"
+      }
+    ],
+    "حينئذ": [
+      {
+        "meaning": "تركيب يدل على الوقت المشار إليه عندئذ أو في تلك الحال.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "زمن"
+      }
+    ]
   }
 }

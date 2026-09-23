@@ -142,7 +142,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --title "Diwan Shamil v${VERSION_NAME}" \
             --draft \
-            --notes ""
+            --notes-file "release-notes-v${VERSION_NAME}.md"
 
       - name: Remove signing material
         if: always()

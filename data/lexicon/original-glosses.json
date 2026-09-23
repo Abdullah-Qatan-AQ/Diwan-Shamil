@@ -3,8 +3,8 @@
   "license": "MIT",
   "copyright": "Copyright (c) 2026 Abdullah Qatan",
   "author": "Abdullah Qatan",
-  "scope": "معانٍ عربية أصلية وملاحظات أولية وشرح للحروف الهجائية صيغت لهذا المشروع؛ الألفاظ العامة ليست ملكًا للمشروع.",
-  "notice": "قد تكون بعض المعاني غير صحيحة أو غير مكتملة أو متغيرة بحسب السياق، وليست بديلًا عن المعاجم المتخصصة.",
+  "scope": "معانٍ عربية أصلية وملاحظات تفسيرية أولية وعبارات عربية قصيرة ومتلاصقة صيغت لهذا المشروع.",
+  "notice": "الألفاظ العربية العامة ليست ملكًا للمشروع، والترخيص يخص الصياغة والبنية والاختيار الأصليين فقط. هذه الشروح ليست بديلاً عن المعاجم المتخصصة.",
   "entries": {
     "الله": [
       {
@@ -1268,6 +1268,11 @@
         "meaning": "في المسافة أو الحال الفاصلة بين شيئين.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "معنى أصلي"
+      },
+      {
+        "meaning": "لفظ يدل على التوسط أو الفصل أو العلاقة بين طرفين أو أكثر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "مكان وعلاقة"
       }
     ],
     "فوق": [
@@ -1275,6 +1280,11 @@
         "meaning": "في الجهة الأعلى.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "معنى أصلي"
+      },
+      {
+        "meaning": "ظرف يدل على العلو المكاني أو التفوق المجازي.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف مكان"
       }
     ],
     "تحت": [
@@ -1282,6 +1292,11 @@
         "meaning": "في الجهة الأسفل.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "معنى أصلي"
+      },
+      {
+        "meaning": "ظرف يدل على الانخفاض المكاني أو المرتبة الأدنى.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف مكان"
       }
     ],
     "قبل": [
@@ -1289,6 +1304,11 @@
         "meaning": "في الزمن أو المكان المتقدم.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "معنى أصلي"
+      },
+      {
+        "meaning": "ظرف يدل على التقدم في الزمان أو المكان أو الترتيب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
       }
     ],
     "بعد": [
@@ -1296,6 +1316,11 @@
         "meaning": "تباعد أو تأخر.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "معنى أصلي"
+      },
+      {
+        "meaning": "ظرف يدل على التأخر في الزمان أو المكان أو الترتيب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ظرف"
       }
     ],
     "ثم": [
@@ -1320,11 +1345,6 @@
         "meaning": "أداة وصل تجمع بين مفردات أو جمل دون أن تحدد وحدها نوع العلاقة بينها.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "حرف عطف"
-      },
-      {
-        "meaning": "حرف واو؛ قد يدل على العطف أو القسم أو المصاحبة، ويدخل في بنية الكلمات.",
-        "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
       }
     ],
     "أو": [
@@ -20230,11 +20250,6 @@
         "meaning": "أداة وصل تُشعر بالتعقيب أو النتيجة أو الترتيب القريب.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "حرف عطف"
-      },
-      {
-        "meaning": "حرف فاء؛ صوت شفوي أسناني، وقد يأتي حرف عطف أو جزءًا من الكلمة.",
-        "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
       }
     ],
     "ك": [
@@ -20242,11 +20257,6 @@
         "meaning": "حرف تشبيه يصل شيئًا بآخر في صفة أو هيئة مشتركة.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
         "pos": "حرف جر"
-      },
-      {
-        "meaning": "حرف كاف؛ صوت لهوي مهموس، وقد يأتي أداة تشبيه أو جزءًا من الكلمة.",
-        "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
       }
     ],
     "حتى": [
@@ -20389,185 +20399,333 @@
         "pos": "ظرف"
       }
     ],
-    "ا": [
+    "أيه": [
       {
-        "meaning": "حرف ألف؛ يفتتح كلمات كثيرة، وقد يحمل همزة أو مدًا بحسب الرسم والحركة.",
+        "meaning": "صيغة نداء أو تنبيه للمخاطَب، وقد تأتي في الكلام العامي بمعنى يا هذا أو انتبه.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "نداء واستفهام عامي"
       }
     ],
-    "ب": [
+    "أيها": [
       {
-        "meaning": "حرف باء؛ صوت شفوي، وتأتي الباء في العربية حرف جر أو جزءًا من بنية الكلمة.",
+        "meaning": "تركيب نداء يتبعه اسم معرف، مثل أيها القارئ.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "تركيب نداء"
       }
     ],
-    "ت": [
+    "أيتها": [
       {
-        "meaning": "حرف تاء؛ صوت مهموس، وتظهر التاء في صيغ التأنيث وبعض الأبنية.",
+        "meaning": "تركيب نداء للمؤنث يتبعه اسم معرف.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "تركيب نداء"
       }
     ],
-    "ث": [
+    "أيش": [
       {
-        "meaning": "حرف ثاء؛ صوت بين الأسنان، ويكوّن مع غيره ألفاظًا عربية متعددة.",
+        "meaning": "أداة استفهام عامية عن الشيء أو الفعل، بمعنى ماذا أو ما هذا.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "استفهام عامي"
       }
     ],
-    "ج": [
+    "ليش": [
       {
-        "meaning": "حرف جيم؛ صوت حلقي أو شجري في النطق العربي، وله ألفاظ كثيرة في اللغة.",
+        "meaning": "أداة استفهام عامية عن السبب، بمعنى لماذا.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "استفهام عامي"
       }
     ],
-    "ح": [
+    "لماذا": [
       {
-        "meaning": "حرف حاء؛ صوت حلقي مهموس، يميز ألفاظًا عن نظائرها القريبة.",
+        "meaning": "أداة استفهام يطلب بها بيان السبب أو العلة.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "استفهام عن السبب"
       }
     ],
-    "خ": [
+    "لمَ": [
       {
-        "meaning": "حرف خاء؛ صوت حلقي، ويدخل في جذور وصيغ عربية متنوعة.",
+        "meaning": "صيغة مختصرة من لماذا، تستعمل للسؤال عن السبب.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "استفهام عن السبب"
       }
     ],
-    "د": [
+    "أية": [
       {
-        "meaning": "حرف دال؛ صوت لثوي، ويظهر في أصول كلمات كثيرة.",
+        "meaning": "صيغة مؤنثة من أي، تستعمل للتعيين أو السؤال عن واحد من أشياء.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "أداة تعيين"
       }
     ],
-    "ذ": [
+    "لما": [
       {
-        "meaning": "حرف ذال؛ صوت بين الأسنان، ويشارك في بناء ألفاظ عربية معروفة.",
+        "meaning": "أداة نفي تفيد أن الفعل لم يحدث حتى وقت الكلام، وقد تأتي ظرفاً بحسب السياق.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "نفي وظرف"
       }
     ],
-    "ر": [
+    "عند": [
       {
-        "meaning": "حرف راء؛ صوت تكريري، وقد يتأثر تفخيمه وترقيقه بالسياق الصوتي.",
+        "meaning": "ظرف يدل على القرب أو المصاحبة في المكان أو الزمان أو الحال.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "ظرف"
       }
     ],
-    "ز": [
+    "منذ": [
       {
-        "meaning": "حرف زاي؛ صوت صفيري مجهور، ويدخل في صيغ وأصول لغوية متعددة.",
+        "meaning": "لفظ يحدد ابتداء المدة الزمنية أو استمرارها من وقت معين.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "زمن"
       }
     ],
-    "س": [
+    "منه": [
       {
-        "meaning": "حرف سين؛ صوت صفيري مهموس، ويأتي أيضًا بادئة للاستقبال في بعض التراكيب.",
+        "meaning": "تركيب من حرف الجر من والضمير المتصل، يدل على المصدر أو التبعيض أو الانفصال.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "جار ومجرور"
       }
     ],
-    "ش": [
+    "منها": [
       {
-        "meaning": "حرف شين؛ صوت صفيري مركب، يميز ألفاظًا عن ألفاظ متقاربة الرسم.",
+        "meaning": "تركيب يدل على المصدر أو التبعيض أو الانفصال عن مؤنث أو جماعة.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "جار ومجرور"
       }
     ],
-    "ص": [
+    "إليه": [
       {
-        "meaning": "حرف صاد؛ صوت صفيري مفخم، ويظهر في جذور عربية كثيرة.",
+        "meaning": "تركيب يدل على الاتجاه أو الإضافة إلى مخاطب أو غائب مذكر.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "جار ومجرور"
       }
     ],
-    "ض": [
+    "عليه": [
       {
-        "meaning": "حرف ضاد؛ صوت عربي مميز في النطق، وتبنى به ألفاظ ذات دلالات متنوعة.",
+        "meaning": "تركيب يدل على الاستعلاء أو التعلق أو المسؤولية بحسب السياق.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "جار ومجرور"
       }
     ],
-    "ط": [
+    "فيه": [
       {
-        "meaning": "حرف طاء؛ صوت انفجاري مفخم، ويدخل في أصول كلمات متعددة.",
+        "meaning": "تركيب يدل على الظرفية أو التعلق بشيء مذكر.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "جار ومجرور"
       }
     ],
-    "ظ": [
+    "بها": [
       {
-        "meaning": "حرف ظاء؛ صوت مفخم بين الأسنان، ويختلف عن الضاد في الرسم والنطق.",
+        "meaning": "تركيب يدل على الاستعانة أو الملابسة أو المصاحبة مع مؤنث أو جماعة.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "جار ومجرور"
       }
     ],
-    "ع": [
+    "لها": [
       {
-        "meaning": "حرف عين؛ صوت حلقي عميق، وتستعمله العربية في جذور كثيرة.",
+        "meaning": "تركيب يدل على الملك أو الاختصاص أو الاتجاه إلى مؤنث أو جماعة.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "جار ومجرور"
       }
     ],
-    "غ": [
+    "كما": [
       {
-        "meaning": "حرف غين؛ صوت حلقي مجهور، ويدخل في أبنية وألفاظ متنوعة.",
+        "meaning": "تركيب يدل على المماثلة أو المصاحبة أو القدر بحسب السياق.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "تركيب"
       }
     ],
-    "ق": [
+    "كذلك": [
       {
-        "meaning": "حرف قاف؛ صوت لهوي مفخم، ويظهر في جذور عربية كثيرة.",
+        "meaning": "لفظ يدل على المماثلة، بمعنى على هذا النحو أيضاً.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "إشارة ومماثلة"
       }
     ],
-    "ل": [
+    "أيضاً": [
       {
-        "meaning": "حرف لام؛ صوت جانبي، وتأتي اللام للجر أو التعليل أو التعريف في تراكيب مختلفة.",
+        "meaning": "لفظ يدل على الإضافة والمشاركة، بمعنى كذلك أو زيادة على ما سبق.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "إضافة"
       }
     ],
-    "م": [
+    "حن": [
       {
-        "meaning": "حرف ميم؛ صوت شفوي، ويظهر في صيغ وأصول وأدوات عربية كثيرة.",
+        "meaning": "فعل يدل على الميل أو الشوق أو إصدار صوت الحنين بحسب السياق.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "فعل"
       }
     ],
-    "ن": [
+    "حنّ": [
       {
-        "meaning": "حرف نون؛ صوت أنفي، ويدخل في أبنية الأسماء والأفعال والحروف.",
+        "meaning": "فعل يدل على الاشتياق أو الميل، وقد يدل على صوت الحنين.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "فعل"
       }
     ],
-    "ه": [
+    "إنه": [
       {
-        "meaning": "حرف هاء؛ صوت حلقي مهموس، وقد يدل الضمير المتصل في تراكيب معينة.",
+        "meaning": "تركيب من أداة التوكيد وضمير الغائب، يستأنف خبراً مؤكداً عن مذكر.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "تركيب"
       }
     ],
-    "ي": [
+    "إنها": [
       {
-        "meaning": "حرف ياء؛ قد يكون حرف مد أو لين أو جزءًا من بنية الكلمة بحسب الموضع.",
+        "meaning": "تركيب من أداة التوكيد وضمير الغائب، يستأنف خبراً مؤكداً عن مؤنث.",
         "source": "Abdullah Qatan — Original project gloss (MIT)",
-        "pos": "حرف هجائي — معنى أصلي"
+        "pos": "تركيب"
+      }
+    ],
+    "أنه": [
+      {
+        "meaning": "تركيب يربط مضموناً بجملة سابقة مع توكيده، عن مذكر أو شيء.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "أنها": [
+      {
+        "meaning": "تركيب يربط مضموناً بجملة سابقة مع توكيده، عن مؤنث أو جماعة غير عاقلة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إني": [
+      {
+        "meaning": "تركيب توكيد يتحدث فيه المتكلم عن نفسه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إنا": [
+      {
+        "meaning": "تركيب توكيد يتحدث فيه المتكلم باسم نفسه أو جماعته.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إنك": [
+      {
+        "meaning": "تركيب توكيد يوجّه الكلام إلى مخاطب مفرد.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "إنكم": [
+      {
+        "meaning": "تركيب توكيد يوجّه الكلام إلى جماعة من المخاطبين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "تركيب"
+      }
+    ],
+    "أنتم": [
+      {
+        "meaning": "ضمير منفصل يدل على جماعة المخاطبين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "نحن": [
+      {
+        "meaning": "ضمير منفصل يدل على المتكلم ومعه غيره.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هو": [
+      {
+        "meaning": "ضمير منفصل يدل على غائب مذكر مفرد.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هي": [
+      {
+        "meaning": "ضمير منفصل يدل على غائبة مؤنثة مفردة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هم": [
+      {
+        "meaning": "ضمير منفصل يدل على جماعة الغائبين.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هن": [
+      {
+        "meaning": "ضمير منفصل يدل على جماعة الغائبات.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "ضمير"
+      }
+    ],
+    "هذا": [
+      {
+        "meaning": "اسم إشارة للمفرد المذكر القريب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "هذه": [
+      {
+        "meaning": "اسم إشارة للمفرد المؤنث القريب.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "ذلك": [
+      {
+        "meaning": "اسم إشارة للمفرد المذكر البعيد أو المستحضر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "تلك": [
+      {
+        "meaning": "اسم إشارة للمفرد المؤنث البعيد أو المستحضر.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة"
+      }
+    ],
+    "هنا": [
+      {
+        "meaning": "ظرف إشارة إلى مكان قريب أو حاضر في السياق.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة مكان"
+      }
+    ],
+    "هناك": [
+      {
+        "meaning": "ظرف إشارة إلى مكان بعيد أو مشار إليه.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "إشارة مكان"
+      }
+    ],
+    "حين": [
+      {
+        "meaning": "لفظ يدل على وقت أو مدة غير محددة بدقة.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "زمن"
+      }
+    ],
+    "حينئذ": [
+      {
+        "meaning": "تركيب يدل على الوقت المشار إليه عندئذ أو في تلك الحال.",
+        "source": "Abdullah Qatan — Original project gloss (MIT)",
+        "pos": "زمن"
       }
     ]
   },
-  "mergedSources": [
-    "original-additions.json",
-    "original-letters.json",
-    "alphabet definitions authored for this project"
-  ]
+  "mergedSources": {
+    "original-glosses.json": "محتوى MIT أصلي للمشروع؛ حُفظ مع إزالة تعريفات الحروف المفردة القديمة فقط.",
+    "original-additions.json": "محتوى MIT أصلي للمشروع؛ دُمج كما هو مع إزالة التكرارات.",
+    "original-letters.json": "محتوى MIT أصلي للمشروع؛ المقصود عبارات وأدوات متلاصقة، لا الحروف الهجائية المفردة.",
+    "excludedExternalData": [
+      "data/quran.json",
+      "data/ara-*.json",
+      "data/poetry/*.json",
+      "data/lexicon/lexicon.json",
+      "data/lexicon/lexicon-core.json",
+      "data/lexicon/wiktionary*.json"
+    ]
+  }
 }
